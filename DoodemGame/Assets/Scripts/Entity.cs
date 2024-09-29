@@ -5,13 +5,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-public class movement : MonoBehaviour
+public class Entity : MonoBehaviour,IAtackable
 {
     private NavMeshAgent agente;
     private float timeLastHit;
     private Transform currentObjective;
 
     public Transform objetive;
+    public float speed;
     public float health;
     public float damage;
     public float attackDistance;
@@ -21,7 +22,8 @@ public class movement : MonoBehaviour
     {
         currentObjective = objetive;
         agente = GetComponent<NavMeshAgent>();
-        agente.SetDestination(objetive.position);
+        //agente.SetDestination(objetive.position);
+        
     }
 
     void Update()
@@ -36,12 +38,11 @@ public class movement : MonoBehaviour
                     //agente.SetDestination(currentObjective.position);
                 }
             }
-        
             Attack();
         }
     }
 
-    void Attack()
+   public void Attack()
     {
         Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
         if (hitColliders.Length==0) return;
@@ -61,7 +62,7 @@ public class movement : MonoBehaviour
             if (Time.time - timeLastHit >= 1f / attackSpeed)
             {
                 float aux = 0;
-                if (currentObjective.TryGetComponent(out movement m))
+                if (currentObjective.TryGetComponent(out IAtackable m))
                 {
                     aux = m.Attacked(damage);
                 }
@@ -88,5 +89,12 @@ public class movement : MonoBehaviour
         }
 
         return health;
+    }
+
+    public void SetAgent()
+    {
+        agente = GetComponent<NavMeshAgent>();
+        agente.speed = speed;
+        agente.SetDestination(objetive.position);
     }
 }
