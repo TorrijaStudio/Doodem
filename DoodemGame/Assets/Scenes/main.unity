@@ -787,6 +787,7 @@ GameObject:
   - component: {fileID: 1337947988}
   - component: {fileID: 1337947987}
   - component: {fileID: 1337947986}
+  - component: {fileID: 1337947991}
   m_Layer: 6
   m_Name: terreno
   m_TagString: Untagged
@@ -911,6 +912,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1337947991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337947985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b9f8c39053387e4cb5a7bdcc8e5d992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1648833798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -483, y: -322}
+  m_AnchoredPosition: {x: -267, y: -23}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1842492386
@@ -1359,7 +1372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetoACrear: {fileID: 8061729011767845096, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
   terreno: {fileID: 1337947988}
-  grid: {x: 12.24, y: 10}
+  _grid: {x: 10, y: 10}
 --- !u!114 &1842492387
 MonoBehaviour:
   m_ObjectHideFlags: 0

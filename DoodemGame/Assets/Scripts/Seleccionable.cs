@@ -1,85 +1,70 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
-public class Seleccionable : MonoBehaviour,IDragHandler, IPointerDownHandler, IPointerUpHandler
+public class Seleccionable : MonoBehaviour, IPointerDownHandler
 {
-    //private bool siendoArrastrado = false;
     public GameObject objetoACrear;
     private GameObject objeto;
 
     [SerializeField] private MeshRenderer terreno;
-    public Vector2 grid;
+    private Vector2 _grid;
+    private bool _selected;
+    
     void Start()
     {
-        terreno.sharedMaterial.SetFloat(ScaleX, grid.x);
-        terreno.sharedMaterial.SetFloat(ScaleY, grid.y);
+        _grid = terreno.gameObject.GetComponent<terreno>().GetGrid();
     }
-
-    private void OnValidate()
-    {
-        terreno.sharedMaterial.SetFloat(ScaleX, grid.x);
-        terreno.sharedMaterial.SetFloat(ScaleY, grid.y);
-    }
-
+    
     GameObject InstanciarObjeto(Vector3 position)
     {
-        Debug.Log(position);
-        //GameObject instanciado = Instantiate(objetoACrear, new Vector3(11.37f,1.26f,-6.37f), objetoACrear.transform.rotation);
-        //NavMeshHit hit;
-        //if (NavMesh.SamplePosition(instanciado.transform.position, out hit, 0.89f, NavMesh.AllAreas))
-        //{
-        //    instanciado.transform.position = hit.position;
-        //}
         return Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
     }
 
 
     void Update()
     {
-        
-    }
-
-    private bool isDragging = false;
-    private static readonly int ScaleX = Shader.PropertyToID("_ScaleX");
-    private static readonly int ScaleY = Shader.PropertyToID("_ScaleY");
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        isDragging = true;
-        objeto = InstanciarObjeto(eventData.position);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (isDragging)
+        if (Input.GetMouseButton(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            
-            if (Physics.Raycast(ray, out hit,100, LayerMask.GetMask("Terreno")))
+            if (_selected)
             {
-                var corner = hit.transform.position - hit.transform.lossyScale / 2F;
-                var newPos = hit.point - corner;
-                var cellSize = new Vector2(hit.transform.lossyScale.x, hit.transform.lossyScale.z) / grid;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+            
+                if (Physics.Raycast(ray, out hit,100, LayerMask.GetMask("Terreno")))
+                {
+                    var corner = hit.transform.position - hit.transform.lossyScale / 2F;
+                    var newPos = hit.point - corner;
+                    var cellSize = new Vector2(hit.transform.lossyScale.x, hit.transform.lossyScale.z) / _grid;
                 
-                var pos = new Vector2Int((int)(newPos.x / cellSize.x), (int)(newPos.z/cellSize.y) );
-                objeto.transform.position = new Vector3(corner.x + pos.x * cellSize.x + cellSize.x /2f, 1.82f, corner.z + pos.y * cellSize.y + cellSize.y/2f);
-                Debug.Log("Posición del objeto: " + objeto.transform.position);
+                    var pos = new Vector2Int((int)(newPos.x / cellSize.x), (int)(newPos.z/cellSize.y) );
+                    if (objeto == null) {objeto = InstanciarObjeto(Input.mousePosition);}
+                    objeto.transform.position = new Vector3(corner.x + pos.x * cellSize.x + cellSize.x /2f, 
+                        1.82f, corner.z + pos.y * cellSize.y + cellSize.y/2f);
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (_selected && objeto)
+            {
+                objeto.GetComponent<NavMeshAgent>().enabled = true;
+                objeto.GetComponent<Entity>().enabled = true;
+                objeto.GetComponent<Entity>().SetAgent();
+                _selected = false;
+                objeto = null;
             }
         }
     }
-
-
-    public void OnPointerUp(PointerEventData eventData)
+    
+    public void OnPointerDown(PointerEventData eventData)
     {
-        isDragging = false;
-        objeto.GetComponent<NavMeshAgent>().enabled = true;
-        objeto.GetComponent<Entity>().enabled = true;
-        objeto.GetComponent<Entity>().SetAgent();
-        objeto = null;
+        _selected = true;
     }
 }
