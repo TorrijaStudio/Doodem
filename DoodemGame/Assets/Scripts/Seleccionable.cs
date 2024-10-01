@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +11,19 @@ public class Seleccionable : MonoBehaviour,IDragHandler, IPointerDownHandler, IP
     public GameObject objetoACrear;
     private GameObject objeto;
 
-    
-
+    [SerializeField] private MeshRenderer terreno;
+    public Vector2 grid;
     void Start()
     {
-      
+        terreno.sharedMaterial.SetFloat(ScaleX, grid.x);
+        terreno.sharedMaterial.SetFloat(ScaleY, grid.y);
     }
-   
+
+    private void OnValidate()
+    {
+        terreno.sharedMaterial.SetFloat(ScaleX, grid.x);
+        terreno.sharedMaterial.SetFloat(ScaleY, grid.y);
+    }
 
     GameObject InstanciarObjeto(Vector3 position)
     {
@@ -37,6 +44,8 @@ public class Seleccionable : MonoBehaviour,IDragHandler, IPointerDownHandler, IP
     }
 
     private bool isDragging = false;
+    private static readonly int ScaleX = Shader.PropertyToID("_ScaleX");
+    private static readonly int ScaleY = Shader.PropertyToID("_ScaleY");
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -51,9 +60,14 @@ public class Seleccionable : MonoBehaviour,IDragHandler, IPointerDownHandler, IP
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit,100, LayerMask.GetMask("Terreno")))
             {
-                objeto.transform.position = new Vector3(hit.point.x, 1.82f, hit.point.z);
+                var corner = hit.transform.position - hit.transform.lossyScale / 2F;
+                var newPos = hit.point - corner;
+                var cellSize = new Vector2(hit.transform.lossyScale.x, hit.transform.lossyScale.z) / grid;
+                
+                var pos = new Vector2Int((int)(newPos.x / cellSize.x), (int)(newPos.z/cellSize.y) );
+                objeto.transform.position = new Vector3(corner.x + pos.x * cellSize.x + cellSize.x /2f, 1.82f, corner.z + pos.y * cellSize.y + cellSize.y/2f);
                 Debug.Log("Posición del objeto: " + objeto.transform.position);
             }
         }
