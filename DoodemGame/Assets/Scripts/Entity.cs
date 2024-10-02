@@ -22,7 +22,6 @@ public class Entity : MonoBehaviour,IAtackable
         currentObjective = objetive;
         agente = GetComponent<NavMeshAgent>();
         //agente.SetDestination(objetive.position);
-        
     }
 
     void Update()

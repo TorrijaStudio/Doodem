@@ -1,16 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using HelloWorld;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public class Seleccionable : MonoBehaviour, IPointerDownHandler
+public class Seleccionable : NetworkBehaviour, IPointerDownHandler
 {
     public GameObject objetoACrear;
     private GameObject objeto;
+    public static ulong clientID;
 
     [SerializeField] private MeshRenderer terreno;
     private Vector2 _grid;
@@ -23,6 +26,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     
     GameObject InstanciarObjeto(Vector3 position)
     {
+        
         return Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
     }
 
@@ -54,13 +58,26 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         {
             if (_selected && objeto)
             {
-                objeto.GetComponent<NavMeshAgent>().enabled = true;
-                objeto.GetComponent<Entity>().enabled = true;
-                objeto.GetComponent<Entity>().SetAgent();
+                // objeto.GetComponent<NavMeshAgent>().enabled = true;
+                // objeto.GetComponent<Entity>().enabled = true;
+                // objeto.GetComponent<Entity>().SetAgent();
+                SpawnServer(objeto.transform.position, clientID);
+                StartCoroutine(BorrarObjeto(objeto));
                 _selected = false;
                 objeto = null;
             }
         }
+    }
+
+    private IEnumerator BorrarObjeto(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(obj);
+    }
+    
+    private void SpawnServer(Vector3 pos, ulong obj)
+    {
+        GameManager.Instance.SpawnServerRpc(obj, 0, pos);
     }
     
     public void OnPointerDown(PointerEventData eventData)
