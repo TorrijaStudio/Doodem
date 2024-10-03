@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5161333959966227400}
   - component: {fileID: -3352348223912276953}
   - component: {fileID: -6138819229892260113}
+  - component: {fileID: -5057402376785887337}
   m_Layer: 3
   m_Name: personaje1
   m_TagString: Untagged
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8061729011767845096}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f867668e045214aaef8db9b10b33a8, type: 3}
   m_Name: 
@@ -149,7 +150,7 @@ MonoBehaviour:
   speed: 3.5
   health: 100
   damage: 20
-  attackDistance: 3
+  attackDistance: 10
   attackSpeed: 1
 --- !u!114 &-3352348223912276953
 MonoBehaviour:
@@ -203,3 +204,15 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-5057402376785887337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061729011767845096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99d01c318afaa141882dbd975b520da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

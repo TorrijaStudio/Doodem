@@ -60,8 +60,8 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
             {
                 // objeto.GetComponent<NavMeshAgent>().enabled = true;
                 // objeto.GetComponent<Entity>().enabled = true;
-                // objeto.GetComponent<Entity>().SetAgent();
                 SpawnServer(objeto.transform.position, clientID);
+                //objeto.GetComponent<Entity>().SetAgent();
                 StartCoroutine(BorrarObjeto(objeto));
                 _selected = false;
                 objeto = null;

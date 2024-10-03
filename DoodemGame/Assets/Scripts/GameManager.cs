@@ -38,7 +38,8 @@ public class GameManager : NetworkBehaviour
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);
         player.GetComponent<NavMeshAgent>().enabled = true;
-        player.GetComponent<Entity>().enabled = true;
+        //player.GetComponent<Entity>().enabled = true;
+       // player.GetComponent<Attack>().enabled = true;
         player.GetComponent<Entity>().SetAgent();
     }
     
