@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using HelloWorld;
+using Unity.AI.Navigation;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
 {
     public GameObject objetoACrear;
     private GameObject objeto;
-    public static ulong clientID;
+    public static int clientID;
 
     [SerializeField] private MeshRenderer terreno;
     private Vector2 _grid;
@@ -75,9 +76,9 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
         Destroy(obj);
     }
     
-    private void SpawnServer(Vector3 pos, ulong obj)
+    private void SpawnServer(Vector3 pos, int playerId)
     {
-        GameManager.Instance.SpawnServerRpc(obj, 0, pos);
+        GameManager.Instance.SpawnServerRpc(playerId, 0, pos);
     }
     
     public void OnPointerDown(PointerEventData eventData)

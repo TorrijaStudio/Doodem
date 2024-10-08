@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -9,6 +11,17 @@ public class Entity : MonoBehaviour,IAtackable
     private NavMeshAgent agente;
     private float timeLastHit;
     private bool isOnGround;
+    private string layer;
+    private bool fly;
+    private playerInfo _playerInfo;
+    
+    private NetworkVariable<int> _idPlayer = new NetworkVariable<int>();
+
+    public int PlayerId
+    {
+        get => _idPlayer.Value;
+        set => _idPlayer.Value = value;
+    }
     
     public Transform objetive;
     public float speed;
@@ -17,9 +30,21 @@ public class Entity : MonoBehaviour,IAtackable
     public float attackDistance;
     public float attackSpeed;
 
+    private void SetLayer(int oldId, int id)
+    {
+        gameObject.layer = LayerMask.NameToLayer(id == 0 ? "Rojo" : "Azul");
+    }
+    
+
     void Start()
     {
+        //SetLayer(0, _idPlayer.Value);
+        //_idPlayer.OnValueChanged += SetLayer; 
         agente = GetComponent<NavMeshAgent>();
+        //if (id == 0) 
+        //    gameObject.layer = LayerMask.NameToLayer("Rojo");
+        //else 
+        //    gameObject.layer = LayerMask.NameToLayer("Azul");
         //agente.SetDestination(objetive.position);
     }
 
@@ -42,8 +67,9 @@ public class Entity : MonoBehaviour,IAtackable
         return health;
     }
 
-    public void SetAgent()
+    public void SetAgent(int playerId)
     {
+        agente.SetDestination(objetive.position);
         isOnGround = true;
         agente = GetComponent<NavMeshAgent>();
         agente.speed = speed;
@@ -53,5 +79,10 @@ public class Entity : MonoBehaviour,IAtackable
     public bool GetIsOnGround()
     {
         return isOnGround;
+    }
+
+    private void OnDestroy()
+    {
+        _idPlayer.OnValueChanged -= SetLayer;
     }
 }
