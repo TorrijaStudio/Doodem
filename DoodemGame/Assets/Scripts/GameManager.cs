@@ -14,7 +14,8 @@ public class GameManager : NetworkBehaviour
     private GameObject _playerPrefab;
     public static GameManager Instance;
     public playerInfo[] players = new playerInfo[2];
-    private int id;
+    private NetworkVariable<int> _id = new();
+    public int clientId;
    
 
     // Start is called before the first frame update
@@ -26,6 +27,7 @@ public class GameManager : NetworkBehaviour
         {
             Instance = this;
         }
+
         _networkManager = NetworkManager.Singleton;
         _playerPrefab = _networkManager.NetworkConfig.Prefabs.Prefabs[0].Prefab;
         _networkManager.OnServerStarted += OnServerStarted;
@@ -46,31 +48,43 @@ public class GameManager : NetworkBehaviour
         
         //player.GetComponent<Entity>().enabled = true;
        // player.GetComponent<Attack>().enabled = true;
-        player.GetComponent<Entity>().SetAgent(playerId);
+       var entity = player.GetComponent<Entity>();
+       // entity./
+       entity.SetAgent();
+       entity._idPlayer.Value = playerId;
+       Debug.Log("Spawning entity with id " + playerId);
     }
     
     private void OnClientConnected(ulong obj)
     {
+        
         if(IsClient)
-            Seleccionable.clientID = id;
+        {
+            if(Seleccionable.ClientID == -1)
+            {
+                Seleccionable.ClientID = _id.Value;
+                clientId = _id.Value;
+            }
+        }
         if (IsServer)
         {
             var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[1].Prefab);
             player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);
             var playerInfo = player.GetComponent<playerInfo>();
-            playerInfo._idPlayer.Value= id;
+            playerInfo.PlayerId = _id.Value;
             playerInfo.obj = obj;
-            players[id] = playerInfo;
-            id++;
+            // players[id] = playerInfo;
+            _id.Value++;
         } 
         // var player = Instantiate(_playerPrefab);
         // player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);Debug.Log(_idPlayer);
     }
 
-    public void OnDestroy()
+    public override void OnDestroy()
     {
         _networkManager.OnServerStarted -= OnServerStarted;
         _networkManager.OnClientConnectedCallback -= OnClientConnected;
+        base.OnDestroy();
     }
     
 }

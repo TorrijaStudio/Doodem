@@ -670,6 +670,7 @@ MonoBehaviour:
   players:
   - {fileID: 0}
   - {fileID: 0}
+  clientId: 0
 --- !u!1 &706801342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,6 +1750,7 @@ GameObject:
   - component: {fileID: 1842492385}
   - component: {fileID: 1842492388}
   - component: {fileID: 1842492387}
+  - component: {fileID: 1842492389}
   - component: {fileID: 1842492386}
   m_Layer: 0
   m_Name: totem
@@ -1828,6 +1830,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842492384}
   m_CullTransparentMesh: 1
+--- !u!114 &1842492389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842492384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4145899787
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1960179239
 GameObject:
   m_ObjectHideFlags: 0

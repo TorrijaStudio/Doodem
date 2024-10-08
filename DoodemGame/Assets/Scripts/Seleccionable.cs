@@ -14,15 +14,19 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
 {
     public GameObject objetoACrear;
     private GameObject objeto;
-    public static int clientID;
+    public static int ClientID;
 
     [SerializeField] private MeshRenderer terreno;
     private Vector2 _grid;
     private bool _selected;
+    // public Seleccionable Instance;
     
     void Start()
     {
         _grid = terreno.gameObject.GetComponent<terreno>().GetGrid();
+        ClientID = -1;
+        // if(Instance)
+
     }
     
     GameObject InstanciarObjeto(Vector3 position)
@@ -54,19 +58,25 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
                 }
             }
         }
-
+    
         if (Input.GetMouseButtonUp(0))
         {
             if (_selected && objeto)
             {
                 // objeto.GetComponent<NavMeshAgent>().enabled = true;
                 // objeto.GetComponent<Entity>().enabled = true;
-                SpawnServer(objeto.transform.position, clientID);
+                Debug.Log(name + ": " + ClientID);
+                SpawnServer(objeto.transform.position, ClientID);
                 //objeto.GetComponent<Entity>().SetAgent();
                 StartCoroutine(BorrarObjeto(objeto));
                 _selected = false;
                 objeto = null;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("ClientID: " + ClientID);
         }
     }
 
@@ -78,7 +88,9 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     
     private void SpawnServer(Vector3 pos, int playerId)
     {
-        GameManager.Instance.SpawnServerRpc(playerId, 0, pos);
+        Debug.Log(playerId);
+        if(IsSpawned)
+            GameManager.Instance.SpawnServerRpc(playerId, 0, pos);
     }
     
     public void OnPointerDown(PointerEventData eventData)

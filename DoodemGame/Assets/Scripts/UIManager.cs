@@ -5,6 +5,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace HelloWorld
@@ -13,6 +14,7 @@ namespace HelloWorld
     {
         private string joinCode = "Enter code...";
         private const int maxConnections = 3;
+        private bool isHost;
 
         async void Start()
         {
@@ -44,6 +46,10 @@ namespace HelloWorld
             if (GUILayout.Button("Host")) StartHost();
             if (GUILayout.Button("Client")) StartClient(joinCode);
             joinCode = GUILayout.TextField(joinCode);
+            if (GUILayout.Button("Paste code and join"))
+            {
+                StartClient(GUIUtility.systemCopyBuffer);
+            }
         }
 
         void StatusLabels()
@@ -54,12 +60,15 @@ namespace HelloWorld
             GUILayout.Label("Transport: " +
                             NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
             GUILayout.Label("Mode: " + mode);
+            GUILayout.Label(isHost ? "Host" : "Client");
 
             GUILayout.Label("Room: " + joinCode);
+            if(GUILayout.Button("Copy code")) GUIUtility.systemCopyBuffer = joinCode;
         }
 
         private async void StartHost()
         {
+            isHost = true;
             try
             {
                 await UnityServices.InitializeAsync();
@@ -73,6 +82,7 @@ namespace HelloWorld
                     .SetRelayServerData(new RelayServerData(allocation, "wss"));
                 joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
+                GUIUtility.systemCopyBuffer = joinCode;
                 NetworkManager.Singleton.StartHost();
             }
             catch (RelayServiceException e)

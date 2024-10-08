@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class playerInfo : NetworkBehaviour
 {
-    public NetworkVariable<int> _idPlayer = new NetworkVariable<int>(writePerm:NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> idPlayer = new(writePerm:NetworkVariableWritePermission.Server);
     public ulong obj;
 
-    public int playerId
+    public int PlayerId
     {
-        get => _idPlayer.Value;
-        set => _idPlayer.Value = value;
+        get => idPlayer.Value;
+        set => idPlayer.Value = value;
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.Instance.players[PlayerId] = this;
+        Debug.Log(name + ": " + PlayerId);
     }
 
     // Update is called once per frame

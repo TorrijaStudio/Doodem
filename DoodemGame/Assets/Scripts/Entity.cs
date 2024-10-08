@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-public class Entity : MonoBehaviour,IAtackable
+public class Entity : NetworkBehaviour ,IAtackable
 {
     private NavMeshAgent agente;
     private float timeLastHit;
@@ -15,13 +16,13 @@ public class Entity : MonoBehaviour,IAtackable
     private bool fly;
     private playerInfo _playerInfo;
     
-    private NetworkVariable<int> _idPlayer = new NetworkVariable<int>();
+    public NetworkVariable<int> _idPlayer = new NetworkVariable<int>(writePerm:NetworkVariableWritePermission.Server);
 
-    public int PlayerId
-    {
-        get => _idPlayer.Value;
-        set => _idPlayer.Value = value;
-    }
+    // public int PlayerId
+    // {
+    //     get => _idPlayer.Value;
+    //     set => _idPlayer.Value = value;
+    // }
     
     public Transform objetive;
     public float speed;
@@ -33,14 +34,23 @@ public class Entity : MonoBehaviour,IAtackable
     private void SetLayer(int oldId, int id)
     {
         gameObject.layer = LayerMask.NameToLayer(id == 0 ? "Rojo" : "Azul");
+        var meshes = transform.GetComponentsInChildren<MeshRenderer>().ToList();
+        meshes.ForEach(mesh =>
+        {
+            var materials = mesh.materials.ToList();
+            materials.ForEach(mat => mat.color = id == 0 ? Color.red : Color.blue);
+            mesh.SetMaterials(materials);
+        });
     }
     
 
     void Start()
     {
-        //SetLayer(0, _idPlayer.Value);
-        //_idPlayer.OnValueChanged += SetLayer; 
+        // PlayerId = Seleccionable.ClientID;
+        SetLayer(0, _idPlayer.Value);
+        _idPlayer.OnValueChanged += SetLayer; 
         agente = GetComponent<NavMeshAgent>();
+        // SetAgent();
         //if (id == 0) 
         //    gameObject.layer = LayerMask.NameToLayer("Rojo");
         //else 
@@ -57,7 +67,7 @@ public class Entity : MonoBehaviour,IAtackable
 
     public float Attacked(float enemyDamage)
     {
-        Debug.Log(gameObject.name +"-- "+health);
+        Debug.Log(gameObject.name + " -- "+health);
         health -= enemyDamage;
         if (health < 0)
         {
@@ -67,8 +77,9 @@ public class Entity : MonoBehaviour,IAtackable
         return health;
     }
 
-    public void SetAgent(int playerId)
+    public void SetAgent()
     {
+        if(!agente) return;
         agente.SetDestination(objetive.position);
         isOnGround = true;
         agente = GetComponent<NavMeshAgent>();
@@ -81,8 +92,9 @@ public class Entity : MonoBehaviour,IAtackable
         return isOnGround;
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         _idPlayer.OnValueChanged -= SetLayer;
+        base.OnDestroy();
     }
 }
