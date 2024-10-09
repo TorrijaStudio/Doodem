@@ -595,6 +595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f867668e045214aaef8db9b10b33a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _idPlayer:
+    m_InternalValue: 0
   objetive: {fileID: 1734961144}
   speed: 0
   health: 100
@@ -671,6 +673,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   clientId: 0
+  Bases:
+  - {fileID: 938703320}
+  - {fileID: 1734961144}
 --- !u!1 &706801342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,7 +2187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1240635363635733933, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.42
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 1240635363635733933, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2244,6 +2249,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5161333959966227400, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
+      propertyPath: Bases.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5161333959966227400, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
+      propertyPath: Bases.Array.data[0]
+      value: 
+      objectReference: {fileID: 938703320}
+    - target: {fileID: 5161333959966227400, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
+      propertyPath: Bases.Array.data[1]
+      value: 
+      objectReference: {fileID: 1734961144}
     - target: {fileID: 6248338216956237444, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
       propertyPath: m_Enabled
       value: 0

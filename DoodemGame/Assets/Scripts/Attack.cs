@@ -38,6 +38,8 @@ public class Attack : MonoBehaviour
             AttackArea();   
         }
     }
+    
+    
     public void Attackupdate()
     {
         if (currentObjective == objetive)
@@ -89,7 +91,7 @@ public class Attack : MonoBehaviour
     private void AttackArea()
     {
         Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
-        Debug.Log(hitColliders.Length);
+        Debug.Log("Overlaped with " + hitColliders.Length + "colliders");
         if (hitColliders.Length==0) return;
         foreach (var c in hitColliders)
         {

@@ -16,6 +16,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     private GameObject objeto;
     public static int ClientID;
 
+
     [SerializeField] private MeshRenderer terreno;
     private Vector2 _grid;
     private bool _selected;
@@ -39,7 +40,10 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     GameObject InstanciarObjeto(Vector3 position)
     {
         
-        return Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
+        var a = Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
+        a.name += " soy un objeto tonto que explota";
+        return a;
+
     }
 
 
@@ -61,7 +65,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
                     var pos = new Vector2Int((int)(newPos.x / cellSize.x), (int)(newPos.z/cellSize.y) );
                     if (objeto == null) {objeto = InstanciarObjeto(Input.mousePosition);}
                     objeto.transform.position = new Vector3(corner.x + pos.x * cellSize.x + cellSize.x /2f, 
-                        1.82f, corner.z + pos.y * cellSize.y + cellSize.y/2f);
+                        1.1f, corner.z + pos.y * cellSize.y + cellSize.y/2f);
                 }
             }
         }
@@ -95,7 +99,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     
     private void SpawnServer(Vector3 pos, int playerId)
     {
-        Debug.Log(playerId);
+        // Debug.Log(playerId);
         if(IsSpawned)
             GameManager.Instance.SpawnServerRpc(playerId, 0, pos);
     }

@@ -16,6 +16,8 @@ public class GameManager : NetworkBehaviour
     public playerInfo[] players = new playerInfo[2];
     private NetworkVariable<int> _id = new();
     public int clientId;
+    public List<Transform> Bases;
+
    
 
     // Start is called before the first frame update

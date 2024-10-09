@@ -41,6 +41,8 @@ public class Entity : NetworkBehaviour ,IAtackable
             materials.ForEach(mat => mat.color = id == 0 ? Color.red : Color.blue);
             mesh.SetMaterials(materials);
         });
+        Debug.Log(id);
+        objetive = GameManager.Instance.Bases[id];
     }
     
 
@@ -49,7 +51,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         // PlayerId = Seleccionable.ClientID;
         SetLayer(0, _idPlayer.Value);
         _idPlayer.OnValueChanged += SetLayer; 
-        agente = GetComponent<NavMeshAgent>();
+
         SetAgent();
         //if (id == 0) 
         //    gameObject.layer = LayerMask.NameToLayer("Rojo");
@@ -77,16 +79,22 @@ public class Entity : NetworkBehaviour ,IAtackable
         return health;
     }
 
-    public void SetAgent()
+    private void SetAgent()
     {
-        if(!agente) return;
-        agente.SetDestination(objetive.position);
-        isOnGround = true;
         agente = GetComponent<NavMeshAgent>();
+        isOnGround = true;
         agente.speed = speed;
-        agente.SetDestination(objetive.position);
+
+        StartCoroutine(SetDestination());
     }
 
+    private IEnumerator SetDestination()
+    {
+        yield return new WaitUntil((() => agente.isOnNavMesh));
+        agente.SetDestination(objetive.position);
+    }
+    
+    
     public bool GetIsOnGround()
     {
         return isOnGround;
