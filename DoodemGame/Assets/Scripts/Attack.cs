@@ -91,7 +91,7 @@ public class Attack : MonoBehaviour
     private void AttackArea()
     {
         Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
-        Debug.Log("Overlaped with " + hitColliders.Length + "colliders");
+        Debug.Log(hitColliders.Length);
         if (hitColliders.Length==0) return;
         foreach (var c in hitColliders)
         {
