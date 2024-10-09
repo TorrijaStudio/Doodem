@@ -50,7 +50,7 @@ public class GameManager : NetworkBehaviour
        // player.GetComponent<Attack>().enabled = true;
        var entity = player.GetComponent<Entity>();
        // entity./
-       entity.SetAgent();
+       // entity.SetAgent();
        entity._idPlayer.Value = playerId;
        Debug.Log("Spawning entity with id " + playerId);
     }

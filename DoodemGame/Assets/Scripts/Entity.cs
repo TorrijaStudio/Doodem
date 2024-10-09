@@ -50,7 +50,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         SetLayer(0, _idPlayer.Value);
         _idPlayer.OnValueChanged += SetLayer; 
         agente = GetComponent<NavMeshAgent>();
-        // SetAgent();
+        SetAgent();
         //if (id == 0) 
         //    gameObject.layer = LayerMask.NameToLayer("Rojo");
         //else 
