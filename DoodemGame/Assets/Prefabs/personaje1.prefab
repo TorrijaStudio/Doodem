@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -5057402376785887337}
   - component: {fileID: -6366027180613728213}
   - component: {fileID: 9166708200504943702}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: personaje1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f867668e045214aaef8db9b10b33a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityNet: {fileID: 0}
   objetive: {fileID: 8418144411756796690, guid: ecfbafd27a2ace442849a70e7e248aad, type: 3}
   speed: 3.5
   health: 100
@@ -168,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2468877698
+  GlobalObjectIdHash: 2372337910
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -215,7 +214,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8061729011767845096}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c99d01c318afaa141882dbd975b520da, type: 3}
   m_Name: 
@@ -251,6 +250,8 @@ MonoBehaviour:
   flySpeed: 3
   fly: 0
   xTime: 4
+  numRocas: 2
+  damageRoca: 10
 --- !u!1001 &1461636331633403157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -313,39 +314,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8391222552659086748, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -3756473180518285571, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -1688617927700330159, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -1599826595754709761, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -1025663018108745142, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -516098083770646512, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -466329591000292508, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -208595431880416365, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 492440804577196729, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Name
@@ -353,15 +354,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2891746525080496957, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8416272007918961125, guid: 2c7bf6aea2b07074980dbf373622c760, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

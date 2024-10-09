@@ -19,10 +19,17 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     [SerializeField] private MeshRenderer terreno;
     private Vector2 _grid;
     private bool _selected;
+    private List<Transform> cartas;
     // public Seleccionable Instance;
     
     void Start()
     {
+        cartas = new List<Transform>();
+        foreach (Transform t in transform.parent)
+        {
+            if(t!=transform)
+                cartas.Add(t);
+        }
         _grid = terreno.gameObject.GetComponent<terreno>().GetGrid();
         ClientID = -1;
         // if(Instance)
@@ -96,5 +103,13 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         _selected = true;
+        foreach (var c in cartas)
+        {
+            c.GetComponent<Seleccionable>().setFalse();
+        }
+    }
+    public void setFalse()
+    {
+        _selected = false;
     }
 }

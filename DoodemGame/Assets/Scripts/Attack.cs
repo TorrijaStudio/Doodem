@@ -55,8 +55,6 @@ public class Attack : MonoBehaviour
                 }
             }
         }
-        
-        //Debug.Log(hitColliders[0].name);
         if (currentObjective)
         {
             if (Time.time - timeLastHit >= 1f / attackSpeed)
@@ -66,9 +64,6 @@ public class Attack : MonoBehaviour
                 {
                     aux = m.Attacked(damage);
                 }
-
-                
-                
                 if (aux < 0)
                 {
                     Debug.Log(gameObject.name+"  "+objetive.position);
@@ -82,7 +77,6 @@ public class Attack : MonoBehaviour
                 }
                 timeLastHit = Time.time;
             }   
-            
         }
         else
         {
