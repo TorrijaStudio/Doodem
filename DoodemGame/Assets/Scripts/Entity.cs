@@ -17,6 +17,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     private playerInfo _playerInfo;
     
     public NetworkVariable<int> _idPlayer = new NetworkVariable<int>(writePerm:NetworkVariableWritePermission.Server);
+    public string layerEnemy;
 
     // public int PlayerId
     // {
@@ -34,6 +35,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     private void SetLayer(int oldId, int id)
     {
         gameObject.layer = LayerMask.NameToLayer(id == 0 ? "Rojo" : "Azul");
+        layerEnemy = id == 0 ? "Azul" : "Rojo";
         var meshes = transform.GetComponentsInChildren<MeshRenderer>().ToList();
         meshes.ForEach(mesh =>
         {

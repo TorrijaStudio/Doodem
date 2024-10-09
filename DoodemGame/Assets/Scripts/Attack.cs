@@ -33,21 +33,23 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(entity.GetIsOnGround())
         {
-            AttackArea();   
+            Attackupdate();   
         }
     }
-    
-    
     public void Attackupdate()
     {
         if (currentObjective == objetive)
         { 
-            Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
+            Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask(entity.layerEnemy));
             if (hitColliders.Length==0) return;
+            Debug.LogError("iogjnfgfn");
             foreach (var c in hitColliders)
             {
+                Debug.LogError(LayerMask.LayerToName(c.gameObject.layer));
+                Debug.LogError(c.name);
                 if (c.gameObject != gameObject && gameObject.layer!=c.gameObject.layer)
                 {
                     currentObjective = c.transform;
@@ -90,8 +92,7 @@ public class Attack : MonoBehaviour
 
     private void AttackArea()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
-        Debug.Log(hitColliders.Length);
+        Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask(entity.layerEnemy));
         if (hitColliders.Length==0) return;
         foreach (var c in hitColliders)
         {
@@ -117,7 +118,6 @@ public class Attack : MonoBehaviour
                 }
                 if (aux < 0)
                 {
-                    Debug.Log(gameObject.name+"  "+objetive.position);
                     currentObjective = objetive;
                     if(agente.enabled)
                         agente.SetDestination(objetive.position);
