@@ -34,7 +34,7 @@ public class Aguila : MonoBehaviour
         landHeight = transform.position.y;
         currentObjective = _entity.objetive;
         aux1 = numRocas;
-        rocas = numRocas;
+        //rocas = numRocas;
     }
 
     // Update is called once per frame
@@ -63,6 +63,7 @@ public class Aguila : MonoBehaviour
             return;
         }
 
+        if (!currentObjective) return;
         if ((transform.position - currentObjective.position).magnitude > _entity.attackDistance)
         {
             Vector3 dir = currentObjective.position - transform.position;
@@ -92,13 +93,12 @@ public class Aguila : MonoBehaviour
 
     public void AguilaKill()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, _entity.attackDistance,LayerMask.GetMask("Azul"));//meter layer de aliado
+        Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, _entity.attackDistance,LayerMask.GetMask(_entity.layer));
         List<Collider> allys = new List<Collider>();
         foreach (var c in hitColliders)
         {
             if (c.gameObject.layer == gameObject.layer)
             {
-                
                 c.GetComponent<Aguila>().fly = true;
                 allys.Add(c);
             }
@@ -121,7 +121,7 @@ public class Aguila : MonoBehaviour
     {
         if ((currentObjective == _entity.objetive || rocas == numRocas) && attacked)
         { 
-            Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, _entity.attackDistance, LayerMask.GetMask("Enemy"));
+            Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, _entity.attackDistance, LayerMask.GetMask(_entity.layerEnemy));
             if (hitColliders.Length==0) return;
             foreach (var c in hitColliders)
             {

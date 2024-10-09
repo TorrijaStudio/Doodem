@@ -12,7 +12,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     private NavMeshAgent agente;
     private float timeLastHit;
     private bool isOnGround;
-    private string layer;
+    public string layer;
     private bool fly;
     private playerInfo _playerInfo;
     
@@ -36,6 +36,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         gameObject.layer = LayerMask.NameToLayer(id == 0 ? "Rojo" : "Azul");
         layerEnemy = id == 0 ? "Azul" : "Rojo";
+        layer = id == 0 ? "Rojo" : "Azul";
         var meshes = transform.GetComponentsInChildren<MeshRenderer>().ToList();
         meshes.ForEach(mesh =>
         {
