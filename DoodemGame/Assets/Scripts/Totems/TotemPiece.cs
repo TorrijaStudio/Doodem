@@ -92,7 +92,7 @@ namespace Totems
                 var position = transform.position;
                 var newPos = Vector3.MoveTowards(position, pos, speed);
                 transform.position = newPos;
-                yield return null;
+                yield return new WaitForFixedUpdate();
             } while (Vector3.Distance(pos, transform.position) > 0.000001);
 
             if (deactivateOnEnd && totem)

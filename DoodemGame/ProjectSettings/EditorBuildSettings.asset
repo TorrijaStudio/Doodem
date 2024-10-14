@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/TotemMixingTest.unity
+    guid: fea18e9159b45e840baf618850df1021
   m_configObjects: {}

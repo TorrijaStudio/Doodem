@@ -346,7 +346,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -365,6 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 57b6629c7268065449a5ea94ef60f8fd, type: 2}
+  totem: {fileID: 0}
   type: 0
   animalName: Bear
 --- !u!1 &5578181062901626435

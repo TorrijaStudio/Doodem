@@ -32,14 +32,39 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
     void Update()
     {
         //If computer (??)
-        if (Input.touchSupported)
-        {
-            
-        }
-        else
         {
             PointerController(MouseToRay());
-            if (Input.GetMouseButton(0))
+            if (Input.touches.Length > 0)
+            {
+                
+                PointerController(_camera.ScreenPointToRay(Input.touches[0].position));
+                if(!selectedPiece)
+                {
+                    var aux = Physics.OverlapBox(transform.position, new Vector3(0.25f, 0.25f, 2f), Quaternion.identity,
+                        LayerMask.GetMask("Totem"));
+                    if (aux.Length > 0)
+                    {
+                        foreach (var VARIABLE in aux)
+                        {
+                            var auxPiece = VARIABLE.GetComponent<TotemPiece>();
+                            if (auxPiece != grabbedPiece)
+                            {
+                                selectedPiece = auxPiece;
+                                selectedTotem = selectedPiece.totem;
+                                break;
+                            }
+                        }
+
+                    }
+                }else if (grabbedPiece)
+                {
+                    if (selectedPiece == grabbedPiece)
+                        selectedPiece = null;
+                }
+                PressController(Input.touches[0].position);
+                _isDragging = true;
+            }
+            else if (Input.GetMouseButton(0))
             {
                 PressController(Input.mousePosition);
                 _isDragging = true;
@@ -51,24 +76,36 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
                 {
                     if(!selectedPiece || !selectedTotem.CanTakePart(grabbedPiece.gameObject))
                     {
-                        grabbedPiece.MoveTo(_grabPosition - grabbedPiece.transform.forward * GrabOffset, 0.5f, true);
+                        grabbedPiece.MoveTo(_grabPosition - grabbedPiece.transform.forward * GrabOffset, 0.8f, true);
                     }
                     else
                     {
-                        //If the totem doesnt have designated parts then dont admit that kind of part
                         var tempTotem = grabbedPiece.totem;
-                        var tempPosition = selectedPiece.transform.position;
-                        selectedPiece.totem = tempTotem;
-                        selectedPiece.transform.SetParent(tempTotem.transform);
-                        grabbedPiece.transform.SetParent(selectedTotem.transform);
-                        grabbedPiece.totem = selectedTotem;
-                        //if totem is null send other piece to established overflow positions
-                        
-                        selectedPiece.MoveTo(_grabPosition, 0.5f, selectedPiece.totem);
-                        grabbedPiece.MoveTo(tempPosition, 0.5f, grabbedPiece.totem);
-                        grabbedPiece.transform.SetSiblingIndex(TagToNumber(grabbedPiece.tag));
-                        selectedPiece.transform.SetSiblingIndex(TagToNumber(selectedPiece.tag));
-                        selectedPiece = grabbedPiece;
+                        if (selectedPiece.totem.AddPart(grabbedPiece, out var exchangePiece))
+                        {
+                            tempTotem.AddPart(exchangePiece, out var p);
+                            selectedTotem.Separate(TagToNumber(grabbedPiece.tag) + 1);
+                            selectedPiece = grabbedPiece;
+                            // grabbedPiece = null;
+                            tempTotem.Lock(false);
+                            tempTotem.Deactivate();
+                            
+                        }
+                        // //If the totem doesnt have designated parts then dont admit that kind of part
+                        // var tempTotem = grabbedPiece.totem;
+                        // var tempPosition = selectedPiece.transform.position;
+                        // selectedPiece.totem = tempTotem;
+                        // selectedPiece.transform.SetParent(tempTotem.transform);
+                        //
+                        // grabbedPiece.transform.SetParent(selectedTotem.transform);
+                        // grabbedPiece.totem = selectedTotem;
+                        // //if totem is null send other piece to established overflow positions
+                        //
+                        // selectedPiece.MoveTo(_grabPosition, 0.5f, selectedPiece.totem);
+                        // grabbedPiece.MoveTo(tempPosition, 0.5f, grabbedPiece.totem);
+                        // grabbedPiece.transform.SetSiblingIndex(TagToNumber(grabbedPiece.tag));
+                        // selectedPiece.transform.SetSiblingIndex(TagToNumber(selectedPiece.tag));
+                        // selectedPiece = grabbedPiece;
                     }
                     grabbedPiece = null;
                     
@@ -145,8 +182,7 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
                         if(selectedTotem.CanTakePart(grabbedPiece.gameObject))
                         {
                             selectedTotem.Separate(TagToNumber(grabbedPiece.tag) + 1);
-                            selectedPiece = selectedTotem.transform.GetChild(Mathf.Min(TagToNumber(grabbedPiece.tag), selectedTotem.transform.childCount - 1))
-                                .GetComponent<TotemPiece>();
+                            selectedPiece = selectedTotem.GetPiece(grabbedPiece.tag).GetComponent<TotemPiece>();
                         }
                     }
                     break;
@@ -167,7 +203,7 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
                         if (auxSelection == grabbedPiece) break;
                         selectedPiece = auxSelection;
                         if(selectedPiece.totem)
-                            selectedPiece.totem.Separate(other.transform.GetSiblingIndex() + 1);
+                            selectedPiece.totem.Separate(TagToNumber(other.tag) + 1);
                     }
                     // selectedTotem.Separate(other.transform.GetSiblingIndex() + 1);
                     break;

@@ -220,7 +220,7 @@ PrefabInstance:
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: head
       value: 
-      objectReference: {fileID: 1857824305}
+      objectReference: {fileID: 1857824310}
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: TotemOffset
       value: 0
@@ -348,11 +348,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72831681}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &126080922 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1062466098516003971, guid: 50326a227cc733240bf73ef5cf2b0f81, type: 3}
-  m_PrefabInstance: {fileID: 204614622}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &126080923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6828182007223145747, guid: 50326a227cc733240bf73ef5cf2b0f81, type: 3}
@@ -1165,7 +1160,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460886622}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2014,15 +2009,15 @@ PrefabInstance:
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: body
       value: 
-      objectReference: {fileID: 1033860253}
+      objectReference: {fileID: 1033860258}
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: feet
       value: 
-      objectReference: {fileID: 896976639}
+      objectReference: {fileID: 896976644}
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: head
       value: 
-      objectReference: {fileID: 1992282210}
+      objectReference: {fileID: 1992282215}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -3450,7 +3445,7 @@ Transform:
   m_GameObject: {fileID: 1677870471}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6, z: -10}
+  m_LocalPosition: {x: -0.67, y: 1.6, z: -10.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3821,7 +3816,7 @@ PrefabInstance:
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: feet
       value: 
-      objectReference: {fileID: 126080922}
+      objectReference: {fileID: 126080923}
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: TotemOffset
       value: 0
@@ -3947,11 +3942,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764713200}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1857824305 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4743716353546243484, guid: 0e91fe7e5f5a2084396d7c5f999a67b4, type: 3}
-  m_PrefabInstance: {fileID: 2050664348}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1857824310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8308627840760760927, guid: 0e91fe7e5f5a2084396d7c5f999a67b4, type: 3}
@@ -4678,15 +4668,15 @@ PrefabInstance:
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: body
       value: 
-      objectReference: {fileID: 1890318683}
+      objectReference: {fileID: 1890318688}
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: feet
       value: 
-      objectReference: {fileID: 1495580835}
+      objectReference: {fileID: 1495580840}
     - target: {fileID: 5275010074968078160, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
       propertyPath: head
       value: 
-      objectReference: {fileID: 341314388}
+      objectReference: {fileID: 341314393}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

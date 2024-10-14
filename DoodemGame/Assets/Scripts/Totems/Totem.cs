@@ -10,13 +10,10 @@ public class Totem : MonoBehaviour
     [SerializeField] private float TotemOffset = 1.0f;
     [SerializeField] private float TotemPieceHover = 0.30f;
     
-    [SerializeField] private GameObject head;
-    [SerializeField] private GameObject body;
-    [SerializeField] private GameObject feet;
-
-    private TotemPiece totemHead;
-    private TotemPiece totemBody;
-    private TotemPiece totemFeet;
+    [SerializeField] private Transform head;
+    [SerializeField] private Transform body;
+    [SerializeField] private Transform feet;
+    
 
     private bool isLocked = false;
     
@@ -29,13 +26,13 @@ public class Totem : MonoBehaviour
 
         var position = _transform.position;
         var up = _transform.up * TotemOffset;
-        head = Instantiate(h, position + up, Quaternion.identity, _transform);
+        head = Instantiate(h, position + up, Quaternion.identity, _transform).transform;
         // head.transform.SetParent(_transform);
         
-        body = Instantiate(b, position, Quaternion.identity, _transform);
+        body = Instantiate(b, position, Quaternion.identity, _transform).transform;
         // body.transform.SetParent(_transform);
         
-        feet = Instantiate(f, position - up, Quaternion.identity, _transform);
+        feet = Instantiate(f, position - up, Quaternion.identity, _transform).transform;
         // feet.transform.SetParent(_transform);
     }
 
@@ -50,10 +47,50 @@ public class Totem : MonoBehaviour
         return true;
     }
 
+    public bool AddPart(TotemPiece pieceToSet, out TotemPiece outPiece)
+    {
+        outPiece = null;
+        var result = pieceToSet.tag switch
+        {
+            "Head" => TryAddPiece(pieceToSet, ref head, out outPiece),
+            "Body" => TryAddPiece(pieceToSet, ref body, out outPiece),
+            "Feet" => TryAddPiece(pieceToSet, ref feet, out outPiece),
+            _ => false
+        };
+
+        return result;
+    }
+
+    public Transform GetPiece(string pieceTag)
+    {
+        return pieceTag switch
+        {
+            "Head" => head,
+            "Body" => body,
+            "Feet" => feet,
+            _ => null
+        };
+    }
+
+    private bool TryAddPiece(TotemPiece pieceToSet, ref Transform other, out TotemPiece outPiece)
+    {
+        if (!other)
+        {
+            outPiece = null;
+            return false;
+        }
+
+        outPiece = other.GetComponent<TotemPiece>();
+        other = pieceToSet.transform;
+        other.GetComponent<TotemPiece>().totem = this;
+        other.SetParent(_transform);
+        return true;
+    }
+    
     public void Separate(int mode)
     {
         if(isLocked)    return;
-        if(!(head && feet && body))    return;
+        // if(!(head && feet && body))    return;
         
         var distanceHead = TotemOffset;
         float distanceBody = 0;
@@ -70,15 +107,17 @@ public class Totem : MonoBehaviour
                 distanceHead += TotemPieceHover;
                 distanceBody += TotemPieceHover;
                 break;
-            default:
-                break;
         }
 
-        var position = _transform.position;
+        var position = transform.position;
         var up = _transform.up;
-        var speed = 0.01f;
-        transform.GetChild(0).GetComponent<TotemPiece>().MoveTo(position + (up * distanceHead), speed);
-        transform.GetChild(1).GetComponent<TotemPiece>().MoveTo(position + (up * distanceBody), speed);
+        var speed = 0.1f;
+        if(head)
+            head.GetComponent<TotemPiece>().MoveTo(position + (up * distanceHead), speed);
+        if(body)
+            body.GetComponent<TotemPiece>().MoveTo(position + (up * distanceBody), speed);
+        if(feet)
+            feet.GetComponent<TotemPiece>().MoveTo(position - up * TotemOffset , speed);
 
     }
 
@@ -97,12 +136,12 @@ public class Totem : MonoBehaviour
     private void Start()
     {
         _transform = transform;
-        if(head)
-            totemHead = head.GetComponent<TotemPiece>();
-        if(body)
-            totemBody = body.GetComponent<TotemPiece>();
-        if(feet)
-            totemFeet = feet.GetComponent<TotemPiece>();
+        // if(head)
+        //     totemHead = head.GetComponent<TotemPiece>();
+        // if(body)
+        //     totemBody = body.GetComponent<TotemPiece>();
+        // if(feet)
+        //     totemFeet = feet.GetComponent<TotemPiece>();
     }
 
     public void Deactivate()
