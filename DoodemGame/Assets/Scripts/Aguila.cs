@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-public class Aguila : MonoBehaviour
+public class Aguila : MonoBehaviour, IAttack
 {
     public float height;
     public float flySpeed;
@@ -47,11 +47,11 @@ public class Aguila : MonoBehaviour
         }
         else
         {
-            land();
+            //land();
         }
         if(_entity.GetIsOnGround())
         {
-            Attackupdate();   
+            AttackUpdate();   
         }
     }
 
@@ -87,7 +87,12 @@ public class Aguila : MonoBehaviour
         {
             fly = false;
             agente.enabled = true;
-            agente.SetDestination(currentObjective.position);
+            if(currentObjective)
+            {
+                Debug.LogError("objetivo: "+currentObjective.name);
+                agente.SetDestination(currentObjective.position);
+            }
+            
         }
     }
 
@@ -117,7 +122,7 @@ public class Aguila : MonoBehaviour
         }
     }
     
-    public void Attackupdate()
+    public void AttackUpdate()
     {
         if ((currentObjective == _entity.objetive || rocas == numRocas) && attacked)
         { 
@@ -179,5 +184,9 @@ public class Aguila : MonoBehaviour
                 agente.SetDestination(_entity.objetive.position);
         }
     }
-    
+
+    public void SetCurrentObjetive(Transform co)
+    {
+        currentObjective = co;
+    }
 }

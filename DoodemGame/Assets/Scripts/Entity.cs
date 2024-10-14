@@ -10,10 +10,8 @@ using UnityEngine.Serialization;
 public class Entity : NetworkBehaviour ,IAtackable
 {
     private NavMeshAgent agente;
-    private float timeLastHit;
     private bool isOnGround;
     public string layer;
-    private bool fly;
     private playerInfo _playerInfo;
     
     public NetworkVariable<int> _idPlayer = new NetworkVariable<int>(writePerm:NetworkVariableWritePermission.Server);
@@ -51,16 +49,10 @@ public class Entity : NetworkBehaviour ,IAtackable
 
     void Start()
     {
-        // PlayerId = Seleccionable.ClientID;
         SetLayer(0, _idPlayer.Value);
         _idPlayer.OnValueChanged += SetLayer; 
-
         SetAgent();
-        //if (id == 0) 
-        //    gameObject.layer = LayerMask.NameToLayer("Rojo");
-        //else 
-        //    gameObject.layer = LayerMask.NameToLayer("Azul");
-        //agente.SetDestination(objetive.position);
+        StartCoroutine(SearchResources());
     }
 
     void Update()
@@ -88,13 +80,18 @@ public class Entity : NetworkBehaviour ,IAtackable
         isOnGround = true;
         agente.speed = speed;
 
-        StartCoroutine(SetDestination());
+        StartCoroutine(SetDestination(objetive));
     }
 
-    private IEnumerator SetDestination()
+    private IEnumerator SetDestination(Transform d)
     {
         yield return new WaitUntil((() => agente.isOnNavMesh));
-        agente.SetDestination(objetive.position);
+        if (TryGetComponent(out IAttack a))
+        {
+            a.SetCurrentObjetive(d);
+        }
+        Debug.LogError("objetivo sSET  " +d.name);
+        agente.SetDestination(d.position);
     }
     
     
@@ -107,5 +104,33 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         _idPlayer.OnValueChanged -= SetLayer;
         base.OnDestroy();
+    }
+
+    public IEnumerator SearchResources()
+    {
+        //seleccion de bioma segun el bicho que seas:
+        yield return new WaitUntil((() => agente.isOnNavMesh));
+        var biomas = GameManager.Instance.biomas;
+        Debug.LogError(biomas.Count);
+        float minDistance = float.MaxValue;
+        Transform o = null;
+        foreach (bioma b in biomas)
+        {
+            foreach (Transform r in b.GetRecursos())
+            {
+                float d = Vector3.Distance(transform.position, r.position);
+                if (minDistance > d && !r.GetComponent<recurso>().GetSelected())
+                {
+                    minDistance = d;
+                    o = r;
+                }
+            }
+        }
+
+        if (o)
+        {
+            o.GetComponent<recurso>().SetSelected(true);
+            StartCoroutine(SetDestination(o));
+        }
     }
 }

@@ -14,6 +14,7 @@ public class GameManager : NetworkBehaviour
     private GameObject _playerPrefab;
     public static GameManager Instance;
     public playerInfo[] players = new playerInfo[2];
+    public List<bioma> biomas = new ();
     private NetworkVariable<int> _id = new();
     public int clientId;
     public List<Transform> Bases;
@@ -29,7 +30,7 @@ public class GameManager : NetworkBehaviour
         {
             Instance = this;
         }
-
+        
         _networkManager = NetworkManager.Singleton;
         _playerPrefab = _networkManager.NetworkConfig.Prefabs.Prefabs[0].Prefab;
         _networkManager.OnServerStarted += OnServerStarted;
@@ -46,14 +47,29 @@ public class GameManager : NetworkBehaviour
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);
-        player.GetComponent<NavMeshAgent>().enabled = true;
+        if (player.TryGetComponent(out NavMeshAgent nav))
+        {
+            nav.enabled = true;
+            //player.GetComponent<NavMeshAgent>().enabled = true;
+        }
+
+        if (player.TryGetComponent(out Entity e))
+        {
+            e._idPlayer.Value = playerId;
+           //var entity = player.GetComponent<Entity>();
+           //entity._idPlayer.Value = playerId;
+        }
+
+        if (player.TryGetComponent(out bioma b))
+        {
+            b._idPlayer.Value = playerId;
+            biomas.Add(b);
+        }
         
         //player.GetComponent<Entity>().enabled = true;
        // player.GetComponent<Attack>().enabled = true;
-       var entity = player.GetComponent<Entity>();
        // entity./
        // entity.SetAgent();
-       entity._idPlayer.Value = playerId;
        Debug.Log("Spawning entity with id " + playerId);
     }
     

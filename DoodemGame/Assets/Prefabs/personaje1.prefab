@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f867668e045214aaef8db9b10b33a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: 
   _idPlayer:
     m_InternalValue: 0
   layerEnemy: 

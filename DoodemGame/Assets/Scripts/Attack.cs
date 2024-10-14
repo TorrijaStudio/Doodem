@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Attack : MonoBehaviour
+public class Attack : MonoBehaviour,IAttack
 {
     public float angleAttack;
     
@@ -36,20 +36,17 @@ public class Attack : MonoBehaviour
         
         if(entity.GetIsOnGround())
         {
-            Attackupdate();   
+            AttackUpdate();   
         }
     }
-    public void Attackupdate()
+    public void AttackUpdate()
     {
         if (currentObjective == objetive)
         { 
             Collider[] hitColliders = Physics.OverlapSphere(agente.transform.position, attackDistance, LayerMask.GetMask(entity.layerEnemy));
             if (hitColliders.Length==0) return;
-            Debug.LogError("iogjnfgfn");
             foreach (var c in hitColliders)
             {
-                Debug.LogError(LayerMask.LayerToName(c.gameObject.layer));
-                Debug.LogError(c.name);
                 if (c.gameObject != gameObject && gameObject.layer!=c.gameObject.layer)
                 {
                     currentObjective = c.transform;
@@ -138,5 +135,10 @@ public class Attack : MonoBehaviour
     public Transform GetCurrentObjetive()
     {
         return currentObjective;
+    }
+    
+    public void SetCurrentObjetive(Transform co)
+    {
+        currentObjective = co;
     }
 }

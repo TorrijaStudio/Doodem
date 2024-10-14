@@ -15,6 +15,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     public GameObject objetoACrear;
     private GameObject objeto;
     public static int ClientID;
+    public int indexPrefab;
 
 
     [SerializeField] private MeshRenderer terreno;
@@ -61,7 +62,6 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
                     var corner = hit.transform.position - hit.transform.lossyScale / 2F;
                     var newPos = hit.point - corner;
                     var cellSize = new Vector2(hit.transform.lossyScale.x, hit.transform.lossyScale.z) / _grid;
-                
                     var pos = new Vector2Int((int)(newPos.x / cellSize.x), (int)(newPos.z/cellSize.y) );
                     if (objeto == null) {objeto = InstanciarObjeto(Input.mousePosition);}
                     objeto.transform.position = new Vector3(corner.x + pos.x * cellSize.x + cellSize.x /2f, 
@@ -101,7 +101,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     {
         // Debug.Log(playerId);
         if(IsSpawned)
-            GameManager.Instance.SpawnServerRpc(playerId, 0, pos);
+            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos);
     }
     
     public void OnPointerDown(PointerEventData eventData)
@@ -109,10 +109,10 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
         _selected = true;
         foreach (var c in cartas)
         {
-            c.GetComponent<Seleccionable>().setFalse();
+            c.GetComponent<Seleccionable>().SetFalse();
         }
     }
-    public void setFalse()
+    public void SetFalse()
     {
         _selected = false;
     }
