@@ -16,6 +16,8 @@ public class Entity : NetworkBehaviour ,IAtackable
     
     public NetworkVariable<int> _idPlayer = new NetworkVariable<int>(writePerm:NetworkVariableWritePermission.Server);
     public string layerEnemy;
+    private int currentAreaIndex;
+    [SerializeField] private float currentDamage;
 
     // public int PlayerId
     // {
@@ -46,10 +48,10 @@ public class Entity : NetworkBehaviour ,IAtackable
         objetive = GameManager.Instance.Bases[id];
     }
     
-
     void Start()
     {
         SetLayer(0, _idPlayer.Value);
+        currentDamage = damage;
         _idPlayer.OnValueChanged += SetLayer; 
         SetAgent();
         StartCoroutine(SearchResources());
@@ -57,11 +59,9 @@ public class Entity : NetworkBehaviour ,IAtackable
 
     void Update()
     {
-        
+        checkAreaAgent();
     }
-
-   
-
+    
     public float Attacked(float enemyDamage)
     {
         Debug.Log(gameObject.name + " -- "+health);
@@ -90,15 +90,38 @@ public class Entity : NetworkBehaviour ,IAtackable
         {
             a.SetCurrentObjetive(d);
         }
-        Debug.LogError("objetivo sSET  " +d.name);
         agente.SetDestination(d.position);
     }
-    
-    
+
+    #region getters and setters
+
     public bool GetIsOnGround()
     {
         return isOnGround;
     }
+
+    public float GetCurrentDamage()
+    {
+        return currentDamage;
+    }
+
+    public void SetCurrentDamage(float v)
+    {
+        currentDamage = v;
+    }
+
+    public void SetSpeed(float s)
+    {
+        agente.speed = s < 1 ? 1 : s;
+    }
+    
+
+    public float GetSpeed()
+    {
+        return agente.speed;
+    }
+    #endregion
+    
 
     public override void OnDestroy()
     {
@@ -110,11 +133,10 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         //seleccion de bioma segun el bicho que seas:
         yield return new WaitUntil((() => agente.isOnNavMesh));
-        var biomas = GameManager.Instance.biomas;
-        Debug.LogError(biomas.Count);
+        var biomas = GameManager.Instance.biomasInMatch;
         float minDistance = float.MaxValue;
         Transform o = null;
-        foreach (bioma b in biomas)
+        foreach (ABiome b in biomas)
         {
             foreach (Transform r in b.GetRecursos())
             {
@@ -133,4 +155,42 @@ public class Entity : NetworkBehaviour ,IAtackable
             StartCoroutine(SetDestination(o));
         }
     }
+
+    #region biomas
+
+    private void checkAreaAgent()
+    {
+        NavMeshHit hit;
+        
+        if (NavMesh.SamplePosition(agente.transform.position, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            for (int areaIndex = 0; areaIndex < 5; areaIndex++)
+            {
+                if ((hit.mask & (1 << areaIndex)) != 0)
+                {
+                    if (currentAreaIndex != areaIndex)
+                    {
+                        OnEnterArea(areaIndex,currentAreaIndex);
+                        currentAreaIndex = areaIndex;
+                    }
+                    break; 
+                }
+            }
+        }
+    }
+
+    private void OnEnterArea(int index,int prevBiome)
+    {
+        if (prevBiome != 0)//bioma 0 es el walkable, no hay que deshacer efectos
+        {
+            var prevBioma = GameManager.Instance.biomasGame[prevBiome];
+            prevBioma.LeaveBiome(gameObject);
+        }
+        
+        var bioma = GameManager.Instance.biomasGame[index];
+        if(bioma)
+            bioma.ActionBioma(gameObject);
+    }
+
+    #endregion
 }

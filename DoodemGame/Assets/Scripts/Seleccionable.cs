@@ -16,13 +16,13 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     private GameObject objeto;
     public static int ClientID;
     public int indexPrefab;
+    public bool CanDropEnemySide;
 
 
     [SerializeField] private MeshRenderer terreno;
-    private Vector2 _grid;
+    private Vector2Int _grid;
     private bool _selected;
     private List<Transform> cartas;
-    // public Seleccionable Instance;
     
     void Start()
     {
@@ -34,15 +34,13 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
         }
         _grid = terreno.gameObject.GetComponent<terreno>().GetGrid();
         ClientID = -1;
-        // if(Instance)
-
     }
     
     GameObject InstanciarObjeto(Vector3 position)
     {
         
         var a = Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
-        a.name += " soy un objeto tonto que explota";
+        a.name = " soy un objeto tonto que explota";
         return a;
 
     }
@@ -59,10 +57,16 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
             
                 if (Physics.Raycast(ray, out hit,100, LayerMask.GetMask("Terreno")))
                 {
+                    if (!CanDropEnemySide && (ClientID == 0 && hit.point.z < terreno.transform.position.z ||
+                        ClientID == 1 && hit.point.z > terreno.transform.position.z))
+                    {
+                        return;
+                    }
                     var corner = hit.transform.position - hit.transform.lossyScale / 2F;
                     var newPos = hit.point - corner;
                     var cellSize = new Vector2(hit.transform.lossyScale.x, hit.transform.lossyScale.z) / _grid;
                     var pos = new Vector2Int((int)(newPos.x / cellSize.x), (int)(newPos.z/cellSize.y) );
+                    if(pos.x == _grid.x || pos.y == _grid.y)    return;
                     if (objeto == null) {objeto = InstanciarObjeto(Input.mousePosition);}
                     objeto.transform.position = new Vector3(corner.x + pos.x * cellSize.x + cellSize.x /2f, 
                         1.1f, corner.z + pos.y * cellSize.y + cellSize.y/2f);
@@ -74,12 +78,8 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
         {
             if (_selected && objeto)
             {
-                // objeto.GetComponent<NavMeshAgent>().enabled = true;
-                // objeto.GetComponent<Entity>().enabled = true;
-                Debug.Log(name + ": " + ClientID);
                 SpawnServer(objeto.transform.position, ClientID);
-                //objeto.GetComponent<Entity>().SetAgent();
-                StartCoroutine(BorrarObjeto(objeto));
+                Destroy(objeto);
                 _selected = false;
                 objeto = null;
             }
@@ -89,12 +89,6 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
         {
             Debug.Log("ClientID: " + ClientID);
         }
-    }
-
-    private IEnumerator BorrarObjeto(GameObject obj)
-    {
-        yield return new WaitForSeconds(0.5f);
-        Destroy(obj);
     }
     
     private void SpawnServer(Vector3 pos, int playerId)

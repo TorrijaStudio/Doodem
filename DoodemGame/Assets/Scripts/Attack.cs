@@ -13,7 +13,6 @@ public class Attack : MonoBehaviour,IAttack
 
     private Transform objetive;
     private Transform currentObjective;
-    private float damage;
     private float attackDistance;
     private float attackSpeed;
     private float timeLastHit;
@@ -25,7 +24,6 @@ public class Attack : MonoBehaviour,IAttack
         entity = GetComponent<Entity>();
         objetive = entity.objetive;
         currentObjective = objetive;
-        damage = entity.damage;
         attackDistance = entity.attackDistance;
         attackSpeed = entity.attackSpeed;
     }
@@ -63,7 +61,7 @@ public class Attack : MonoBehaviour,IAttack
                 float aux = 0;
                 if (currentObjective.TryGetComponent(out IAtackable m))
                 {
-                    aux = m.Attacked(damage);
+                    aux = m.Attacked(entity.GetCurrentDamage());
                 }
                 if (aux < 0)
                 {
@@ -111,7 +109,7 @@ public class Attack : MonoBehaviour,IAttack
                 float aux = 0;
                 if (c.TryGetComponent(out IAtackable m))
                 {
-                    aux = m.Attacked(damage);
+                    aux = m.Attacked(entity.GetCurrentDamage());
                 }
                 if (aux < 0)
                 {

@@ -16,7 +16,6 @@ public class Aguila : MonoBehaviour, IAttack
     
     private NavMeshAgent agente;
     private Entity _entity;
-    private Attack _attack;
     private float landHeight;
     private int rocas;
     private float timeLastHit;
@@ -30,7 +29,6 @@ public class Aguila : MonoBehaviour, IAttack
     {
         _entity = GetComponent<Entity>();
         agente = GetComponent<NavMeshAgent>();
-        _attack = GetComponent<Attack>();
         landHeight = transform.position.y;
         currentObjective = _entity.objetive;
         aux1 = numRocas;

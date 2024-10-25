@@ -2,23 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.WebSockets;
+using Unity.AI.Navigation;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class GameManager : NetworkBehaviour
 {
     private NetworkManager _networkManager;
     private GameObject _playerPrefab;
     public static GameManager Instance;
+    public GameObject terreno;
     public playerInfo[] players = new playerInfo[2];
-    public List<bioma> biomas = new ();
+    public ABiome[] biomasGame = new ABiome[5]; 
+    public List<ABiome> biomasInMatch = new ();
     private NetworkVariable<int> _id = new();
     public int clientId;
     public List<Transform> Bases;
-
+    private List<Vector2> Positions = new ();//casillas disponibles
+    private Dictionary<Vector2Int, GameObject> entidades = new();
    
 
     // Start is called before the first frame update
@@ -37,10 +42,56 @@ public class GameManager : NetworkBehaviour
         _networkManager.OnClientConnectedCallback += OnClientConnected;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            foreach (var VARIABLE in entidades.Keys)
+            {
+                if(entidades[VARIABLE])
+                    Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
+            }
+        }
+    }
+
+    public void StartGame()
+    {
+        foreach (GameObject g in entidades.Values)
+        {
+            if(!g) continue;
+            if (g.TryGetComponent(out recurso r))
+            {
+                r.CheckIfItsInMyBiome();
+            }else if (g.TryGetComponent(out obstaculo o))
+            {
+                o.CheckIfItsInMyBiome();
+            }
+        }
+        terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+
     private void OnServerStarted()
     {
         print("Server ready");
     }
+
+    public void AddPosition(Vector2 v)
+    {
+        Positions.Add(v);
+    }
+
+    public void AddPositionSomething(Vector3 p,GameObject o)
+    {
+        var v = terreno.GetComponent<terreno>().PositionToGrid(p);
+        if(entidades.ContainsKey(v) && entidades[v])
+            entidades[v].SetActive(false);
+        entidades[v] = o;
+    }
+    
     
     [ServerRpc(RequireOwnership = false)]
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos)
@@ -50,6 +101,16 @@ public class GameManager : NetworkBehaviour
         if (player.TryGetComponent(out NavMeshAgent nav))
         {
             nav.enabled = true;
+            var posInGid = terreno.GetComponent<terreno>().PositionToGrid(pos);
+            if (entidades.ContainsKey(posInGid) && entidades[posInGid])
+            {
+                Destroy(player);
+            }
+            else
+            {
+                AddPositionSomething(pos,player);
+            }
+            
             //player.GetComponent<NavMeshAgent>().enabled = true;
         }
 
@@ -60,10 +121,10 @@ public class GameManager : NetworkBehaviour
            //entity._idPlayer.Value = playerId;
         }
 
-        if (player.TryGetComponent(out bioma b))
+        if (player.TryGetComponent(out ABiome b))
         {
             b._idPlayer.Value = playerId;
-            biomas.Add(b);
+            biomasInMatch.Add(b);
         }
         
         //player.GetComponent<Entity>().enabled = true;
@@ -82,7 +143,10 @@ public class GameManager : NetworkBehaviour
             {
                 Seleccionable.ClientID = _id.Value;
                 clientId = _id.Value;
-            }
+                // Camera.main.enabled = false;
+                GameObject.Find(clientId == 0 ? "Main Camera" : "Main Camera1").GetComponent<Camera>().enabled =
+                    false;
+            }   
         }
         if (IsServer)
         {

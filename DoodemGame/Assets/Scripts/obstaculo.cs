@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
-public class recurso : MonoBehaviour
+public class obstaculo : MonoBehaviour
 {
-    private bool isSelected;
     private int indexLayerArea;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,26 +18,13 @@ public class recurso : MonoBehaviour
     {
         
     }
+
     private IEnumerator AddPosition()
     {
         yield return new WaitForSeconds(1.0f);
         GameManager.Instance.AddPositionSomething(transform.position,gameObject);
     }
-    public bool GetSelected()
-    {
-        return isSelected;
-    }
-
-    public void SetSelected(bool b)
-    {
-        isSelected = b;
-    }
-
-    public void PickRecurso()
-    {
-        gameObject.SetActive(false);
-    }
-
+    
     public void CheckIfItsInMyBiome()
     {
         RaycastHit hit;
