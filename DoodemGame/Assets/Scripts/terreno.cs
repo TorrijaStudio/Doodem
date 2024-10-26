@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class terreno : MonoBehaviour
+public class terreno : NetworkBehaviour
 {
     public Vector2Int grid;
 
@@ -17,28 +18,13 @@ public class terreno : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < grid.x; i++)
-        {
-            for (int j = 0; j < grid.y; j++)
-            {
-                GameManager.Instance.AddPosition(new Vector2(i,j));
-            }
-        } 
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //     RaycastHit hit;
-        //
-        //     if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("casilla")))
-        //     {
-        //         hit.transform.GetComponent<casilla>().SetCasilla();
-        //     }
-        // }
+       
     }
 
     private void GenerateTileMap()

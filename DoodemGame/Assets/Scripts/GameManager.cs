@@ -8,22 +8,25 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 public class GameManager : NetworkBehaviour
 {
     private NetworkManager _networkManager;
     private GameObject _playerPrefab;
+    private NetworkVariable<int> _id = new();
+    private Dictionary<Vector2Int, GameObject> entidades = new();
+    
+    //public List<GameObject>[] playerObjects = new List<GameObject>[2];
     public static GameManager Instance;
     public GameObject terreno;
     public playerInfo[] players = new playerInfo[2];
     public ABiome[] biomasGame = new ABiome[5]; 
     public List<ABiome> biomasInMatch = new ();
-    private NetworkVariable<int> _id = new();
     public int clientId;
     public List<Transform> Bases;
-    private List<Vector2> Positions = new ();//casillas disponibles
-    private Dictionary<Vector2Int, GameObject> entidades = new();
+    public GameObject objectSelected;
    
 
     // Start is called before the first frame update
@@ -40,6 +43,10 @@ public class GameManager : NetworkBehaviour
         _playerPrefab = _networkManager.NetworkConfig.Prefabs.Prefabs[0].Prefab;
         _networkManager.OnServerStarted += OnServerStarted;
         _networkManager.OnClientConnectedCallback += OnClientConnected;
+        for(int i=0;i<2;i++)
+        {
+            //playerObjects[i] = new();
+        }
     }
 
     private void Update()
@@ -56,19 +63,52 @@ public class GameManager : NetworkBehaviour
                     Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
             }
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+       
+            if (Physics.Raycast(ray, out hit, 100,LayerMask.GetMask("Rojo","Azul","casilla")))
+            {
+                Debug.LogError("selected");
+                objectSelected = hit.transform.gameObject;
+                //DespawnServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>(),default);
+            }
+            else
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    Debug.LogError("NULLL");
+                    objectSelected = null;
+                }
+            }
+        }
     }
 
     public void StartGame()
     {
+        var idOtherPlayer = clientId == 0 ? 1 : 0;
+        Debug.LogError(clientId+" : "+idOtherPlayer);
+        //foreach (var p in playerObjects[idOtherPlayer])
+        //{
+        //    if(p)//cada entity y abiome se borre en ondestroy?
+        //        p.SetActive(true);
+        //}
+        Debug.LogError(entidades.Count);
         foreach (GameObject g in entidades.Values)
         {
             if(!g) continue;
+            Debug.LogError(g.name);
             if (g.TryGetComponent(out recurso r))
             {
                 r.CheckIfItsInMyBiome();
             }else if (g.TryGetComponent(out obstaculo o))
             {
                 o.CheckIfItsInMyBiome();
+            }else if (g.TryGetComponent(out Entity e))
+            {
+                //e.GetComponent<NavMeshAgent>().enabled = true;
+                e.SetSpeed(e.speed);
             }
         }
         terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
@@ -77,11 +117,6 @@ public class GameManager : NetworkBehaviour
     private void OnServerStarted()
     {
         print("Server ready");
-    }
-
-    public void AddPosition(Vector2 v)
-    {
-        Positions.Add(v);
     }
 
     public void AddPositionSomething(Vector3 p,GameObject o)
@@ -98,6 +133,7 @@ public class GameManager : NetworkBehaviour
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);
+        Debug.LogError("OLAAAAAA");
         if (player.TryGetComponent(out NavMeshAgent nav))
         {
             nav.enabled = true;
@@ -106,10 +142,10 @@ public class GameManager : NetworkBehaviour
             {
                 Destroy(player);
             }
-            else
-            {
-                AddPositionSomething(pos,player);
-            }
+            //else
+            //{
+            //    AddPositionSomething(pos,player);
+            //}
             
             //player.GetComponent<NavMeshAgent>().enabled = true;
         }
@@ -133,7 +169,16 @@ public class GameManager : NetworkBehaviour
        // entity.SetAgent();
        Debug.Log("Spawning entity with id " + playerId);
     }
-    
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnServerRpc(NetworkObjectReference target, ServerRpcParams serverRpcParams)
+    {
+        if (target.TryGet(out NetworkObject targetObject))
+        {
+            Destroy(targetObject.gameObject);
+        }
+    }
+
     private void OnClientConnected(ulong obj)
     {
         

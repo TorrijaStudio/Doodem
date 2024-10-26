@@ -50,16 +50,29 @@ public class Entity : NetworkBehaviour ,IAtackable
     
     void Start()
     {
+        //GameManager.Instance.playerObjects[_idPlayer.Value].Add(gameObject);
+        StartCoroutine(AddPosition());
         SetLayer(0, _idPlayer.Value);
         currentDamage = damage;
         _idPlayer.OnValueChanged += SetLayer; 
         SetAgent();
-        StartCoroutine(SearchResources());
+        //StartCoroutine(SearchResources());
+        //if (GameManager.Instance.clientId != _idPlayer.Value)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 
     void Update()
     {
         checkAreaAgent();
+    }
+    
+    private IEnumerator AddPosition()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Debug.LogError("aladi");
+        GameManager.Instance.AddPositionSomething(transform.position,gameObject);
     }
     
     public float Attacked(float enemyDamage)
@@ -76,20 +89,24 @@ public class Entity : NetworkBehaviour ,IAtackable
 
     private void SetAgent()
     {
+        Debug.LogError("me llamo");
         agente = GetComponent<NavMeshAgent>();
+        //agente.enabled = true;
         isOnGround = true;
-        agente.speed = speed;
-
+        //agente.speed = speed;
+        
         StartCoroutine(SetDestination(objetive));
     }
 
-    private IEnumerator SetDestination(Transform d)
+    public IEnumerator SetDestination(Transform d)
     {
-        yield return new WaitUntil((() => agente.isOnNavMesh));
+        yield return new WaitUntil((() => agente.isOnNavMesh && gameObject.activeSelf));
+        Debug.LogError("HOLAAA");
         if (TryGetComponent(out IAttack a))
         {
             a.SetCurrentObjetive(d);
         }
+        Debug.LogError(d.position+" me muevo aqui");
         agente.SetDestination(d.position);
     }
 
@@ -125,6 +142,7 @@ public class Entity : NetworkBehaviour ,IAtackable
 
     public override void OnDestroy()
     {
+        //GameManager.Instance.playerObjects[_idPlayer.Value].Remove(gameObject);
         _idPlayer.OnValueChanged -= SetLayer;
         base.OnDestroy();
     }
@@ -132,7 +150,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     public IEnumerator SearchResources()
     {
         //seleccion de bioma segun el bicho que seas:
-        yield return new WaitUntil((() => agente.isOnNavMesh));
+        yield return new WaitUntil((() => agente.isOnNavMesh && gameObject.activeSelf));
         var biomas = GameManager.Instance.biomasInMatch;
         float minDistance = float.MaxValue;
         Transform o = null;

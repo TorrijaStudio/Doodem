@@ -52,19 +52,21 @@ public abstract class ABiome : NetworkBehaviour
         pos = positions.ToList();
         transform.localScale = new Vector3(2*xSize*cellSize.x+cellSize.x,transform.localScale.y,2*zSize*cellSize.y+cellSize.y);
         SetHijos();
-        
+        //GameManager.Instance.playerObjects[_idPlayer.Value].Add(gameObject);
+       // if (GameManager.Instance.clientId != _idPlayer.Value)
+       // {
+       //     gameObject.SetActive(false);
+       // }
     }
 
-   
+     
 
-    private void OnTriggerEnter(Collider other)
+     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent &&
                    other.transform.parent.name == "Tiles" && 
                   (!other.GetComponent<casilla>().GetBiome() || gameObject!=other.GetComponent<casilla>().GetBiome()))
         {
-            //if(_idPlayer.Value == other.GetComponent<casilla>().GetSide())
-            //{
                 var mesh = other.transform.GetComponent<MeshRenderer>();
                 var casilla = other.GetComponent<casilla>();
                 var index = casilla.GetAreaNav();
@@ -75,10 +77,9 @@ public abstract class ABiome : NetworkBehaviour
                 mesh.material = mat;
                 casilla.SetBiome(gameObject);
                 casilla.SetAreaNav(indexLayerArea);
-                casilla.SetSide(_idPlayer.Value);
-                //terreno.transform.GetComponent<NavMeshSurface>().BuildNavMesh();
+
             
-            //}
+
         }
     }
 
@@ -132,6 +133,21 @@ public abstract class ABiome : NetworkBehaviour
     public Transform GetRecursos()
     {
         return recursos;
+    }
+
+    void OnDestroy()
+    {
+        //GameManager.Instance.playerObjects[_idPlayer.Value].Remove(gameObject);
+        Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale/2f, transform.rotation,LayerMask.GetMask("casilla"));
+       
+       foreach (var c in colliders)
+       {
+           var casilla = c.GetComponent<casilla>();
+           if (casilla.GetBiome() == gameObject)
+           {
+               casilla.ResetCasilla();
+           }
+       }
     }
 
     public abstract void ActionBioma(GameObject o);

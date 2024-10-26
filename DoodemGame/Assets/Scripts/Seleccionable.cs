@@ -101,6 +101,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         _selected = true;
+        GameManager.Instance.objectSelected = null;
         foreach (var c in cartas)
         {
             c.GetComponent<Seleccionable>().SetFalse();

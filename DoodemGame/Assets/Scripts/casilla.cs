@@ -11,12 +11,13 @@ public class casilla : MonoBehaviour
     private Material previousMaterial;
     private NavMeshModifier _navMeshModifier;
     private int previousIndexArea;
-    public NetworkVariable<int> _idPlayer = new(writePerm:NetworkVariableWritePermission.Server);
+    private Material originalMaterial;
     
     // Start is called before the first frame update
     void Start()
     {
         _navMeshModifier = GetComponent<NavMeshModifier>();
+        originalMaterial = GetComponent<MeshRenderer>().material;
     }
 
     // Update is called once per frame
@@ -72,17 +73,16 @@ public class casilla : MonoBehaviour
     {
         return previousIndexArea;
     }
-
-    public int GetSide()
-    {
-        return _idPlayer.Value;
-    }
-
-    public void SetSide(int i)
-    {
-        _idPlayer.Value = i;
-    }
     #endregion
-    
+
+    public void ResetCasilla()
+    {
+        previousBiome = null;
+        biome = null;
+        previousIndexArea = 0;
+        _navMeshModifier.area = 0;
+        previousMaterial = originalMaterial;
+        GetComponent<MeshRenderer>().material = originalMaterial;
+    }
     
 }
