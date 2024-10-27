@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8606666962978185151}
   - component: {fileID: 1841659148253886138}
   - component: {fileID: 2214413792348590995}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Midle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7617652266872115313}
   - component: {fileID: 5044195393245203028}
   - component: {fileID: 8312972440406545761}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 1187855191612838993}
   - component: {fileID: 1289714012803780114}
   - component: {fileID: 5863373089862150009}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EagleFeet
   m_TagString: Feet
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 6384187309943480300}
   - component: {fileID: 7486157161055105231}
   - component: {fileID: 6693427232025752405}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5900172586333071540}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 3143642695969148776}
   - component: {fileID: 1791914691062816821}
   - component: {fileID: 5485694068795496979}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2955600568946711930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6913901448839408270}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 1931719161142646976}
   - component: {fileID: 6354698604719454944}
   - component: {fileID: 3465903955765832851}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Midle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 8447134948881014788}
   - component: {fileID: 6293291584062465275}
   - component: {fileID: 1216257667264337663}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}

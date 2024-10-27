@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Animals.Interfaces;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,7 +25,13 @@ public class Entity : NetworkBehaviour ,IAtackable
     //     get => _idPlayer.Value;
     //     set => _idPlayer.Value = value;
     // }
+    public List<Transform> objetives;
+    private Dictionary<Recursos, int> _resources;
     
+    private IAnimalHead _head;
+    private AnimalBody _body;
+    private IAnimalFeet _feet;
+        
     public Transform objetive;
     public float speed;
     public float health;
@@ -44,34 +51,49 @@ public class Entity : NetworkBehaviour ,IAtackable
             materials.ForEach(mat => mat.color = id == 0 ? Color.red : Color.blue);
             mesh.SetMaterials(materials);
         });
+        
         Debug.Log(id);
         objetive = GameManager.Instance.Bases[id];
     }
     
-    void Start()
+    public void SetAnimalParts(GameObject head, GameObject body, GameObject feet)
     {
-        //GameManager.Instance.playerObjects[_idPlayer.Value].Add(gameObject);
-        StartCoroutine(AddPosition());
+        _body = Instantiate(body, transform).GetComponent<AnimalBody>();
+        _head = Instantiate(head, _body.GetHeadAttachmentPoint().position, _body.GetHeadAttachmentPoint().rotation,
+            transform).GetComponent<IAnimalHead>();
+        _feet = Instantiate(feet, _body.GetFeetAttachmentPoint().position, _body.GetFeetAttachmentPoint().rotation,
+            transform).GetComponent<IAnimalFeet>();
+        var a = transform.GetChild(0).GetComponentsInChildren<MeshRenderer>();
+        foreach (var meshRenderer in a)
+        {
+            meshRenderer.enabled = false;
+        }
+    }
+
+    
+    void Start()
+    {        
+        _resources = new Dictionary<Recursos, int>();
         SetLayer(0, _idPlayer.Value);
         currentDamage = damage;
         _idPlayer.OnValueChanged += SetLayer; 
         SetAgent();
-        //StartCoroutine(SearchResources());
-        //if (GameManager.Instance.clientId != _idPlayer.Value)
-        //{
-        //    gameObject.SetActive(false);
-        //}
+        agente.speed = 1f;
+        // StartCoroutine(SearchResources());
+        StartCoroutine(Brain());
     }
 
+    private IEnumerator Brain()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            ReevaluateSituation();
+        }
+    }
     void Update()
     {
         checkAreaAgent();
-    }
-    
-    private IEnumerator AddPosition()
-    {
-        yield return new WaitForSeconds(1.0f);
-        GameManager.Instance.AddPositionSomething(transform.position,gameObject);
     }
     
     public float Attacked(float enemyDamage)
@@ -89,16 +111,15 @@ public class Entity : NetworkBehaviour ,IAtackable
     private void SetAgent()
     {
         agente = GetComponent<NavMeshAgent>();
-        //agente.enabled = true;
         isOnGround = true;
-        //agente.speed = speed;
-        
+        agente.speed = speed;
+
         StartCoroutine(SetDestination(objetive));
     }
 
-    public IEnumerator SetDestination(Transform d)
+    private IEnumerator SetDestination(Transform d)
     {
-        yield return new WaitUntil((() => agente.isOnNavMesh && gameObject.activeSelf));
+        yield return new WaitUntil((() => agente.isOnNavMesh));
         if (TryGetComponent(out IAttack a))
         {
             a.SetCurrentObjetive(d);
@@ -134,19 +155,68 @@ public class Entity : NetworkBehaviour ,IAtackable
         return agente.speed;
     }
     #endregion
-    
+    private void ReevaluateSituation()
+    {
+        var enemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == layerEnemy).Select(entity => entity.transform).ToList();
+        var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected()).Select((recurso =>recurso.transform)).ToList();
+        if(resources.Count == 0 && enemies.Count == 0)  return;
+        
+        var values = new List<KeyValuePair<Transform, float>>();
+        values.AddRange(_head.AssignValuesToEnemies(enemies));
+        values.AddRange(_head.AssignValuesToResources(resources));
+        values.AddRange(_body.AssignValuesToEnemies(enemies));
+        values.AddRange(_body.AssignValuesToResources(resources));
+        values.AddRange(_feet.AssignValuesToEnemies(enemies));
+        values.AddRange(_feet.AssignValuesToResources(resources));
+        // var keyValuePairs = values.OrderBy((f => f.Value));
+        // var a = from entry in values orderby entry.Value descending select entry;
+        values.Sort((kp, kp1) => (int)Mathf.CeilToInt((kp.Value - kp1.Value)*100));
+        objetive = values.First().Key;
+        agente.SetDestination(objetive.position);
+        Debug.Log(objetive.name);
+    }
+
+    private void MergeDictionaries(ref List<KeyValuePair<Transform, float>> inDic, List<KeyValuePair<Transform, float>> joinDic)
+    {
+        inDic.AddRange(joinDic);
+    }
 
     public override void OnDestroy()
     {
-        //GameManager.Instance.playerObjects[_idPlayer.Value].Remove(gameObject);
         _idPlayer.OnValueChanged -= SetLayer;
         base.OnDestroy();
     }
-
+    public delegate void EmptyEvent();
+    public delegate void ResourcesEvent(Recursos res, int n);
+     
+    public EmptyEvent OnDeath;
+    public EmptyEvent OnKilledEnemy;
+     
+    public ResourcesEvent OnResourcesChanged;
+     public int GetResources(Recursos res)
+    {
+        return _resources.TryGetValue(res, out var value) ? value : 0;
+    }
+     public void AddOrTakeResources(Recursos res, int n)
+         {
+             if (_resources.TryGetValue(res, out var value))
+             {
+                 if (value + n > 0)
+                     _resources[res] = value + n;
+                 else
+                     _resources.Remove(res);
+                 OnResourcesChanged.Invoke(res, Math.Max(n+value, 0));
+             }
+             else if(n > 0)
+             {
+                 _resources.Add(res, n);
+                 OnResourcesChanged(res, n);
+             }
+         }
     public IEnumerator SearchResources()
     {
         //seleccion de bioma segun el bicho que seas:
-        yield return new WaitUntil((() => agente.isOnNavMesh && gameObject.activeSelf));
+        yield return new WaitUntil((() => agente.isOnNavMesh));
         var biomas = GameManager.Instance.biomasInMatch;
         float minDistance = float.MaxValue;
         Transform o = null;
