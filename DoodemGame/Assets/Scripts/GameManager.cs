@@ -55,14 +55,7 @@ public class GameManager : NetworkBehaviour
         {
             StartGame();
         }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            foreach (var VARIABLE in entidades.Keys)
-            {
-                if(entidades[VARIABLE])
-                    Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
-            }
-        }
+        
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -70,7 +63,6 @@ public class GameManager : NetworkBehaviour
        
             if (Physics.Raycast(ray, out hit, 100,LayerMask.GetMask("Rojo","Azul","casilla")))
             {
-                Debug.LogError("selected");
                 objectSelected = hit.transform.gameObject;
                 //DespawnServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>(),default);
             }
@@ -78,7 +70,6 @@ public class GameManager : NetworkBehaviour
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    Debug.LogError("NULLL");
                     objectSelected = null;
                 }
             }
@@ -87,13 +78,37 @@ public class GameManager : NetworkBehaviour
 
     public void StartGame()
     {
-        var idOtherPlayer = clientId == 0 ? 1 : 0;
-        Debug.LogError(clientId+" : "+idOtherPlayer);
+        //var idOtherPlayer = clientId == 0 ? 1 : 0;
+        //Debug.LogError(clientId+" : "+idOtherPlayer);
+        //for (int i = 0; i <playerObjects[idOtherPlayer].Count; i++)
+        //{
+        //    if(playerObjects[idOtherPlayer][i])
+        //        playerObjects[idOtherPlayer][i].SetActive(true);
+        //        
+        //}
+
         //foreach (var p in playerObjects[idOtherPlayer])
         //{
         //    if(p)//cada entity y abiome se borre en ondestroy?
         //        p.SetActive(true);
         //}
+        //Debug.LogError(entidades.Count);
+        foreach (GameObject g in entidades.Values)
+        {
+            if(!g) continue;
+            Debug.LogError(g.name);
+            if (g.TryGetComponent(out Entity e))
+            {
+                //e.GetComponent<NavMeshAgent>().enabled = true;
+                e.SetSpeed(e.speed);
+            }
+            
+        }
+        terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+
+    public void updateEntidades()
+    {
         Debug.LogError(entidades.Count);
         foreach (GameObject g in entidades.Values)
         {
@@ -105,13 +120,8 @@ public class GameManager : NetworkBehaviour
             }else if (g.TryGetComponent(out obstaculo o))
             {
                 o.CheckIfItsInMyBiome();
-            }else if (g.TryGetComponent(out Entity e))
-            {
-                //e.GetComponent<NavMeshAgent>().enabled = true;
-                e.SetSpeed(e.speed);
             }
         }
-        terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     private void OnServerStarted()
@@ -133,7 +143,6 @@ public class GameManager : NetworkBehaviour
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);
-        Debug.LogError("OLAAAAAA");
         if (player.TryGetComponent(out NavMeshAgent nav))
         {
             nav.enabled = true;
@@ -162,7 +171,7 @@ public class GameManager : NetworkBehaviour
             b._idPlayer.Value = playerId;
             biomasInMatch.Add(b);
         }
-        
+
         //player.GetComponent<Entity>().enabled = true;
        // player.GetComponent<Attack>().enabled = true;
        // entity./
@@ -189,6 +198,9 @@ public class GameManager : NetworkBehaviour
                 Seleccionable.ClientID = _id.Value;
                 clientId = _id.Value;
                 // Camera.main.enabled = false;
+                
+                
+
                 GameObject.Find(clientId == 0 ? "Main Camera" : "Main Camera1").GetComponent<Camera>().enabled =
                     false;
             }   
@@ -203,8 +215,14 @@ public class GameManager : NetworkBehaviour
             // players[id] = playerInfo;
             _id.Value++;
         } 
+        
         // var player = Instantiate(_playerPrefab);
         // player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);Debug.Log(_idPlayer);
+    }
+    
+    public void StartTime()
+    {
+        GameObject.Find("wall").GetComponent<wall>().enabled = true;
     }
 
     public override void OnDestroy()

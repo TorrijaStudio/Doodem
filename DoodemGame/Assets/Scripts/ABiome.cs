@@ -52,14 +52,20 @@ public abstract class ABiome : NetworkBehaviour
         pos = positions.ToList();
         transform.localScale = new Vector3(2*xSize*cellSize.x+cellSize.x,transform.localScale.y,2*zSize*cellSize.y+cellSize.y);
         SetHijos();
+        StartCoroutine(UpdateEntities());
         //GameManager.Instance.playerObjects[_idPlayer.Value].Add(gameObject);
-       // if (GameManager.Instance.clientId != _idPlayer.Value)
-       // {
-       //     gameObject.SetActive(false);
-       // }
+        //if (GameManager.Instance.clientId != _idPlayer.Value)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 
-     
+     private IEnumerator UpdateEntities()
+     {
+         yield return new WaitForSeconds(0.5f);
+         GameManager.Instance.updateEntidades();
+     }
+
 
      private void OnTriggerEnter(Collider other)
     {
@@ -77,9 +83,6 @@ public abstract class ABiome : NetworkBehaviour
                 mesh.material = mat;
                 casilla.SetBiome(gameObject);
                 casilla.SetAreaNav(indexLayerArea);
-
-            
-
         }
     }
 

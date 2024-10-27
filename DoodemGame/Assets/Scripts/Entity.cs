@@ -71,7 +71,6 @@ public class Entity : NetworkBehaviour ,IAtackable
     private IEnumerator AddPosition()
     {
         yield return new WaitForSeconds(1.0f);
-        Debug.LogError("aladi");
         GameManager.Instance.AddPositionSomething(transform.position,gameObject);
     }
     
@@ -89,7 +88,6 @@ public class Entity : NetworkBehaviour ,IAtackable
 
     private void SetAgent()
     {
-        Debug.LogError("me llamo");
         agente = GetComponent<NavMeshAgent>();
         //agente.enabled = true;
         isOnGround = true;
@@ -101,12 +99,10 @@ public class Entity : NetworkBehaviour ,IAtackable
     public IEnumerator SetDestination(Transform d)
     {
         yield return new WaitUntil((() => agente.isOnNavMesh && gameObject.activeSelf));
-        Debug.LogError("HOLAAA");
         if (TryGetComponent(out IAttack a))
         {
             a.SetCurrentObjetive(d);
         }
-        Debug.LogError(d.position+" me muevo aqui");
         agente.SetDestination(d.position);
     }
 

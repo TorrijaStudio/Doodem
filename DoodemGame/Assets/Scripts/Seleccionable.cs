@@ -57,8 +57,8 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
             
                 if (Physics.Raycast(ray, out hit,100, LayerMask.GetMask("Terreno")))
                 {
-                    if (!CanDropEnemySide && (ClientID == 0 && hit.point.z < terreno.transform.position.z ||
-                        ClientID == 1 && hit.point.z > terreno.transform.position.z))
+                    if (!CanDropEnemySide && (ClientID == 0 && hit.point.z < terreno.transform.position.z +2F ||
+                        ClientID == 1 && hit.point.z > terreno.transform.position.z -2F))
                     {
                         return;
                     }
