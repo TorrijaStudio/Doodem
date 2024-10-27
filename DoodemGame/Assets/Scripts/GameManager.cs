@@ -9,6 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class GameManager : NetworkBehaviour
 {
@@ -22,9 +23,26 @@ public class GameManager : NetworkBehaviour
     private NetworkVariable<int> _id = new();
     public int clientId;
     public List<Transform> Bases;
+    
+    public List<Entity> enemies;
+    public List<Entity> allies;
+    public List<recurso> recs;
+
+    [SerializeField] private GameObject[] _heads;
+    [SerializeField] private GameObject[] _body;
+    [SerializeField] private GameObject[] _feet;
+
     private List<Vector2> Positions = new ();//casillas disponibles
     private Dictionary<Vector2Int, GameObject> entidades = new();
-   
+    public float MaxDistance
+    {
+        get
+        {
+            var grid = terreno.GetComponent<terreno>().GetGrid();
+            return grid.magnitude;
+        }
+        private set => MaxDistance = value;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -97,9 +115,14 @@ public class GameManager : NetworkBehaviour
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos)
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
+        var entity = player.GetComponent<Entity>();
+        if(entity)
+            entity.SetAnimalParts(_heads[Random.Range(0, _heads.Length)], _body[Random.Range(0, _body.Length)], _feet[Random.Range(0, _feet.Length)]);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);
+
         if (player.TryGetComponent(out NavMeshAgent nav))
         {
+            
             nav.enabled = true;
             var posInGid = terreno.GetComponent<terreno>().PositionToGrid(pos);
             if (entidades.ContainsKey(posInGid) && entidades[posInGid])

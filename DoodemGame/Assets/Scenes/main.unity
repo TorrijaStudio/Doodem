@@ -6838,17 +6838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f867668e045214aaef8db9b10b33a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer: 
-  _idPlayer:
-    m_InternalValue: 0
-  layerEnemy: 
-  currentDamage: 0
-  objetive: {fileID: 1734961144}
-  speed: 0
-  health: 100
-  damage: 20
-  attackDistance: 5
-  attackSpeed: 1
 --- !u!114 &254608305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8079,6 +8068,17 @@ MonoBehaviour:
   Bases:
   - {fileID: 938703320}
   - {fileID: 1734961144}
+  enemies: []
+  allies: []
+  _heads:
+  - {fileID: 6596802920627415814, guid: d95237832f459f444baba0f71c1fd013, type: 3}
+  - {fileID: 4743716353546243484, guid: 4f1162bc0c6684d40847dc057c0c69a1, type: 3}
+  _body:
+  - {fileID: 7197332935426439036, guid: 6ffb3bc3932436e469986bf0131ef97b, type: 3}
+  - {fileID: 6963791943007721694, guid: 794e3825106c16e48b76dfb74a5714dc, type: 3}
+  _feet:
+  - {fileID: 1062466098516003971, guid: b576cbab974477e40aaf92853c574201, type: 3}
+  - {fileID: 1470985371071878847, guid: ab3f7006e713dc841bf01bbf67a64e95, type: 3}
 --- !u!1 &320175314
 GameObject:
   m_ObjectHideFlags: 0
@@ -9091,7 +9091,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337763919}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &337763921
 Camera:
   m_ObjectHideFlags: 0
@@ -47685,7 +47685,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741270287}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1741270289
 Camera:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 // using System.Linq;
+// using Animals.Interfaces;
 // using Totems;
 // using Unity.VisualScripting;
 // using UnityEditor;
@@ -7,7 +8,7 @@
 //
 // namespace Tools
 // {
-//     [EditorTool("Totem Instantiate Tool", typeof(Totem))]
+//     [EditorTool("Animal Instantiate Tool", typeof(Entity))]
 //     public class TotemSpawner: EditorTool
 //     {
 //         private GameObject _h;
@@ -35,8 +36,8 @@
 //         {
 //             if (fromAssign)
 //             {
-//                 var tpiece = fromAssign.GetComponent<TotemPiece>();
-//                 if (tpiece && tpiece.CompareTag(bodyType))
+//                 var tpiece = fromAssign.GetComponent<IAnimalPart>();
+//                 if (tpiece != null && fromAssign.CompareTag(bodyType))
 //                 {
 //                     toAssign = fromAssign;
 //                     return;
@@ -62,7 +63,7 @@
 //                     var instantiate = GUILayout.Button("Instantiate");
 //                     if (instantiate && _h && _b && _f)
 //                     {
-//                         target.GameObject().GetComponent<Totem>().CreateTotem(_h, _b, _f);
+//                         target.GameObject().GetComponent<Entity>().SetAnimalParts(_h, _b, _f);
 //                     }
 //                 }
 //             }

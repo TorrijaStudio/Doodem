@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8180983642856431383}
   - component: {fileID: 6961376818650201272}
   - component: {fileID: 4968324614876361185}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BearFeet
   m_TagString: Feet
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 3248028343023008044}
   - component: {fileID: 1088211327249898113}
   - component: {fileID: 8532366231382301209}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5513816795259788157}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 793618093187665531}
   - component: {fileID: 8468351442318351527}
   - component: {fileID: 1217453091122786963}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}

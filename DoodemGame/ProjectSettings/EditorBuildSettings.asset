@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/main.unity
     guid: 74d538466cf9f6a448f0f1d3b57e3b69
+  - enabled: 0
+    path: Assets/Scenes/AnimalWhat.unity
+    guid: 6c34db2bfba30e24ca9718e7c759d8b3
   m_configObjects: {}
