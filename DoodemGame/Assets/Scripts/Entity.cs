@@ -70,7 +70,12 @@ public class Entity : NetworkBehaviour ,IAtackable
         }
     }
 
-    
+    private void Awake()
+    {
+        GameManager.Instance.playerObjects.Add(gameObject);
+        gameObject.SetActive(false);
+    }
+
     void Start()
     {        
         _resources = new Dictionary<Recursos, int>();
@@ -78,7 +83,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         currentDamage = damage;
         _idPlayer.OnValueChanged += SetLayer; 
         SetAgent();
-        agente.speed = 1f;
+        agente.speed = speed;
         // StartCoroutine(SearchResources());
         StartCoroutine(Brain());
     }
@@ -126,6 +131,11 @@ public class Entity : NetworkBehaviour ,IAtackable
         }
         agente.SetDestination(d.position);
     }
+    //private IEnumerator AddPosition()
+    //{
+    //    yield return new WaitForSeconds(1.0f);
+    //    GameManager.Instance.AddPositionSomething(transform.position,gameObject);
+    //}
 
     #region getters and setters
 

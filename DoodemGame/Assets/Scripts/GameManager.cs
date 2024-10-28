@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -23,6 +24,8 @@ public class GameManager : NetworkBehaviour
     private NetworkVariable<int> _id = new();
     public int clientId;
     public List<Transform> Bases;
+    public GameObject objectSelected;
+    public List<GameObject> playerObjects = new List<GameObject>();
     
     public List<Entity> enemies;
     public List<Entity> allies;
@@ -62,9 +65,9 @@ public class GameManager : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && IsHost)
         {
-            StartGame();
+            ExecuteOnAllClientsClientRpc();
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
@@ -72,6 +75,22 @@ public class GameManager : NetworkBehaviour
             {
                 if(entidades[VARIABLE])
                     Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
+            }
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(rayo, out hit,30,LayerMask.GetMask("Rojo","Azul","casilla")))
+            {
+                objectSelected = hit.collider.gameObject;
+            }
+            else
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    objectSelected = null;
+                }
             }
         }
     }
@@ -90,6 +109,16 @@ public class GameManager : NetworkBehaviour
             }
         }
         terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+    
+    [ClientRpc]
+    void ExecuteOnAllClientsClientRpc()
+    {
+        Debug.Log("Esta función se ejecuta en todos los clientes.");
+        foreach (var p in playerObjects)
+        {
+            p.SetActive(true);
+        }
     }
 
     private void OnServerStarted()
@@ -157,6 +186,30 @@ public class GameManager : NetworkBehaviour
        Debug.Log("Spawning entity with id " + playerId);
     }
     
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnServerRpc(NetworkObjectReference target, ServerRpcParams serverRpcParams)
+    {
+        if (target.TryGet(out NetworkObject targetObject))
+        {
+            Destroy(targetObject.gameObject);
+        }
+    }
+    public void updateEntidades()
+    {
+        Debug.LogError(entidades.Count);
+        foreach (GameObject g in entidades.Values)
+        {
+            if(!g) continue;
+            Debug.LogError(g.name);
+            if (g.TryGetComponent(out recurso r))
+            {
+                r.CheckIfItsInMyBiome();
+            }else if (g.TryGetComponent(out obstaculo o))
+            {
+                o.CheckIfItsInMyBiome();
+            }
+        }
+    }
     private void OnClientConnected(ulong obj)
     {
         

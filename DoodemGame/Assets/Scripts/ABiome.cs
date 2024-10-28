@@ -28,7 +28,13 @@ public abstract class ABiome : NetworkBehaviour
     public int indexLayerArea;
 
     private static Random random;
-  
+    
+    
+    private void Awake()
+    {
+        //GameManager.Instance.playerObjects.Add(gameObject);
+        //gameObject.SetActive(false);
+    }
     
     // Start is called before the first frame update
      void Start()
@@ -51,14 +57,24 @@ public abstract class ABiome : NetworkBehaviour
         
         pos = positions.ToList();
         transform.localScale = new Vector3(2*xSize*cellSize.x+cellSize.x,transform.localScale.y,2*zSize*cellSize.y+cellSize.y);
+        Debug.LogError(IsHost+" "+IsClient+" "+IsServer+" "+IsOwner);
         SetHijos();
+        //if (IsOwner)
+        //{
+        //    Debug.LogError("holaaaa");
+        //    SetHijos();
+        //}
+
         StartCoroutine(UpdateEntities());
+        
         //GameManager.Instance.playerObjects[_idPlayer.Value].Add(gameObject);
         //if (GameManager.Instance.clientId != _idPlayer.Value)
         //{
         //    gameObject.SetActive(false);
         //}
     }
+
+    
 
      private IEnumerator UpdateEntities()
      {
@@ -151,6 +167,7 @@ public abstract class ABiome : NetworkBehaviour
                casilla.ResetCasilla();
            }
        }
+       GameManager.Instance.updateEntidades();
     }
 
     public abstract void ActionBioma(GameObject o);

@@ -25,4 +25,5 @@ public class desertBiome : ABiome
         var entity = o.GetComponent<Entity>();
         entity.SetCurrentDamage( entity.GetCurrentDamage() + entity.damage * damageReduction/100f);
     }
+ 
 }

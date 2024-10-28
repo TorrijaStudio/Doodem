@@ -22,4 +22,5 @@ public class glacierBiome : ABiome
         var entity = o.GetComponent<Entity>();
         entity.SetSpeed(entity.GetSpeed()+3.0f);
     }
+    
 }
