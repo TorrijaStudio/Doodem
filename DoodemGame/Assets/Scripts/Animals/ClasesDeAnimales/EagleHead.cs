@@ -7,27 +7,26 @@ namespace Animals.ClasesDeAnimales
 {
     public class EagleHead :MonoBehaviour,  IAnimalHead
     {
-        public List<KeyValuePair<Transform, float>> AssignValuesToResources(IList<Transform> resources)
+        public List<float> AssignValuesToResources(IList<Transform> resources)
         {
-            var a =new List<KeyValuePair<Transform, float>>();
-            foreach (var enemy in resources)
+            var a = new float[resources.Count];
+            for (var i = 0; i < resources.Count; i++)
             {
-                var dist = transform.position - enemy.position;
-                a.Add(new KeyValuePair<Transform, float>(enemy, Mathf.Log10(dist.magnitude / GameManager.Instance.MaxDistance)));
+                var dist = transform.position - resources[i].position;
+                a[i] = Mathf.Log10(dist.magnitude / GameManager.Instance.MaxDistance);
             }
-            return a;
+            return a.ToList();
         }
 
-        public List<KeyValuePair<Transform, float>> AssignValuesToEnemies(IList<Transform> enemies)
+        public List<float> AssignValuesToEnemies(IList<Transform> enemies)
         {
-            // return enemies.Select(resource => resource.position - transform.position).Select(dist => Mathf.Log(dist.magnitude / GameManager.Instance.MaxDistance, 8)).ToList();
-            var a = new List<KeyValuePair<Transform, float>>();
-            foreach (var enemy in enemies)
+            var a = new float[enemies.Count];
+            for (var i = 0; i < enemies.Count; i++)
             {
-                var dist = transform.position - enemy.position;
-                a.Add(new KeyValuePair<Transform, float>(enemy, Mathf.Log(dist.magnitude / GameManager.Instance.MaxDistance, 8)));
+                var dist = transform.position - enemies[i].position;
+                a[i] = Mathf.Log(dist.magnitude / GameManager.Instance.MaxDistance, 8);
             }
-            return a;
+            return a.ToList();
         }
 
         public Resources Resources { get; set; }

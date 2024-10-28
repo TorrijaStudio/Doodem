@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Animals.Interfaces;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -235,28 +236,42 @@ public class Entity : NetworkBehaviour ,IAtackable
         agente.isStopped = false;
         var enemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == layerEnemy).Select(entity => entity.transform).ToList();
         var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected()).Select((recurso =>recurso.transform)).ToList();
-        Debug.Log(resources.Count);
         if(resources.Count == 0 && enemies.Count == 0)  return;
+
+        var values = enemies.Select(transform1 => new KeyValuePair<Transform, float>(transform1, 0f)).ToList();
+        values.AddRange(resources.Select(transform1 => new KeyValuePair<Transform, float>(transform1, 0f)));
+
         
-        var values = new List<KeyValuePair<Transform, float>>();
-        values.AddRange(_head.AssignValuesToEnemies(enemies));
-        values.AddRange(_head.AssignValuesToResources(resources));
-        values.AddRange(_body.AssignValuesToEnemies(enemies));
-        values.AddRange(_body.AssignValuesToResources(resources));
-        values.AddRange(_feet.AssignValuesToEnemies(enemies));
-        values.AddRange(_feet.AssignValuesToResources(resources));
-        // var keyValuePairs = values.OrderBy((f => f.Value));
+        // var aaaaaaa = values.Aggregate("", (current, pair) => current + (pair.Key + " " + pair.Value + "\n"));
+        // Debug.Log(aaaaaaa);
+        var partRange = _head.AssignValuesToEnemies(enemies);
+        partRange.AddRange(_head.AssignValuesToResources(resources));
+        MergeInformation(ref values, partRange);
+        
+        partRange = _body.AssignValuesToEnemies(enemies);
+        partRange.AddRange(_body.AssignValuesToResources(resources));
+        MergeInformation(ref values, partRange);
+        
+        partRange = _feet.AssignValuesToEnemies(enemies);
+        partRange.AddRange(_feet.AssignValuesToResources(resources));
+        MergeInformation(ref values, partRange);
+
         // var a = from entry in values orderby entry.Value descending select entry;
         values.Sort((kp, kp1) => (int)Mathf.CeilToInt((kp.Value - kp1.Value)*100));
+        // Debug.Log(resources.Count());
         objetive = values.First().Key;
         isEnemy = (bool)objetive.GetComponent<Entity>();
+        // Debug.LogWarning($"Next objective is {objetive.name} and is {isEnemy} an enemy??");
         agente.SetDestination(objetive.position);
-        Debug.Log(objetive.name);
+        // Debug.Log(objetive.name);
     }
 
-    private void MergeDictionaries(ref List<KeyValuePair<Transform, float>> inDic, List<KeyValuePair<Transform, float>> joinDic)
+    private void MergeInformation(ref List<KeyValuePair<Transform, float>> inDic, List<float> info)
     {
-        inDic.AddRange(joinDic);
+        for (var i = 0; i < inDic.Count; i++)
+        {
+            inDic[i] = new KeyValuePair<Transform, float>(inDic[i].Key, inDic[i].Value + info[i]);
+        }
     }
 
     public override void OnDestroy()

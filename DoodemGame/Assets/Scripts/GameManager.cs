@@ -17,7 +17,8 @@ public class GameManager : NetworkBehaviour
     private NetworkManager _networkManager;
     private GameObject _playerPrefab;
     public static GameManager Instance;
-    public GameObject terreno;
+    public GameObject terrenoGO;
+    private terreno _terreno;
     public playerInfo[] players = new playerInfo[2];
     public ABiome[] biomasGame = new ABiome[5]; 
     public List<ABiome> biomasInMatch = new ();
@@ -41,7 +42,7 @@ public class GameManager : NetworkBehaviour
     {
         get
         {
-            var grid = terreno.GetComponent<terreno>().GetGrid();
+            var grid = _terreno.GetGrid();
             return grid.magnitude;
         }
         private set => MaxDistance = value;
@@ -56,7 +57,8 @@ public class GameManager : NetworkBehaviour
         {
             Instance = this;
         }
-        
+
+        _terreno = terrenoGO.GetComponent<terreno>();
         _networkManager = NetworkManager.Singleton;
         _playerPrefab = _networkManager.NetworkConfig.Prefabs.Prefabs[0].Prefab;
         _networkManager.OnServerStarted += OnServerStarted;
@@ -108,7 +110,7 @@ public class GameManager : NetworkBehaviour
                 o.CheckIfItsInMyBiome();
             }
         }
-        terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+        terrenoGO.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
     
     [ClientRpc]
@@ -135,11 +137,20 @@ public class GameManager : NetworkBehaviour
 
     public void AddPositionSomething(Vector3 p,GameObject o)
     {
-        var v = terreno.GetComponent<terreno>().PositionToGrid(p);
+        var v = terrenoGO.GetComponent<terreno>().PositionToGrid(p);
         if(entidades.ContainsKey(v) && entidades[v])
             entidades[v].SetActive(false);
         entidades[v] = o;
-    } 
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnRecursoServerRpc(int resourceType, Vector3 pos)
+    {
+        var resource = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[4].Prefab, pos, Quaternion.identity);
+        resource.GetComponent<NetworkObject>().Spawn();
+        transform.SetParent(GameObject.Find("RECURSOS").transform);
+        
+    }
     
     [ServerRpc(RequireOwnership = false)]
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos)
@@ -159,7 +170,7 @@ public class GameManager : NetworkBehaviour
         {
             
             nav.enabled = true;
-            var posInGid = terreno.GetComponent<terreno>().PositionToGrid(pos);
+            var posInGid = terrenoGO.GetComponent<terreno>().PositionToGrid(pos);
             if (entidades.ContainsKey(posInGid) && entidades[posInGid])
             {
                 Destroy(player);
@@ -200,12 +211,19 @@ public class GameManager : NetworkBehaviour
             Destroy(targetObject.gameObject);
         }
     }
+
+    public void RemoveEntity(Vector3 pos)
+    {
+        entidades.Remove(_terreno.PositionToGrid(pos));
+    }
+    
     public void updateEntidades()
     {
         // Debug.LogError(entidades.Count);
         foreach (GameObject g in entidades.Values)
         {
-            if(!g) continue;
+                if(!g) continue;
+            // Debug.LogError(g.name);
             // Debug.LogError(g.name);
             if (g.TryGetComponent(out recurso r))
             {

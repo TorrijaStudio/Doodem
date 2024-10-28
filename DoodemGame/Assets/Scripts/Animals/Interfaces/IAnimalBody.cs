@@ -18,8 +18,8 @@ namespace Animals.Interfaces
             return feetPoint;
         }
 
-        public abstract List<KeyValuePair<Transform, float>> AssignValuesToResources(IList<Transform> resources);
-        public abstract List<KeyValuePair<Transform, float>> AssignValuesToEnemies(IList<Transform> enemies);
+        public abstract List<float> AssignValuesToResources(IList<Transform> resources);
+        public abstract List<float> AssignValuesToEnemies(IList<Transform> enemies);
 
         public Resources Resources { get; set; }
         public float Life { get; set; }
