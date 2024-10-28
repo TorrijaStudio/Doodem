@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 837803188942647052}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Claw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3468334370734535187}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: HeadAttachment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 8157406842314686787}
   - component: {fileID: 4823601262099514382}
   - component: {fileID: 4864334512391003997}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 7109592531801933337}
   - component: {fileID: 3366603173555036632}
   - component: {fileID: 7182296631777985817}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Nail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 2303119824244276431}
   - component: {fileID: 2766958918150691983}
   - component: {fileID: 5564627988221149632}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Nail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7179875222831277735}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Claw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4793150110772999804}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 1479465044700380003}
   - component: {fileID: 3970389831956550607}
   - component: {fileID: 8477848788110823802}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Nail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -571,7 +571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1501972120155390999}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: FeetAttachment (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,7 +602,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1717198422125568076}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 5518763526600081261}
   - component: {fileID: 6921116355793649341}
   - component: {fileID: 1470093348498247082}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5496407762993223265}
   - component: {fileID: 5688268216352609845}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: BearBody 1
   m_TagString: Body
   m_Icon: {fileID: 0}
@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 3962008616426066932}
   - component: {fileID: 2105843723771834094}
   - component: {fileID: 5402963219349100467}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Nail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1020,7 +1020,7 @@ GameObject:
   - component: {fileID: 2857270723629283974}
   - component: {fileID: 4993314137920102320}
   - component: {fileID: 3248593728909623846}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Nail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

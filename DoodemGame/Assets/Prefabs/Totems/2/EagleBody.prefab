@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8792062564381534682}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8089608110334112670}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: HeadAttachment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 1156825736138851138}
   - component: {fileID: 3353264094739344767}
   - component: {fileID: 8864942110160652752}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 2623712002698045981}
   - component: {fileID: 6435845615766292717}
   - component: {fileID: 4856949111937023240}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1127461276784088364}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: FeetAttachment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 8307545903066358657}
   - component: {fileID: 8718639616529543594}
   - component: {fileID: 4575808360103620292}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: EagleBody
   m_TagString: Body
   m_Icon: {fileID: 0}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9209991456188169099}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 8493354707714782614}
   - component: {fileID: 3662863142258798528}
   - component: {fileID: 91255688636573355}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 8099770731933896345}
   - component: {fileID: 1706292319482252750}
   - component: {fileID: 3475120584445868314}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 7468910947193442194}
   - component: {fileID: 5037261199249219386}
   - component: {fileID: 1610767527738070158}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Beak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 6693899478823535802}
   - component: {fileID: 2293864580709814343}
   - component: {fileID: 4074242776625122119}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 4280728508276262876}
   - component: {fileID: 4876853468019176394}
   - component: {fileID: 893896261311494302}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6583910061684592690}
   - component: {fileID: 6408196396728073143}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: EagleHead
   m_TagString: Head
   m_Icon: {fileID: 0}
@@ -616,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4655741298483895897}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

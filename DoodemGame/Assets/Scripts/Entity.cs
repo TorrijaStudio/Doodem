@@ -7,6 +7,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Entity : NetworkBehaviour ,IAtackable
 {
@@ -19,6 +20,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     public string layerEnemy;
     private int currentAreaIndex;
     [SerializeField] private float currentDamage;
+    private bool isEnemy;
 
     // public int PlayerId
     // {
@@ -70,10 +72,45 @@ public class Entity : NetworkBehaviour ,IAtackable
         }
     }
 
+    private void Attack()
+    {
+        if (Time.time - timeLastHit >= 1f / attackSpeed)
+        {
+            float aux = 0;
+            if (objetive.TryGetComponent(out IAtackable m))
+            {
+                aux = m.Attacked(GetCurrentDamage());
+            }
+            if (aux < 0)
+            {
+                Debug.Log(gameObject.name+"  " + objetive.position);
+                // currentObjective = objetive;
+                // if(agente.enabled)
+                //     agente.SetDestination(objetive.position);
+                // if (gameObject.TryGetComponent(out Aguila a))
+                // {
+                //     a.AguilaKill();
+                // }
+            }
+            timeLastHit = Time.time;
+        }   
+    }
+    
+    [ClientRpc]
+    public void SpawnClientRpc(int h, int b, int f)
+    {
+         SetAnimalParts(GameManager.Instance._heads[h], 
+             GameManager.Instance._body[b], 
+             GameManager.Instance._feet[f]);
+         GameManager.Instance.playerObjects.Add(gameObject);
+         gameObject.SetActive(false);
+    }
+
+
     private void Awake()
     {
-        GameManager.Instance.playerObjects.Add(gameObject);
-        gameObject.SetActive(false);
+        //GameManager.Instance.playerObjects.Add(gameObject);
+        //gameObject.SetActive(false);
     }
 
     void Start()
@@ -99,13 +136,17 @@ public class Entity : NetworkBehaviour ,IAtackable
     void Update()
     {
         checkAreaAgent();
+        if (isEnemy && objetive && Vector3.Distance(objetive.position, transform.position) <= attackDistance)
+        {
+            agente.isStopped = true;
+        }
     }
     
     public float Attacked(float enemyDamage)
     {
         Debug.Log(gameObject.name + " -- "+health);
         health -= enemyDamage;
-        if (health < 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
         }
@@ -167,8 +208,34 @@ public class Entity : NetworkBehaviour ,IAtackable
     #endregion
     private void ReevaluateSituation()
     {
+        if(!agente.isOnNavMesh)  return;
+        if (objetive)
+        {
+            // Debug.LogError(Vector3.Distance(objetive.position, transform.position));
+            // agente.isStopped = true;
+            if (isEnemy)
+            {
+                if (Vector3.Distance(objetive.position, transform.position) <= attackDistance)
+                {
+                    Debug.Log($"Atacando a {objetive} en {timeLastHit}");
+                    Attack();
+                    return; 
+                }
+            }
+            else
+            {
+                if (Vector3.Distance(objetive.position, transform.position) <= 1f)
+                {
+                    objetive.GetComponent<recurso>().PickRecurso();
+                    return; 
+                }
+            }
+        }
+
+        agente.isStopped = false;
         var enemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == layerEnemy).Select(entity => entity.transform).ToList();
         var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected()).Select((recurso =>recurso.transform)).ToList();
+        Debug.Log(resources.Count);
         if(resources.Count == 0 && enemies.Count == 0)  return;
         
         var values = new List<KeyValuePair<Transform, float>>();
@@ -182,6 +249,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         // var a = from entry in values orderby entry.Value descending select entry;
         values.Sort((kp, kp1) => (int)Mathf.CeilToInt((kp.Value - kp1.Value)*100));
         objetive = values.First().Key;
+        isEnemy = (bool)objetive.GetComponent<Entity>();
         agente.SetDestination(objetive.position);
         Debug.Log(objetive.name);
     }
@@ -203,7 +271,9 @@ public class Entity : NetworkBehaviour ,IAtackable
     public EmptyEvent OnKilledEnemy;
      
     public ResourcesEvent OnResourcesChanged;
-     public int GetResources(Recursos res)
+    private float timeLastHit;
+
+    public int GetResources(Recursos res)
     {
         return _resources.TryGetValue(res, out var value) ? value : 0;
     }

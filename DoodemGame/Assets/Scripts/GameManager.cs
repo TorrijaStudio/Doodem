@@ -31,9 +31,9 @@ public class GameManager : NetworkBehaviour
     public List<Entity> allies;
     public List<recurso> recs;
 
-    [SerializeField] private GameObject[] _heads;
-    [SerializeField] private GameObject[] _body;
-    [SerializeField] private GameObject[] _feet;
+    [SerializeField] public GameObject[] _heads;
+    [SerializeField] public GameObject[] _body;
+    [SerializeField] public GameObject[] _feet;
 
     private List<Vector2> Positions = new ();//casillas disponibles
     private Dictionary<Vector2Int, GameObject> entidades = new();
@@ -117,10 +117,12 @@ public class GameManager : NetworkBehaviour
         Debug.Log("Esta función se ejecuta en todos los clientes.");
         foreach (var p in playerObjects)
         {
-            p.SetActive(true);
+            if(p)
+                p.SetActive(true);
         }
     }
 
+    
     private void OnServerStarted()
     {
         print("Server ready");
@@ -137,18 +139,22 @@ public class GameManager : NetworkBehaviour
         if(entidades.ContainsKey(v) && entidades[v])
             entidades[v].SetActive(false);
         entidades[v] = o;
-    }
-    
+    } 
     
     [ServerRpc(RequireOwnership = false)]
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos)
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
+       
+        player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);
         var entity = player.GetComponent<Entity>();
         if(entity)
-            entity.SetAnimalParts(_heads[Random.Range(0, _heads.Length)], _body[Random.Range(0, _body.Length)], _feet[Random.Range(0, _feet.Length)]);
-        player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);
-
+        {
+        //     SetAnimalParts(GameManager.Instance._heads[Random.Range(0, GameManager.Instance._heads.Length)], 
+        //         GameManager.Instance._body[Random.Range(0, GameManager.Instance._body.Length)], 
+        //         GameManager.Instance._feet[Random.Range(0, GameManager.Instance._feet.Length)]);
+            entity.SpawnClientRpc(Random.Range(0, GameManager.Instance._heads.Length), Random.Range(0, GameManager.Instance._body.Length), Random.Range(0, GameManager.Instance._feet.Length));
+        }
         if (player.TryGetComponent(out NavMeshAgent nav))
         {
             
@@ -196,11 +202,11 @@ public class GameManager : NetworkBehaviour
     }
     public void updateEntidades()
     {
-        Debug.LogError(entidades.Count);
+        // Debug.LogError(entidades.Count);
         foreach (GameObject g in entidades.Values)
         {
             if(!g) continue;
-            Debug.LogError(g.name);
+            // Debug.LogError(g.name);
             if (g.TryGetComponent(out recurso r))
             {
                 r.CheckIfItsInMyBiome();

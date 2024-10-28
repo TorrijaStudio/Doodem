@@ -11,7 +11,7 @@ public class recurso : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(transform.parent.parent.name);
+        // Debug.Log(transform.parent.parent.name);
         indexLayerArea = transform.parent.parent.GetComponent<ABiome>().indexLayerArea;
         StartCoroutine(AddPosition());
     }
