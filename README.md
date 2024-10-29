@@ -329,6 +329,7 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
 - **Rehacer:**  Para finalizar con los tótems, como ya se ha comentado, habrá que pagar un precio para poder rehacer los tótems. Este precio comenzará bajo pero irá aumentando según avance la partida.
   
   <img src="/IMAGENES_GDD/rehacer.png" alt="Formula de rehacer" width=75% height=75%>
+  
    - **Fórmula de rehacer tótem:**  
       - `ronda = Nº de ronda`  
       - `m = Multiplicador de ronda`
@@ -352,14 +353,16 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
 <img src="/IMAGENES_GDD/ronda.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Experiencia:**  Finalmente, el último artículo disponible en la tienda es el de la XP, que te permite subir de nivel y poder colocar más tótems en el tablero.
+  
  <img src="/IMAGENES_GDD/precioXP.png" alt="Habilidades del águila" width=75% height=75%>
-    - **Fórmula del precio de los biomas:**
+ 
+   - **Fórmula del precio de los biomas:**
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
         - `N = Nivel actual del jugador`
         - `h = Exponente para aumentar`
-    - **Ejemplo:** Con `a = 20`, `h = 1.3`, los valores de compra de niveles serían:
+   - **Ejemplo:** Con `a = 20`, `h = 1.3`, los valores de compra de niveles serían:
      
-    <img src="/IMAGENES_GDD/DiNeRo.png" alt="Habilidades del águila" width=50% height=50%>
+   <img src="IMAGENES_GDD/DiNeRo.png" alt="Habilidades del águila" width=50% height=50%>
 
 - **Venta:**   Además de comprar piezas, se pueden vender todas aquellas piezas que se posean, siempre que estén en el inventario y no en un tótem. El precio de venta será siempre el mismo para cada tipo de pieza, el cual será un 50% del valor original.
 
@@ -423,7 +426,7 @@ El juego cuenta con una estética cartoon y colorida, ya que se ha tomado inspir
 
 En cuanto al apartado visual del juego, este combina tanto modelos en 3D como escenarios en 2D creados a mano. Además, las interfaces se han creado también en 2D y usando la misma paleta de colores del juego.
 
-<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.25.41.jpeg" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.25.41.jpeg" alt="Habilidades del águila" width=75% height=75%>
 
 
 ### 3.2 Arte conceptual
@@ -436,11 +439,11 @@ Por un lado se creará el arte conceptual de los tótems, que da una representac
  Además, también se usará el mismo programa para la creación de los sprites que formarán los escenarios en los que se disputarán las batallas. 
 Por último, también se crearán arte conceptual de cómo se verían los animales mezclados una vez se han invocado mezclando las piezas que los jugadores elijan de los tótems.
 
-<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.27.37.jpeg" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.27.37.jpeg" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.29.04.jpeg" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.29.04.jpeg" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.29.58.jpeg" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.29.58.jpeg" alt="Habilidades del águila" width=75% height=75%>
 
 ### 3.3 Arte 3D
 El juego utiliza modelos 3D para los tótems y el entorno, brindando una experiencia visual envolvente. La prioridad es que los modelos sean reconocibles y se integren con la estética general del juego.
