@@ -47,6 +47,11 @@ public class Totem : MonoBehaviour
         return true;
     }
 
+    public bool IsPiece()
+    {
+        return !(head && body && feet);
+    }
+    
     public bool AddPart(TotemPiece pieceToSet, out TotemPiece outPiece)
     {
         outPiece = null;
@@ -60,7 +65,25 @@ public class Totem : MonoBehaviour
 
         return result;
     }
-
+    public void ForceAddPart(TotemPiece pieceToSet, out TotemPiece outPiece, string tagg)
+    {
+        outPiece = null;
+        
+        switch (tagg)
+        {
+            case "Head":
+                ForceAddPiece(pieceToSet, ref head, out outPiece);
+                break;
+            case "Body":
+                ForceAddPiece(pieceToSet, ref body, out outPiece);
+                break;
+            case "Feet":
+                ForceAddPiece(pieceToSet, ref feet, out outPiece);
+                break;
+            default:
+                break;
+        }
+    }
     public Transform GetPiece(string pieceTag)
     {
         return pieceTag switch
@@ -85,6 +108,25 @@ public class Totem : MonoBehaviour
         other.GetComponent<TotemPiece>().totem = this;
         other.SetParent(_transform);
         return true;
+    }
+    
+    private void ForceAddPiece(TotemPiece pieceToSet, ref Transform other, out TotemPiece outPiece)
+    {
+        // if (!other)
+        // {
+        //     outPiece = null;
+        //     return;
+        // }
+
+        outPiece = other ? other.GetComponent<TotemPiece>() : null;
+        if (!pieceToSet)
+        {
+            other = null;
+            return;
+        }
+        other = pieceToSet.transform;
+        other.GetComponent<TotemPiece>().totem = this;
+        other.SetParent(_transform);
     }
     
     public void Separate(int mode)
@@ -123,6 +165,7 @@ public class Totem : MonoBehaviour
 
     public bool CanTakePart(GameObject part)
     {
+        // Debug.LogWarning(feet);
         return part.tag switch
         {
             "Feet" => feet,

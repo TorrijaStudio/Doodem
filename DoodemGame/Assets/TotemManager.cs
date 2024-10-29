@@ -74,22 +74,39 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
                 _isDragging = false;
                 if (grabbedPiece)
                 {
-                    if(!selectedPiece || !selectedTotem.CanTakePart(grabbedPiece.gameObject))
+                    if(!selectedPiece || !selectedTotem || !(selectedTotem.CanTakePart(grabbedPiece.gameObject) || grabbedPiece.totem.IsPiece()))
                     {
+                        // Debug.LogError((bool)!selectedPiece + " . " +  (bool) !selectedTotem + " . " + !(selectedTotem.CanTakePart(grabbedPiece.gameObject) || grabbedPiece.totem.IsPiece()));
                         grabbedPiece.MoveTo(_grabPosition - grabbedPiece.transform.forward * GrabOffset, 0.8f, true);
                     }
                     else
                     {
+                        // if(selectedPiece.totem.IsPiece())
                         var tempTotem = grabbedPiece.totem;
-                        if (selectedPiece.totem.AddPart(grabbedPiece, out var exchangePiece))
+                        if(selectedTotem.CanTakePart(grabbedPiece.gameObject))
                         {
-                            tempTotem.AddPart(exchangePiece, out var p);
+                            // Debug.LogWarning("Entrando en esata zona");
+                            // Debug.LogWarning(grabbedPiece.tag);
+                            if (selectedPiece.totem.AddPart(grabbedPiece, out var exchangePiece))
+                            {
+                                tempTotem.AddPart(exchangePiece, out var p);
+                                selectedTotem.Separate(TagToNumber(grabbedPiece.tag) + 1);
+                                selectedPiece = grabbedPiece;
+                                // grabbedPiece = null;
+                                tempTotem.Lock(false);
+                                tempTotem.Deactivate();
+
+                            }
+                        }
+                        else
+                        {
+                            // Debug.LogWarning("Ahora por aqui");
+                            selectedTotem.ForceAddPart(grabbedPiece, out var p, grabbedPiece.tag);
                             selectedTotem.Separate(TagToNumber(grabbedPiece.tag) + 1);
                             selectedPiece = grabbedPiece;
-                            // grabbedPiece = null;
+                            tempTotem.ForceAddPart(p, out var pp, grabbedPiece.tag);
                             tempTotem.Lock(false);
                             tempTotem.Deactivate();
-                            
                         }
                         // //If the totem doesnt have designated parts then dont admit that kind of part
                         // var tempTotem = grabbedPiece.totem;
@@ -143,7 +160,8 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
             _grabPosition = selectedPieceTransform.position + selectedPieceTransform.forward * GrabOffset;
             grabbedPiece = selectedPiece;
             // if(selectedPiece.totem)
-            selectedTotem.Lock(true);
+            if(selectedTotem)
+                selectedTotem.Lock(true);
             selectedPiece = null;
         }
         if(!grabbedPiece)   return;

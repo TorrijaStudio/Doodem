@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Head
+  - Body
+  - Feet
+  - Totem
   layers:
   - Default
   - TransparentFX
@@ -17,9 +21,9 @@ TagManager:
   - ignoreNavMesh
   - obstaculo
   - casilla
-  - 
-  - 
-  - 
+  - Wall
+  - Pointer
+  - Totem
   - 
   - 
   - 
