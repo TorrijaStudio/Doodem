@@ -21,23 +21,28 @@ public class Totem : MonoBehaviour
     public void CreateTotem(GameObject h, GameObject b, GameObject f)
     {
         _transform = transform;
-        if(!(ValidatePartDebug(h, "Head") && ValidatePartDebug(b, "Body") && ValidatePartDebug(f, "Feet")))
-            return;
+        // if(!(ValidatePartDebug(h, "Head") && ValidatePartDebug(b, "Body") && ValidatePartDebug(f, "Feet")))
+        //     return;
 
         var position = _transform.position;
         var up = _transform.up * TotemOffset;
-        head = Instantiate(h, position + up, Quaternion.identity, _transform).transform;
+        if(ValidatePartDebug(h, "Head"))
+            head = Instantiate(h, position + up, Quaternion.identity, _transform).transform;
         // head.transform.SetParent(_transform);
         
-        body = Instantiate(b, position, Quaternion.identity, _transform).transform;
+        if(ValidatePartDebug(b, "Body"))
+            body = Instantiate(b, position, Quaternion.identity, _transform).transform;
         // body.transform.SetParent(_transform);
         
-        feet = Instantiate(f, position - up, Quaternion.identity, _transform).transform;
+        if(ValidatePartDebug(f, "Feet"))
+            feet = Instantiate(f, position - up, Quaternion.identity, _transform).transform;
         // feet.transform.SetParent(_transform);
     }
 
     private bool ValidatePartDebug(GameObject g, string type)
     {
+        if (!g) return false;
+        
         if (!g.CompareTag(type))
         {
             Debug.LogError($"Totem {name} was given object {g.name} of type {g.tag} instead of a {type}!");
