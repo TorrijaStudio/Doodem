@@ -319,6 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: df2efef2c11b1a84c8eb24492f85e66b, type: 2}
+  scriptableObjectTienda: {fileID: 11400000, guid: 4b17fd51a72d66a45837e800fce97ec2, type: 2}
   totem: {fileID: 0}
   type: 1
   animalName: Eagle

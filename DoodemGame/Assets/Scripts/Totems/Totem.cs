@@ -18,15 +18,15 @@ public class Totem : MonoBehaviour
 
     private bool isLocked = false;
 
-    public List<TotemPiece> GetTotem()
+    public List<ScriptableObjectTienda> GetTotem()
     {
-        var list = new List<TotemPiece>();
+        var list = new List<ScriptableObjectTienda>();
         if(head)
-            list.Add(head.GetComponent<TotemPiece>());
+            list.Add(head.GetComponent<TotemPiece>().scriptableObjectTienda);
         if(body)
-            list.Add(body.GetComponent<TotemPiece>());
+            list.Add(body.GetComponent<TotemPiece>().scriptableObjectTienda);
         if(feet)
-            list.Add(feet.GetComponent<TotemPiece>());
+            list.Add(feet.GetComponent<TotemPiece>().scriptableObjectTienda);
         return list;
     }
     public void CreateTotem(GameObject h, GameObject b, GameObject f)
@@ -178,6 +178,10 @@ public class Totem : MonoBehaviour
         other = pieceToSet.transform;
         other.GetComponent<TotemPiece>().totem = this;
         other.SetParent(_transform);
+        if (!head && !body && !feet)
+        {
+            Destroy(gameObject);
+        }
     }
     
     public void Separate(int mode)

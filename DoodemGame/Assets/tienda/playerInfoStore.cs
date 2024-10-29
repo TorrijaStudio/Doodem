@@ -18,8 +18,22 @@ public class playerInfoStore : MonoBehaviour
 
     [SerializeField] private Transform[] positionsToSpawn;
     [SerializeField] private Transform totemItems;
+    [SerializeField] private GameObject botones;
     public Inventory inventory;
+    public bool canOnlyChooseOne;
+    private objetoTienda _selectedObject;
 
+    public objetoTienda SelectedObject
+    {
+        get => _selectedObject;
+        set
+        {
+            if(_selectedObject)
+                _selectedObject.selected = false;
+            _selectedObject = value;
+        }
+    }
+    
     private void Start()
     {
         InitialSelection();
@@ -32,11 +46,13 @@ public class playerInfoStore : MonoBehaviour
             Destroy(totemItems.GetChild(i).gameObject);
         }
         boughtObjects.Clear();
+        botones.SetActive(false);
     }
     
     // Start is called before the first frame update
     public void InitialSelection()
     {
+        canOnlyChooseOne = true;
         var index = 1;
         var prevTotems = new List<int>();
         for (var i = 0; i < totemsTienda.Count; i++)
@@ -55,15 +71,19 @@ public class playerInfoStore : MonoBehaviour
     public void SetUpShop()
     {
         DeleteShopItems();
+        canOnlyChooseOne = false;
         var index = 0;
         var spawnableObjects = objectsTiendas.Where(aux => !inventory.Contains(aux.objectsToSell[0])).ToList();
         for (int i = 0; i < 4; i++)
         {
+            if(spawnableObjects.Count == 0) break;
+            
             var objT = Instantiate(objTiendaPrefab, positionsToSpawn[index].position, Quaternion.identity, totemItems);
             var objToSpawn = Random.Range(0, spawnableObjects.Count);
             objT.CreateObject(spawnableObjects[objToSpawn]);
             spawnableObjects.RemoveAt(objToSpawn);
             index++;
         }
+        botones.SetActive(true);
     }
 }
