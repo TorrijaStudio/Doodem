@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class Entity : NetworkBehaviour ,IAtackable
@@ -150,6 +151,10 @@ public class Entity : NetworkBehaviour ,IAtackable
         if (health <= 0)
         {
             Destroy(gameObject);
+            if (IsHost)
+                GameManager.Instance.checkIfRoundEnded(layer);
+
+
         }
 
         return health;

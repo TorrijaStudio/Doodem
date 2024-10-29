@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/mainDiego.unity
     guid: 6e1b7b972de50004dbb5439610945573
+  - enabled: 1
+    path: Assets/Scenes/victory.unity
+    guid: 20fecd71b220640478489dd916e44b50
+  - enabled: 1
+    path: Assets/Scenes/defeat.unity
+    guid: 583b0ded1392d7f47b7bef49ab5bc730
   m_configObjects: {}
