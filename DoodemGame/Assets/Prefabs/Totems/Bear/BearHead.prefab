@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7025191786986679532}
   - component: {fileID: 530723141891053814}
   - component: {fileID: 2947485948552870246}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3852137887115555466}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 7988131569054063961}
   - component: {fileID: 3293183618082288064}
   - component: {fileID: 5034326539211255655}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 2744669685927876006}
   - component: {fileID: 1532213765180093918}
   - component: {fileID: 6065387740606088054}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: BearHead
   m_TagString: Head
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 1071049447419704250}
   - component: {fileID: 5765868881874213096}
   - component: {fileID: 1919612987798437018}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 4403001023637011935}
   - component: {fileID: 8457030755490234626}
   - component: {fileID: 6498420636514465788}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 1824894909052967040}
   - component: {fileID: 2647923596496374564}
   - component: {fileID: 5942539296074708886}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3730030066274060059}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Ears
   m_TagString: Untagged
   m_Icon: {fileID: 0}
