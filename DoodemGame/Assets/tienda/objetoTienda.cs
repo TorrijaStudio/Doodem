@@ -21,7 +21,6 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void CreateObject(ScriptableObjectTienda scriptableObjectTienda)

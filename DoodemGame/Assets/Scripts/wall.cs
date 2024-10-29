@@ -14,6 +14,7 @@ public class wall : NetworkBehaviour
     private TextMeshProUGUI _text;
     private int contadorActual;
     private float tiempoTranscurrido;
+    public bool startTimer = true;
 
     void Start()
     {
@@ -26,13 +27,14 @@ public class wall : NetworkBehaviour
     {
         tiempoTranscurrido += Time.deltaTime;
 
-        if (tiempoTranscurrido >= intervalo)
+        if (startTimer && tiempoTranscurrido >= intervalo)
         {
             if (cuentaRegresiva)
             {
                 contadorActual--;
                 if (contadorActual <= 0)
                 {
+                    startTimer = false;
                     if (GameManager.Instance.clientId==0)
                     {
                         GameManager.Instance.ExecuteOnAllClientsClientRpc();
