@@ -40,7 +40,7 @@ public class wall : NetworkBehaviour
                         GameManager.Instance.ExecuteOnAllClientsClientRpc();
                     }
                     //transform.position +=Vector3.up*100;
-                    contadorActual = 30;
+                    contadorActual = 0;
                 }
             }
             else
@@ -63,8 +63,8 @@ public class wall : NetworkBehaviour
 
     public void StartTimer()
     {
+        startTimer = true;
         contadorActual = contadorInicial;
         tiempoTranscurrido = 0;
-        startTimer = true;
     }
 }

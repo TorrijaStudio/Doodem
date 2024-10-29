@@ -13,16 +13,11 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private Transform posToSpawn;
 
-    [SerializeField] private Transform seleccionableParent;
-    [SerializeField] private Transform selecPosToSpawn;
-    [SerializeField] private float selecDistance;
-
     [SerializeField] private GameObject pointer;
     [SerializeField] private GameObject wall;
     [SerializeField] private float distance;
 
     [SerializeField] private Totem totemToInstantiate;
-    [SerializeField] private Seleccionable seleccionableToSpawn;
 
     [SerializeField]
     private Transform totemParent;
@@ -131,25 +126,10 @@ public class Inventory : MonoBehaviour
             pos += Vector3.right * separationDistance;
         }
         SetDrag(true);
-        boton.DeleteShopItems();
     }
 
     public void SpawnSeleccionables()
     {
-        var infoForSeleccionables = _totemPieces.Where((list => list.Count == 3)).ToList();
-        Debug.Log(infoForSeleccionables.Count);
-        var objectsToSpawn = infoForSeleccionables.Count;
-        
-        var separationDistance = selecDistance / objectsToSpawn;
-        var pos = selecPosToSpawn.position;
-        foreach (var totemPiece in infoForSeleccionables)
-        { 
-            var totem = Instantiate(seleccionableToSpawn, pos, Quaternion.identity, seleccionableParent);
-            totem.gameObject.SetActive(true);
-            // totem.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            totem.SetInfo(totemPiece[0].scriptableObjectTienda.num, totemPiece[1].scriptableObjectTienda.num, totemPiece[2].scriptableObjectTienda.num);
-            pos += Vector3.down * separationDistance;
-        }
-        SetDrag(true);
+        //TODO: esto esta azul
     }
 }

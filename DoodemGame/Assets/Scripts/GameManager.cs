@@ -82,7 +82,6 @@ public class GameManager : NetworkBehaviour
 
     private void Update()
     {
-        
         //if (Input.GetKeyDown(KeyCode.L) && IsHost)
         //{
         //    ExecuteOnAllClientsClientRpc();
@@ -132,7 +131,6 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
    public void ExecuteOnAllClientsClientRpc()
    {
-       // if(IsServer)
        if(startMatchAfterTimer){
            startedGame = true;
            _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
@@ -148,10 +146,8 @@ public class GameManager : NetworkBehaviour
            //mover camera a el tablero
            startMatchAfterTimer = true;
            
-           FindObjectOfType<Inventory>().SpawnSeleccionables();
            gameCanvas.gameObject.SetActive(true);
            storeCanvas.gameObject.SetActive(false);
-           startedGame = false;
            StartTime();
        }
     }
@@ -162,7 +158,6 @@ public class GameManager : NetworkBehaviour
     {
         if(winner==" ")
         {
-            startedGame = false;
             gameCanvas.gameObject.SetActive(false);
             storeCanvas.gameObject.SetActive(true);
             startMatchAfterTimer = false;
@@ -201,7 +196,6 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-            startedGame = false;
             startMatchAfterTimer = false;
             gameCanvas.gameObject.SetActive(false);
             storeCanvas.gameObject.SetActive(true);
@@ -245,7 +239,7 @@ public class GameManager : NetworkBehaviour
     }
     
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnServerRpc(int playerId, int prefab, Vector3 pos, int head, int body, int feet)
+    public void SpawnServerRpc(int playerId, int prefab, Vector3 pos)
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
        
@@ -256,7 +250,7 @@ public class GameManager : NetworkBehaviour
         //     SetAnimalParts(GameManager.Instance._heads[Random.Range(0, GameManager.Instance._heads.Length)], 
         //         GameManager.Instance._body[Random.Range(0, GameManager.Instance._body.Length)], 
         //         GameManager.Instance._feet[Random.Range(0, GameManager.Instance._feet.Length)]);
-            entity.SpawnClientRpc(head, body, feet);
+            entity.SpawnClientRpc(Random.Range(0, GameManager.Instance._heads.Length), Random.Range(0, GameManager.Instance._body.Length), Random.Range(0, GameManager.Instance._feet.Length));
         }
         if (player.TryGetComponent(out NavMeshAgent nav))
         {
