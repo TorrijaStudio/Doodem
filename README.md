@@ -1,5 +1,9 @@
 # Game Design Document (GDD)
 
+
+<img src="/IMAGENES_GDD/Logo Idea 2.png" alt="Logo de Doodem" width=100% height=100%>
+
+
 **Juegos para Web y Redes Sociales**  
 **Grado en Diseño y Desarrollo de Videojuegos**  
 **Grupo F**  
@@ -183,6 +187,23 @@ En cuanto a las habilidades, no todas las partes tendrán una. En su defecto, es
 - **Al morir**
 - **Durante la ronda (pasiva)**
 
+A continuación, se muestran todas las habilidades y características de cada tótem base.
+
+<img src="/IMAGENES_GDD/Aguilatabla.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/TablaOso.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/asdadsad.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/asdasd.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/sd.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/asdasdas.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/sdf.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/g.png" alt="Habilidades del águila" width=100% height=100%>
 ### 2.4 Biomas
 El número inicial de biomas es cinco. De ellos, tres generan recursos útiles para las criaturas, mientras que los otros dos provocan efectos negativos. Los biomas que generan recursos lo hacen todos al mismo tiempo. Estos biomas también generan obstáculos físicos que retrasan el movimiento de las criaturas. Al inicio de la partida ningún bioma tiene recursos ni obstáculos generados.
 
@@ -197,6 +218,10 @@ Los obstáculos son similares a las paredes. Bloquean el paso de las criaturas, 
 - Una cuadrícula,
 - 4 cuadrículas en forma de T,
 - 4 cuadrículas en forma de L.
+
+<img src="/IMAGENES_GDD/j.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/OBSTACULOS.png" alt="Habilidades del águila" width=100% height=100%>
 
 ### 2.5 Estados
 
@@ -260,7 +285,9 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
  
  Al terminar cada una de las rondas, independientemente del resultado, los jugadores son recompensados con una cantidad de dinero que se irá incrementando con el paso de las rondas. Ambos reciben la misma cantidad base.
  
- Para calcular este dinero base otorgado en cada ronda, se utiliza la siguiente fórmula ajustable que permite alterar los valores para balancear la economía de juego de una forma más sencilla
+ Para calcular este dinero base otorgado en cada ronda, se utiliza la siguiente fórmula ajustable que permite alterar los valores para balancear la economía de juego de una forma más sencilla.
+
+ <img src="/IMAGENES_GDD/dasdasd.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Fórmula de recompensa:**  
    - `a = Recompensa base fija por cada ronda`  
@@ -271,27 +298,42 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
    
    **Ejemplo:** Con los valores `a = 20`, `b = 5` y `c = 1.5`, el dinero obtenido se ajusta para una progresión constante.
 
+  <img src="/IMAGENES_GDD/asdas.png" alt="Habilidades del águila" width=100% height=100%>
+
 #### 2.8.2 Gastos
 - **Reroll:**  En primer lugar tenemos la compra de objetos que incluyen partes de animales y biomas. Al jugador se le presentan 4 objetos a comprar aleatorios, asegurando que hay mínimo una pieza y un bioma disponible.
  El jugador puede gastar una cantidad de dinero para cambiar los objetos de forma aleatoria. Esta acción cuesta dinero y se incrementa con cada uso, volviendo a su valor original en la siguiente ronda. El valor de regeneración de tienda inicial debe ser proporcional al dinero otorgado en la primera ronda, de manera que se limite su uso al principio, pero que según avance la partida sea más común poder usarlo.
+
+<img src="/IMAGENES_GDD/ASDASDAS.png" alt="Habilidades del águila" width=100% height=100%>
+
    - **Fórmula de reroll:**  
       - `a = Recompensa base fija`  
       - `D = Divisor para coste inicial`  
       - `d = Divisor asociado al incremento gradual`  
    - **Ejemplo:** Con `a = 20`, `D = 5` y `d = 8`, se ajusta el valor del reroll para el primer turno.
 
+   <img src="/IMAGENES_GDD/sdfsdfds.png" alt="Habilidades del águila" width=100% height=100%>
+
 - **Piezas:**  En primer lugar, las piezas de torso y base tendrán el mismo precio mientras que las cabezas tendrán un precio más bajo, ya que es una pieza más débil. Además, el precio de todas las partes juntas debe ser igual a un tercio de la recompensa inicial.
+
+<img src="/IMAGENES_GDD/rt.png" alt="Habilidades del águila" width=100% height=100%>
    - **Fórmula del precio de las piezas:**  
       - `C = Precio de Cabeza`  
       - `a = Recompensa base`  
       - `T = Precio de torso y patas`  
+   - **Ejemplo:** Con `a = 20`, `T = 5`, se ajusta el valor de la regeneración para el primer turno.
+
+<img src="/IMAGENES_GDD/hytj.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Rehacer:**  Para finalizar con los tótems, como ya se ha comentado, habrá que pagar un precio para poder rehacer los tótems. Este precio comenzará bajo pero irá aumentando según avance la partida.
+  <img src="/IMAGENES_GDD/rehacer.png" alt="Habilidades del águila" width=100% height=100%>
    - **Fórmula de rehacer tótem:**  
       - `ronda = Nº de ronda`  
-      - `m = Multiplicador de ronda`  
+      - `m = Multiplicador de ronda`
+   <img src="/IMAGENES_GDD/dinero.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Biomas:** A continuación se tratará el precio de los biomas. Estos tendrán un precio base que aumentará en relación al número de biomas de ese tipo que hay en uso y el número de ronda en el que se encuentre la partida:
+      <img src="/IMAGENES_GDD/dfghj.png" alt="Habilidades del águila" width=100% height=100%>
     - **Fórmula del precio de los biomas:**
         - `Preciobioma= precio de cada bioma en la tienda`
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
@@ -300,15 +342,20 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
         - `B = Número de biomas activos del mismo tipo`
         - `i = Incremento porcentual de cada bioma`
  - **Ejemplo:** Con `a = 20`, `g = 1` y `i = 2`, los valores de compra de biomas serían:
+<img src="/IMAGENES_GDD/ronda.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Experiencia:**  Finalmente, el último artículo disponible en la tienda es el de la XP, que te permite subir de nivel y poder colocar más tótems en el tablero.
+- <img src="/IMAGENES_GDD/precioXP.png" alt="Habilidades del águila" width=100% height=100%>
     - **Fórmula del precio de los biomas:**
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
         - `N = Nivel actual del jugador`
         - `h = Exponente para aumentar`
-    - **Ejemplo:** Con `a = 20`, `g = 1` y `i = 2`, los valores de compra de biomas serían:
+    - **Ejemplo:** Con `a = 20`, `h = 1.3`, los valores de compra de niveles serían:
+    <img src="/IMAGENES_GDD/DinNeRo.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Venta:**   Además de comprar piezas, se pueden vender todas aquellas piezas que se posean, siempre que estén en el inventario y no en un tótem. El precio de venta será siempre el mismo para cada tipo de pieza, el cual será un 50% del valor original.
+
+<img src="/IMAGENES_GDD/venta.png" alt="Habilidades del águila" width=100% height=100%>
 
 ### 2.9 Ligas
  A medida que el jugador juega partidas, obtiene una serie de puntos clasificatorios que le situarán en una liga en función de su nivel. Al comenzar, todos los jugadores empiezan con 0 puntos clasificatorios, y en la liga de bronce. A medida que los jugadores vayan obteniendo puntos al ganar partidas, irán subiendo de ligas, pero del mismo modo, pueden bajar.
@@ -331,6 +378,10 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
  
  El sistema de puntuación al ganar una partida es utiliza la siguiente fórmula para calcular los puntos ganados o perdidos:
 
+ <img src="/IMAGENES_GDD/puntosganados.png" alt="Habilidades del águila" width=100% height=100%>
+
+  <img src="/IMAGENES_GDD/pu8ntosperiddos.png" alt="Habilidades del águila" width=100% height=100%>
+
 - K = factor de ajuste, que determina la máxima cantidad de puntos que se pueden
  ganar o perder en una partida.
 - D = diferencia de puntos entre ambos jugadores, definida como PA- PB.
@@ -342,6 +393,8 @@ De este modo, el factor de ajuste k según las ligas es:
 - Liga mítica: k = 50
 
  Finalmente, la cantidad de puntos necesarios para alcanzar cada liga son:
+
+  <img src="/IMAGENES_GDD/TABLASDELIGAS.png" alt="Habilidades del águila" width=100% height=100%>
 
 ### 2.10 Controles
 *Doodem* se juega principalmente en navegadores y está diseñado para PC y dispositivos móviles. Los controles son sencillos para que puedan adaptarse a diferentes dispositivos:
@@ -362,6 +415,8 @@ El juego cuenta con una estética cartoon y colorida, ya que se ha tomado inspir
 
 En cuanto al apartado visual del juego, este combina tanto modelos en 3D como escenarios en 2D creados a mano. Además, las interfaces se han creado también en 2D y usando la misma paleta de colores del juego.
 
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.25.41.jpeg" alt="Habilidades del águila" width=100% height=100%>
+
 
 ### 3.2 Arte conceptual
 El arte conceptual se centra en el diseño de las criaturas y biomas, asegurando que cada tótem transmita la esencia del animal que representa. Los diseños de los tótems son sencillos pero icónicos, permitiendo que los jugadores los identifiquen fácilmente en el tablero.
@@ -373,11 +428,14 @@ Por un lado se creará el arte conceptual de los tótems, que da una representac
  Además, también se usará el mismo programa para la creación de los sprites que formarán los escenarios en los que se disputarán las batallas. 
 Por último, también se crearán arte conceptual de cómo se verían los animales mezclados una vez se han invocado mezclando las piezas que los jugadores elijan de los tótems.
 
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.27.37.jpeg" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.29.04.jpeg" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/WhatsApp Image 2024-10-28 at 22.29.58.jpeg" alt="Habilidades del águila" width=100% height=100%>
+
 ### 3.3 Arte 3D
 El juego utiliza modelos 3D para los tótems y el entorno, brindando una experiencia visual envolvente. La prioridad es que los modelos sean reconocibles y se integren con la estética general del juego.
-
-- **Tótems en 3D:** Los tótems están diseñados en tres dimensiones, permitiendo que se vean desde múltiples ángulos y manteniendo su carácter caricaturesco.
-- **Escenarios en 3D:** El terreno está dividido en casillas, lo cual permite a los jugadores posicionar sus criaturas y biomas de manera estratégica. Los modelos de los biomas son también tridimensionales, con texturas y detalles que los diferencian visualmente y ayudan a crear un entorno coherente.
 
 Para crear los tótems primero se usará un forma de tótem base dividida en tres partes a la que luego se le añadirán las facciones típicas de cada animal. De este modo, el flujo de creación de un nuevo tótem consiste en crear las partes nuevas del animal en vez de tener que crear el tótem desde 0, lo que ahorra una gran cantidad de tiempo.
 
@@ -385,7 +443,9 @@ Cabe destacar que como el juego debe funcionar en navegador, los modelos no pued
 
 En cuanto al texturizado de los mismos, los detalles se han pintado a mano sobre el unwrapping que se elabora en Blender, esto nos permite añadir detalles como plumas, pupilas o incluso partes del cuerpo sin tener que recurrir al modelado de nuevas partes. Además, se ha usado tanto una textura de madera como el mapa de normales de las propias texturas pintadas a mano para dar al tótem el aspecto de estar hecho de madera y de tener ciertas partes talladas a mano.
 
----
+<img src="/IMAGENES_GDD/oso3D.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/aguila3d.png" alt="Habilidades del águila" width=100% height=100%>
 
 ## Capítulo 4: Sonido y Música
 
@@ -408,10 +468,25 @@ En lo relativo a los sonidos se tomarán sonidos naturales y fuertes que simboli
 ### 5.1 Flow-Charts
 Se utilizan diagramas de flujo (_flow-charts_) para organizar el flujo de interfaces dentro del juego y facilitar la navegación del usuario. Estos diagramas ayudan a visualizar la secuencia de pantallas, menús y opciones que el jugador verá y usará durante su experiencia de juego, permitiendo una estructura clara y fácil de entender.
 
+<img src="/IMAGENES_GDD/fc.png" alt="Habilidades del águila" width=100% height=100%>
+
 ### 5.2 Mockups
 Se presentan _mockups_ o maquetas visuales para representar el diseño de las principales interfaces del juego. Estos mockups muestran cómo se verá cada pantalla, incluyendo la disposición de elementos como botones, menús y otros componentes interactivos. 
 
 Cada pantalla está diseñada para optimizar la navegación y asegurar que el jugador pueda acceder fácilmente a las diferentes secciones del juego, tanto en la interfaz principal como en las secciones específicas de combate, tienda y configuración del juego.
+
+<img src="/IMAGENES_GDD/m1.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/m2.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/m3.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/m4.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/m5.png" alt="Habilidades del águila" width=100% height=100%>
+
+<img src="/IMAGENES_GDD/m6.png" alt="Habilidades del águila" width=100% height=100%>
+
 
 ---
 
@@ -432,11 +507,17 @@ El modelo de negocio de _Doodem_ se basará en un enfoque de fidelización. El j
 #### 6.1.2 Mapa de empatía
 El mapa de empatía está diseñado para comprender mejor a los usuarios del juego. Incluye preguntas y factores clave que permiten conocer los deseos, necesidades y comportamientos del jugador. Esta herramienta es crucial para desarrollar un enfoque de monetización efectivo y una experiencia de usuario atractiva.
 
+<img src="/IMAGENES_GDD/sdgddfsd.png" alt="Habilidades del águila" width=100% height=100%>
+
 #### 6.1.3 Caja de herramientas
 La caja de herramientas incluye las estrategias y tácticas que el equipo de desarrollo empleará para mantener y mejorar la experiencia del jugador. Estas herramientas están alineadas con los objetivos del modelo de negocio y buscan promover la retención de jugadores, la adquisición de nuevos usuarios y el incremento en la participación dentro del juego.
 
+<img src="/IMAGENES_GDD/asdasdasf.png" alt="Habilidades del águila" width=100% height=100%>
+
 #### 6.1.4 Modelo de lienzo
 El modelo de lienzo es un esquema que representa los componentes principales del modelo de negocio, incluyendo el valor del juego para los usuarios, las fuentes de ingresos, la estructura de costos y las alianzas clave necesarias para el éxito del juego en el mercado.
+
+<img src="/IMAGENES_GDD/k.png" alt="Habilidades del águila" width=100% height=100%>
 
 ### 6.2 Monetización
 El sistema de monetización en _Doodem_ es de tipo freemium, permitiendo jugar gratis con opción a compras adicionales para mejorar la experiencia. El juego contará con actualizaciones periódicas de contenido, aproximadamente cada dos meses. Estas actualizaciones incluirán nuevos personajes jugables y avatares para los jugadores. Parte del contenido será gratuito y otra parte estará disponible para compra, tanto con dinero real como con moneda virtual.
