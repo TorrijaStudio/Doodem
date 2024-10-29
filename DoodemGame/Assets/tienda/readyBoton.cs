@@ -29,7 +29,6 @@ public class readyBoton : MonoBehaviour
                 tienda.boughtObjects.Add(ob.gameObject);
             }
         }
-        tienda.botones.SetActive(false);
         FindObjectOfType<Inventory>().GetTotemsFromShop();
         FindObjectOfType<Inventory>().SpawnTotems();
         // FindObjectOfType<Canvas>().gameObject.SetActive(false);

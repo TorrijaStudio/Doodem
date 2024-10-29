@@ -36,7 +36,6 @@ public class GameManager : NetworkBehaviour
     public List<Entity> enemies;
     public List<Entity> allies;
     public List<recurso> recs;
-    private bool startMatchAfterTimer;
 
     [SerializeField] public GameObject[] _heads;
     [SerializeField] public GameObject[] _body;
@@ -44,12 +43,6 @@ public class GameManager : NetworkBehaviour
 
     private List<Vector2> Positions = new ();//casillas disponibles
     private Dictionary<Vector2Int, GameObject> entidades = new();
-
-    public GameObject gameCanvas;
-    public Canvas storeCanvas;
-    
-    private playerInfoStore _store;
-    
     public float MaxDistance
     {
         get
@@ -70,9 +63,6 @@ public class GameManager : NetworkBehaviour
             Instance = this;
         }
 
-        gameCanvas.gameObject.SetActive(true);
-        storeCanvas.gameObject.SetActive(false);
-        _store = FindObjectOfType<playerInfoStore>(true);
         _terreno = terrenoGO.GetComponent<terreno>();
         _networkManager = NetworkManager.Singleton;
         _playerPrefab = _networkManager.NetworkConfig.Prefabs.Prefabs[0].Prefab;
@@ -131,37 +121,20 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
    public void ExecuteOnAllClientsClientRpc()
    {
-       if(startMatchAfterTimer){
-           startedGame = true;
-           _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
-           foreach (var p in playerObjects)
-           {
-               if (p)
-                   p.SetActive(true);
-           }
-       }
-       else
-       {
-           FindObjectOfType<playerInfoStore>().CloseShopAfterTimer();
-           //mover camera a el tablero
-           startMatchAfterTimer = true;
-           
-           gameCanvas.gameObject.SetActive(true);
-           storeCanvas.gameObject.SetActive(false);
-           StartTime();
-       }
+       startedGame = true;
+       _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+        foreach (var p in playerObjects)
+        {
+            if(p)
+                p.SetActive(true);
+        }
     }
-   
-   
+
    [ClientRpc]
     public void StartRoundClientRpc(string winner)
     {
         if(winner==" ")
         {
-            gameCanvas.gameObject.SetActive(false);
-            storeCanvas.gameObject.SetActive(true);
-            startMatchAfterTimer = false;
-            _store.InitialSelection();
             StartTime();
             return;
         }
@@ -195,13 +168,7 @@ public class GameManager : NetworkBehaviour
             StartCoroutine(ChangeScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat"));
         }
         else
-        {
-            startMatchAfterTimer = false;
-            gameCanvas.gameObject.SetActive(false);
-            storeCanvas.gameObject.SetActive(true);
-            _store.SetUpShop();
             StartTime();
-        }
         
     }
 
@@ -377,7 +344,8 @@ public class GameManager : NetworkBehaviour
                 Seleccionable.ClientID = _id.Value;
                 clientId = _id.Value;
                 // Camera.main.enabled = false;
-                GameObject.Find(clientId == 0 ? "Main Camera" : "Main Camera1").GetComponent<Camera>().gameObject.SetActive(false);
+                GameObject.Find(clientId == 0 ? "Main Camera" : "Main Camera1").GetComponent<Camera>().enabled =
+                    false;
             }   
         }
         if (IsServer)
