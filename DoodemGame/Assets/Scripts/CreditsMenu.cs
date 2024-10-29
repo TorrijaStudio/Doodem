@@ -8,8 +8,8 @@ public class CreditsMenu : MonoBehaviour
 {
     public void Back()
     {
-        // Cargar la siguiente escena del juego
-        SceneManager.LoadScene("MainMenu"); // Reemplaza "GameScene" con el nombre de tu escena de juego
+        // se va a usar para varias pantallas no solo creditops pero bueno
+        SceneManager.LoadScene("MainMenu"); 
     }
 
     }

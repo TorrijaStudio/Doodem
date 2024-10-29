@@ -8,13 +8,13 @@ public class MainMenuScript : MonoBehaviour
 {
     public void PlayGame()
     {
-        // Cargar la siguiente escena del juego
-        SceneManager.LoadScene("main"); // Reemplaza "GameScene" con el nombre de tu escena de juego
+        
+        SceneManager.LoadScene("PrototypeMain"); 
     }
 
     public void Tienda()
     {
-        SceneManager.LoadScene("Menu Tienda"); // Reemplaza "GameScene" con el nombre de tu escena de juego
+        SceneManager.LoadScene("Menu Tienda"); 
 
     }
 
