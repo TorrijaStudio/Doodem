@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 6963791943007721694, guid: e47e4cd05c08f5c4b9f40bb87cf0a7b3, type: 3}
   - {fileID: 1062466098516003971, guid: 0255d1c8d95a01b4abf70262013c1437, type: 3}
   image: {fileID: 21300000, guid: 9c370bb11be501b40bbcc3683324cb9b, type: 3}
+  num: 1
