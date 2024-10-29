@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.WebSockets;
 using Unity.AI.Navigation;
 using Unity.Netcode;
@@ -9,6 +10,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -27,8 +29,9 @@ public class GameManager : NetworkBehaviour
     public List<Transform> Bases;
     public GameObject objectSelected;
     public List<GameObject> playerObjects = new List<GameObject>();
-    public bool statedGame;
+    public bool startedGame;
     private int numPlayers;
+    public int numRondas;
     
     public List<Entity> enemies;
     public List<Entity> allies;
@@ -81,7 +84,7 @@ public class GameManager : NetworkBehaviour
                     Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
             }
         }
-        if (!statedGame && Input.GetMouseButtonDown(0))
+        if (!startedGame && Input.GetMouseButtonDown(0))
         {
             Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -118,7 +121,7 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
    public void ExecuteOnAllClientsClientRpc()
    {
-       statedGame = true;
+       startedGame = true;
        _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
         foreach (var p in playerObjects)
         {
@@ -127,6 +130,45 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+   [ClientRpc]
+    public void StartRoundClientRpc(string winner)
+    {
+        startedGame = false;
+        numRondas--;
+        if (numRondas == 0)
+        {
+            //if (IsHost)
+            //{
+            //    if (winner == "Rojo")
+            //    {
+            //        SceneManager.LoadScene("victory");
+            //    }
+            //    else
+            //    {
+            //        SceneManager.LoadScene("defeat");
+            //    }
+            //}
+            //else
+            //{
+            //    if (winner == "Rojo")
+            //    {
+            //        SceneManager.LoadScene("defeat");
+            //    }
+            //    else
+            //    {
+            //        SceneManager.LoadScene("victory");
+            //    }
+            //}
+            //SceneManager.LoadScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat");
+            StartCoroutine(ChangeScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat"));
+        }
+    }
+
+    private IEnumerator ChangeScene(string s)
+    {
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene(s);
+    }
     
     private void OnServerStarted()
     {
@@ -223,6 +265,46 @@ public class GameManager : NetworkBehaviour
     {
         entidades.Remove(_terreno.PositionToGrid(pos));
     }
+
+    public void checkIfRoundEnded(string layer)
+    {
+        var RedEnemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == "Rojo").ToList();
+        var BlueEnemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == "Azul").ToList();
+        if (layer == "Rojo")
+            RedEnemies.RemoveAt(0);
+        else
+            BlueEnemies.RemoveAt(0);
+        
+        if (RedEnemies.Count == 0 || BlueEnemies.Count == 0)
+        {
+            if (RedEnemies.Count > 0)
+            {
+                StartCoroutine(RoundEnded(RedEnemies));
+                StartRoundClientRpc("Rojo");
+            }
+            else
+            {
+                StartCoroutine(RoundEnded(BlueEnemies));
+                StartRoundClientRpc("Azul");
+            }
+            
+            
+        }
+    }
+
+    private IEnumerator RoundEnded(List<Entity> lista)
+    {
+        yield return new WaitForSeconds(2.0f);
+        foreach (var r in lista)
+        {
+            if (r.TryGetComponent(out NetworkObject n))
+            {
+                DespawnServerRpc(n, default);
+            }
+        }
+    }
+    
+    
     
     public void updateEntidades()
     {

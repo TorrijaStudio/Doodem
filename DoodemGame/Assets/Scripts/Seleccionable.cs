@@ -51,11 +51,12 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     {
         if (Input.GetMouseButton(0))
         {
-            if (_selected && !GameManager.Instance.statedGame && numCartas>0)
+            Debug.LogError(GameManager.Instance.startedGame+" : "+numCartas);
+            if (_selected && !GameManager.Instance.startedGame && numCartas>0)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-            
+                
                 if (Physics.Raycast(ray, out hit,100, LayerMask.GetMask("Terreno")))
                 {
                     if (!CanDropEnemySide && (ClientID == 0 && hit.point.z < terreno.transform.position.z +2F ||
@@ -95,7 +96,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
 
     private IEnumerator DestroyObject(GameObject o)
     {
-        yield return  new WaitUntil(()=>GameManager.Instance.statedGame);
+        yield return  new WaitUntil(()=>GameManager.Instance.startedGame);
         Destroy(o);
     }
 
