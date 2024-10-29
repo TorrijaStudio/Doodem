@@ -12,6 +12,5 @@ namespace tienda
         public List<TotemPiece> objectsToSell;
         public List<GameObject> animalParts;
         public Sprite image;
-        public int num;
     }
 }
