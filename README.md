@@ -454,9 +454,9 @@ Cabe destacar que como el juego debe funcionar en navegador, los modelos no pued
 
 En cuanto al texturizado de los mismos, los detalles se han pintado a mano sobre el unwrapping que se elabora en Blender, esto nos permite añadir detalles como plumas, pupilas o incluso partes del cuerpo sin tener que recurrir al modelado de nuevas partes. Además, se ha usado tanto una textura de madera como el mapa de normales de las propias texturas pintadas a mano para dar al tótem el aspecto de estar hecho de madera y de tener ciertas partes talladas a mano.
 
-<img src="/IMAGENES_GDD/oso3D.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/oso3D.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/aguila3d.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/aguila3d.png" alt="Habilidades del águila" width=75% height=75%>
 
 ## Capítulo 4: Sonido y Música
 
@@ -479,24 +479,24 @@ En lo relativo a los sonidos se tomarán sonidos naturales y fuertes que simboli
 ### 5.1 Flow-Charts
 Se utilizan diagramas de flujo (_flow-charts_) para organizar el flujo de interfaces dentro del juego y facilitar la navegación del usuario. Estos diagramas ayudan a visualizar la secuencia de pantallas, menús y opciones que el jugador verá y usará durante su experiencia de juego, permitiendo una estructura clara y fácil de entender.
 
-<img src="/IMAGENES_GDD/fc.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/fc.png" alt="Habilidades del águila" width=75% height=75%>
 
 ### 5.2 Mockups
 Se presentan _mockups_ o maquetas visuales para representar el diseño de las principales interfaces del juego. Estos mockups muestran cómo se verá cada pantalla, incluyendo la disposición de elementos como botones, menús y otros componentes interactivos. 
 
 Cada pantalla está diseñada para optimizar la navegación y asegurar que el jugador pueda acceder fácilmente a las diferentes secciones del juego, tanto en la interfaz principal como en las secciones específicas de combate, tienda y configuración del juego.
 
-<img src="/IMAGENES_GDD/m1.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/m1.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m2.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/m2.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m3.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/m3.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m4.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/m4.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m5.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/m5.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m6.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/m6.png" alt="Habilidades del águila" width=75% height=75%>
 
 
 ---
@@ -523,7 +523,7 @@ El mapa de empatía está diseñado para comprender mejor a los usuarios del jue
 #### 6.1.3 Caja de herramientas
 La caja de herramientas incluye las estrategias y tácticas que el equipo de desarrollo empleará para mantener y mejorar la experiencia del jugador. Estas herramientas están alineadas con los objetivos del modelo de negocio y buscan promover la retención de jugadores, la adquisición de nuevos usuarios y el incremento en la participación dentro del juego.
 
-<img src="/IMAGENES_GDD/asdasdasf.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/asdasdasf.png" alt="Habilidades del águila" width=75% height=75%>
 
 #### 6.1.4 Modelo de lienzo
 El modelo de lienzo es un esquema que representa los componentes principales del modelo de negocio, incluyendo el valor del juego para los usuarios, las fuentes de ingresos, la estructura de costos y las alianzas clave necesarias para el éxito del juego en el mercado.
