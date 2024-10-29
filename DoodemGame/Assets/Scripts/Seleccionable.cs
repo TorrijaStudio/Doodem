@@ -51,7 +51,6 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     {
         if (Input.GetMouseButton(0))
         {
-            Debug.LogError(GameManager.Instance.startedGame+" : "+numCartas);
             if (_selected && !GameManager.Instance.startedGame && numCartas>0)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

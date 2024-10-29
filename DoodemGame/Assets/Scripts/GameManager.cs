@@ -72,34 +72,34 @@ public class GameManager : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L) && IsHost)
-        {
-            ExecuteOnAllClientsClientRpc();
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            foreach (var VARIABLE in entidades.Keys)
-            {
-                if(entidades[VARIABLE])
-                    Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
-            }
-        }
-        if (!startedGame && Input.GetMouseButtonDown(0))
-        {
-            Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(rayo, out hit,30,LayerMask.GetMask("Rojo","Azul","casilla")))
-            {
-                objectSelected = hit.collider.gameObject;
-            }
-            else
-            {
-                if (!EventSystem.current.IsPointerOverGameObject())
-                {
-                    objectSelected = null;
-                }
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.L) && IsHost)
+        //{
+        //    ExecuteOnAllClientsClientRpc();
+        //}
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    foreach (var VARIABLE in entidades.Keys)
+        //    {
+        //        if(entidades[VARIABLE])
+        //            Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
+        //    }
+        //}
+        //if (!startedGame && Input.GetMouseButtonDown(0))
+        //{
+        //    Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit hit;
+        //    if (Physics.Raycast(rayo, out hit,30,LayerMask.GetMask("Rojo","Azul","casilla")))
+        //    {
+        //        objectSelected = hit.collider.gameObject;
+        //    }
+        //    else
+        //    {
+        //        if (!EventSystem.current.IsPointerOverGameObject())
+        //        {
+        //            objectSelected = null;
+        //        }
+        //    }
+        //}
     }
 
     public void StartGame()
@@ -133,6 +133,11 @@ public class GameManager : NetworkBehaviour
    [ClientRpc]
     public void StartRoundClientRpc(string winner)
     {
+        if(winner==" ")
+        {
+            StartTime();
+            return;
+        }
         startedGame = false;
         numRondas--;
         if (numRondas == 0)
@@ -162,6 +167,9 @@ public class GameManager : NetworkBehaviour
             //SceneManager.LoadScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat");
             StartCoroutine(ChangeScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat"));
         }
+        else
+            StartTime();
+        
     }
 
     private IEnumerator ChangeScene(string s)
@@ -259,7 +267,10 @@ public class GameManager : NetworkBehaviour
 
     public void StartTime()
     {
-        GameObject.Find("Canvas").transform.GetChild(2).GetComponent<wall>().enabled = true;
+        var w = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<wall>();
+        w.enabled = true;
+        w.StartTimer();
+
     }
     public void RemoveEntity(Vector3 pos)
     {
@@ -347,7 +358,7 @@ public class GameManager : NetworkBehaviour
             // players[id] = playerInfo;
             _id.Value++;
             if (_id.Value == 2)
-                StartTime();
+                StartRoundClientRpc(" ");
         } 
         // var player = Instantiate(_playerPrefab);
         // player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);Debug.Log(_idPlayer);

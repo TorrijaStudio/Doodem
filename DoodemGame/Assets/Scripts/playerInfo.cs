@@ -19,9 +19,9 @@ public class playerInfo : NetworkBehaviour
     void Start()
     {
         GameManager.Instance.players[PlayerId] = this;
-        if(idPlayer.Value == 1)
-            GameManager.Instance.StartTime();
-        Debug.Log(name + ": " + PlayerId);
+        //if(idPlayer.Value == 1)
+            //GameManager.Instance.StartTime();
+        //Debug.Log(name + ": " + PlayerId);
     }
 
     // Update is called once per frame
