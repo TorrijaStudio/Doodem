@@ -69,17 +69,19 @@ public class Inventory : MonoBehaviour
         {
             var child = totemParent.GetChild(i);
             var tempInfo = child.GetComponent<Totem>().GetTotem();
-            if (tempInfo.Count == 3)
-            {
-                tempTotemPieces.Add(tempInfo);
-            }
-            else  if(tempInfo.Count > 0)
-            {
-                foreach (TotemPiece totemPiece in tempInfo)
-                {
-                    tempTotemPieces.Add(new List<TotemPiece>(){totemPiece});
-                }
-            }
+            if(tempInfo.Count > 0)
+                tempTotemPieces.Add(tempInfo.Select(piece => piece.objectsToSell[0]).ToList());
+            // if (tempInfo.Count == 3)
+            // {
+            //     tempTotemPieces.Add(tempInfo.Select(piece => piece.objectsToSell[0]).ToList());
+            // }
+            // else  if(tempInfo.Count > 0)
+            // {
+            //     foreach (var totemPiece in tempInfo)
+            //     {
+            //         tempTotemPieces.Add(new List<TotemPiece>(){totemPiece.objectsToSell[0]});
+            //     }
+            // }
             Destroy(child.gameObject);
         }
         _totemPieces.Clear();

@@ -12,10 +12,12 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
 {
     [SerializeField] public ScriptableObjectTienda info;
     public bool selected;
+
+    private playerInfoStore _store;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _store = FindObjectOfType<playerInfoStore>();
     }
 
     // Update is called once per frame
@@ -33,6 +35,8 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
     {
         if(!selected && eventData.button == PointerEventData.InputButton.Left)
         {
+            if (_store.canOnlyChooseOne)
+                _store.SelectedObject = this;
             selected = true;
         }
         else if (selected && eventData.button == PointerEventData.InputButton.Right)

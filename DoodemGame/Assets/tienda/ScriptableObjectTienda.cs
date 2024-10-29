@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Animals.Interfaces;
 using Totems;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace tienda
     {
         public int price;
         public List<TotemPiece> objectsToSell;
+        public List<GameObject> animalParts;
         public Sprite image;
     }
 }

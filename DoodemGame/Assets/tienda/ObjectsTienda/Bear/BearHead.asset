@@ -15,4 +15,6 @@ MonoBehaviour:
   price: 0
   objectsToSell:
   - {fileID: 6065387740606088054, guid: 0e91fe7e5f5a2084396d7c5f999a67b4, type: 3}
+  animalParts:
+  - {fileID: 4743716353546243484, guid: 0e91fe7e5f5a2084396d7c5f999a67b4, type: 3}
   image: {fileID: 21300000, guid: 6072fbd7e4401b64abc69e042ff11553, type: 3}
