@@ -327,23 +327,28 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
 <img src="/IMAGENES_GDD/hytj.png" alt="Ejemplo del precio de las piezas" width=50% height=50%>
 
 - **Rehacer:**  Para finalizar con los tótems, como ya se ha comentado, habrá que pagar un precio para poder rehacer los tótems. Este precio comenzará bajo pero irá aumentando según avance la partida.
+  
   <img src="/IMAGENES_GDD/rehacer.png" alt="Formula de rehacer" width=75% height=75%>
    - **Fórmula de rehacer tótem:**  
       - `ronda = Nº de ronda`  
       - `m = Multiplicador de ronda`
+  
    <img src="/IMAGENES_GDD/dinero.png" alt="Ejemplo de rehacer" width=50% height=50%>
 
 - **Biomas:** A continuación se tratará el precio de los biomas. Estos tendrán un precio base que aumentará en relación al número de biomas de ese tipo que hay en uso y el número de ronda en el que se encuentre la partida:
 
 <img src="/IMAGENES_GDD/dfghj.png" alt="Habilidades del águila" width=75% height=75%>
-    - **Fórmula del precio de los biomas:**
+
+- **Fórmula del precio de los biomas:**
         - `Preciobioma= precio de cada bioma en la tienda`
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
         - `R = Número de rondas transcurridas`
         - `g = Incremento porcentual por ronda`
         - `B = Número de biomas activos del mismo tipo`
         - `i = Incremento porcentual de cada bioma`
+        
  - **Ejemplo:** Con `a = 20`, `g = 1` y `i = 2`, los valores de compra de biomas serían:
+   
 <img src="/IMAGENES_GDD/ronda.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Experiencia:**  Finalmente, el último artículo disponible en la tienda es el de la XP, que te permite subir de nivel y poder colocar más tótems en el tablero.
@@ -354,7 +359,7 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
         - `h = Exponente para aumentar`
     - **Ejemplo:** Con `a = 20`, `h = 1.3`, los valores de compra de niveles serían:
      
-    <img src="/IMAGENES_GDD/DinNeRo.png" alt="Habilidades del águila" width=50% height=50%>
+    <img src="/IMAGENES_GDD/DiNeRo.png" alt="Habilidades del águila" width=50% height=50%>
 
 - **Venta:**   Además de comprar piezas, se pueden vender todas aquellas piezas que se posean, siempre que estén en el inventario y no en un tótem. El precio de venta será siempre el mismo para cada tipo de pieza, el cual será un 50% del valor original.
 
