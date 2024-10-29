@@ -317,6 +317,7 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
 - **Piezas:**  En primer lugar, las piezas de torso y base tendrán el mismo precio mientras que las cabezas tendrán un precio más bajo, ya que es una pieza más débil. Además, el precio de todas las partes juntas debe ser igual a un tercio de la recompensa inicial.
 
 <img src="/IMAGENES_GDD/rt.png" alt="Fórmula del precio de las piezas" width=75% height=75%>
+
    - **Fórmula del precio de las piezas:**  
       - `C = Precio de Cabeza`  
       - `a = Recompensa base`  
@@ -330,10 +331,11 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
    - **Fórmula de rehacer tótem:**  
       - `ronda = Nº de ronda`  
       - `m = Multiplicador de ronda`
-   <img src="/IMAGENES_GDD/dinero.png" alt="Ejemplo de rehacer" width=75% height=75%>
+   <img src="/IMAGENES_GDD/dinero.png" alt="Ejemplo de rehacer" width=50% height=50%>
 
 - **Biomas:** A continuación se tratará el precio de los biomas. Estos tendrán un precio base que aumentará en relación al número de biomas de ese tipo que hay en uso y el número de ronda en el que se encuentre la partida:
-      <img src="/IMAGENES_GDD/dfghj.png" alt="Habilidades del águila" width=50% height=50%>
+
+<img src="/IMAGENES_GDD/dfghj.png" alt="Habilidades del águila" width=75% height=75%>
     - **Fórmula del precio de los biomas:**
         - `Preciobioma= precio de cada bioma en la tienda`
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
@@ -345,17 +347,18 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
 <img src="/IMAGENES_GDD/ronda.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Experiencia:**  Finalmente, el último artículo disponible en la tienda es el de la XP, que te permite subir de nivel y poder colocar más tótems en el tablero.
-- <img src="/IMAGENES_GDD/precioXP.png" alt="Habilidades del águila" width=75% height=75%>
+ <img src="/IMAGENES_GDD/precioXP.png" alt="Habilidades del águila" width=75% height=75%>
     - **Fórmula del precio de los biomas:**
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
         - `N = Nivel actual del jugador`
         - `h = Exponente para aumentar`
     - **Ejemplo:** Con `a = 20`, `h = 1.3`, los valores de compra de niveles serían:
+     
     <img src="/IMAGENES_GDD/DinNeRo.png" alt="Habilidades del águila" width=50% height=50%>
 
 - **Venta:**   Además de comprar piezas, se pueden vender todas aquellas piezas que se posean, siempre que estén en el inventario y no en un tótem. El precio de venta será siempre el mismo para cada tipo de pieza, el cual será un 50% del valor original.
 
-<img src="/IMAGENES_GDD/venta.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/venta.png" alt="Habilidades del águila" width=50% height=50%>
 
 ### 2.9 Ligas
  A medida que el jugador juega partidas, obtiene una serie de puntos clasificatorios que le situarán en una liga en función de su nivel. Al comenzar, todos los jugadores empiezan con 0 puntos clasificatorios, y en la liga de bronce. A medida que los jugadores vayan obteniendo puntos al ganar partidas, irán subiendo de ligas, pero del mismo modo, pueden bajar.
