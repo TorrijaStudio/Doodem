@@ -32,8 +32,8 @@ Material:
     - _Glossiness: 0.5
     - _Metallic: 0
     - _Scale: 10
-    - _ScaleX: 0
-    - _ScaleY: 0
+    - _ScaleX: 20
+    - _ScaleY: 20
     m_Colors:
     - _Color: {r: 0.5320754, g: 0.047184017, b: 0.047184017, a: 1}
     - _Color2: {r: 0.40566033, g: 1, b: 0.46280703, a: 1}
