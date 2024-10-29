@@ -80,7 +80,8 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
             if (_selected && objeto)
             {
                 SpawnServer(objeto.transform.position, ClientID);
-                Destroy(objeto);
+                GameObject o = objeto;
+                StartCoroutine(DestroyObject(o));
                 _selected = false;
                 objeto = null;
             }
@@ -91,7 +92,13 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
             Debug.Log("ClientID: " + ClientID);
         }
     }
-    
+
+    private IEnumerator DestroyObject(GameObject o)
+    {
+        yield return  new WaitUntil(()=>GameManager.Instance.statedGame);
+        Destroy(o);
+    }
+
     private void SpawnServer(Vector3 pos, int playerId)
     {
         // Debug.Log(playerId);

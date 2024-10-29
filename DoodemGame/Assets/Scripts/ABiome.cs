@@ -57,7 +57,6 @@ public abstract class ABiome : NetworkBehaviour
         
         pos = positions.ToList();
         transform.localScale = new Vector3(2*xSize*cellSize.x+cellSize.x,transform.localScale.y,2*zSize*cellSize.y+cellSize.y);
-        Debug.LogError(IsHost+" "+IsClient+" "+IsServer+" "+IsOwner);
         SetHijos();
         //if (IsOwner)
         //{

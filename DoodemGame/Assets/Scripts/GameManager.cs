@@ -28,6 +28,7 @@ public class GameManager : NetworkBehaviour
     public GameObject objectSelected;
     public List<GameObject> playerObjects = new List<GameObject>();
     public bool statedGame;
+    private int numPlayers;
     
     public List<Entity> enemies;
     public List<Entity> allies;
@@ -118,6 +119,7 @@ public class GameManager : NetworkBehaviour
    public void ExecuteOnAllClientsClientRpc()
    {
        statedGame = true;
+       _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
         foreach (var p in playerObjects)
         {
             if(p)
@@ -262,6 +264,8 @@ public class GameManager : NetworkBehaviour
             playerInfo.obj = obj;
             // players[id] = playerInfo;
             _id.Value++;
+            if (_id.Value == 2)
+                StartTime();
         } 
         // var player = Instantiate(_playerPrefab);
         // player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);Debug.Log(_idPlayer);

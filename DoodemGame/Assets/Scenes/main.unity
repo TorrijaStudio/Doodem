@@ -36526,7 +36526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetoACrear: {fileID: 4907933673860711935, guid: 8ceb79e2ee37121469e550083a35fe92, type: 3}
   indexPrefab: 3
-  CanDropEnemySide: 0
+  CanDropEnemySide: 1
   numCartas: 1
   terreno: {fileID: 1337947988}
 --- !u!114 &1331882688
@@ -51767,8 +51767,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetoACrear: {fileID: 4907933673860711935, guid: 5ec0c4eab915bab41a157a181118f305, type: 3}
   indexPrefab: 2
-  CanDropEnemySide: 0
-  numCartas: 1
+  CanDropEnemySide: 1
+  numCartas: 5
   terreno: {fileID: 1337947988}
 --- !u!114 &1786226305
 MonoBehaviour:

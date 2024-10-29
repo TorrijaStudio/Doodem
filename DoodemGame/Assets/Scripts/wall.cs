@@ -37,7 +37,7 @@ public class wall : NetworkBehaviour
                     {
                         GameManager.Instance.ExecuteOnAllClientsClientRpc();
                     }
-                    transform.position +=Vector3.up*100;
+                    //transform.position +=Vector3.up*100;
                     contadorActual = 0;
                 }
             }
