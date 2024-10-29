@@ -191,19 +191,19 @@ A continuación, se muestran todas las habilidades y características de cada t�
 
 <img src="/IMAGENES_GDD/Aguilatabla.png" alt="Habilidades del águila" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/TablaOso.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/TablaOso.png" alt="Habilidades del oso" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/asdadsad.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/asdadsad.png" alt="Habilidades de la tortuga" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/asdasd.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/asdasd.png" alt="Habilidades del abeja" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/sd.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/sd.png" alt="Habilidades del buitre" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/asdasdas.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/asdasdas (1).png" alt="Habilidades del lince" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/sdf.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/sdf.png" alt="Habilidades del lagarto" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/g.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/g.png" alt="Habilidades de la mantis" width=100% height=100%>
 ### 2.4 Biomas
 El número inicial de biomas es cinco. De ellos, tres generan recursos útiles para las criaturas, mientras que los otros dos provocan efectos negativos. Los biomas que generan recursos lo hacen todos al mismo tiempo. Estos biomas también generan obstáculos físicos que retrasan el movimiento de las criaturas. Al inicio de la partida ningún bioma tiene recursos ni obstáculos generados.
 
@@ -219,9 +219,9 @@ Los obstáculos son similares a las paredes. Bloquean el paso de las criaturas, 
 - 4 cuadrículas en forma de T,
 - 4 cuadrículas en forma de L.
 
-<img src="/IMAGENES_GDD/j.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/j.png" alt="Biomas" width=100% height=100%>
 
-<img src="/IMAGENES_GDD/OBSTACULOS.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/OBSTACULOS.png" alt="Obstáculos" width=100% height=100%>
 
 ### 2.5 Estados
 
@@ -287,7 +287,7 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
  
  Para calcular este dinero base otorgado en cada ronda, se utiliza la siguiente fórmula ajustable que permite alterar los valores para balancear la economía de juego de una forma más sencilla.
 
- <img src="/IMAGENES_GDD/dasdasd.png" alt="Habilidades del águila" width=100% height=100%>
+ <img src="/IMAGENES_GDD/dasdasd.png" alt="Fórmula de la recompensa" width=75% height=75%>
 
 - **Fórmula de recompensa:**  
    - `a = Recompensa base fija por cada ronda`  
@@ -298,13 +298,13 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
    
    **Ejemplo:** Con los valores `a = 20`, `b = 5` y `c = 1.5`, el dinero obtenido se ajusta para una progresión constante.
 
-  <img src="/IMAGENES_GDD/asdas.png" alt="Habilidades del águila" width=100% height=100%>
+  <img src="/IMAGENES_GDD/asdas.png" alt="Ejemplo de recompensa" width=50% height=50%>
 
 #### 2.8.2 Gastos
 - **Reroll:**  En primer lugar tenemos la compra de objetos que incluyen partes de animales y biomas. Al jugador se le presentan 4 objetos a comprar aleatorios, asegurando que hay mínimo una pieza y un bioma disponible.
  El jugador puede gastar una cantidad de dinero para cambiar los objetos de forma aleatoria. Esta acción cuesta dinero y se incrementa con cada uso, volviendo a su valor original en la siguiente ronda. El valor de regeneración de tienda inicial debe ser proporcional al dinero otorgado en la primera ronda, de manera que se limite su uso al principio, pero que según avance la partida sea más común poder usarlo.
 
-<img src="/IMAGENES_GDD/ASDASDAS.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/ASDASDAS.png" alt="Fórmula del Reroll" width=75% height=75%>
 
    - **Fórmula de reroll:**  
       - `a = Recompensa base fija`  
@@ -312,28 +312,28 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
       - `d = Divisor asociado al incremento gradual`  
    - **Ejemplo:** Con `a = 20`, `D = 5` y `d = 8`, se ajusta el valor del reroll para el primer turno.
 
-   <img src="/IMAGENES_GDD/sdfsdfds.png" alt="Habilidades del águila" width=100% height=100%>
+   <img src="/IMAGENES_GDD/sdfsdfds.png" alt="Ejemplo de reroll" width=50% height=50%>
 
 - **Piezas:**  En primer lugar, las piezas de torso y base tendrán el mismo precio mientras que las cabezas tendrán un precio más bajo, ya que es una pieza más débil. Además, el precio de todas las partes juntas debe ser igual a un tercio de la recompensa inicial.
 
-<img src="/IMAGENES_GDD/rt.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/rt.png" alt="Fórmula del precio de las piezas" width=75% height=75%>
    - **Fórmula del precio de las piezas:**  
       - `C = Precio de Cabeza`  
       - `a = Recompensa base`  
       - `T = Precio de torso y patas`  
    - **Ejemplo:** Con `a = 20`, `T = 5`, se ajusta el valor de la regeneración para el primer turno.
 
-<img src="/IMAGENES_GDD/hytj.png" alt="Habilidades del águila" width=100% height=100%>
+<img src="/IMAGENES_GDD/hytj.png" alt="Ejemplo del precio de las piezas" width=50% height=50%>
 
 - **Rehacer:**  Para finalizar con los tótems, como ya se ha comentado, habrá que pagar un precio para poder rehacer los tótems. Este precio comenzará bajo pero irá aumentando según avance la partida.
-  <img src="/IMAGENES_GDD/rehacer.png" alt="Habilidades del águila" width=100% height=100%>
+  <img src="/IMAGENES_GDD/rehacer.png" alt="Formula de rehacer" width=75% height=75%>
    - **Fórmula de rehacer tótem:**  
       - `ronda = Nº de ronda`  
       - `m = Multiplicador de ronda`
-   <img src="/IMAGENES_GDD/dinero.png" alt="Habilidades del águila" width=100% height=100%>
+   <img src="/IMAGENES_GDD/dinero.png" alt="Ejemplo de rehacer" width=75% height=75%>
 
 - **Biomas:** A continuación se tratará el precio de los biomas. Estos tendrán un precio base que aumentará en relación al número de biomas de ese tipo que hay en uso y el número de ronda en el que se encuentre la partida:
-      <img src="/IMAGENES_GDD/dfghj.png" alt="Habilidades del águila" width=100% height=100%>
+      <img src="/IMAGENES_GDD/dfghj.png" alt="Habilidades del águila" width=50% height=50%>
     - **Fórmula del precio de los biomas:**
         - `Preciobioma= precio de cada bioma en la tienda`
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
@@ -345,13 +345,13 @@ Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la p
 <img src="/IMAGENES_GDD/ronda.png" alt="Habilidades del águila" width=100% height=100%>
 
 - **Experiencia:**  Finalmente, el último artículo disponible en la tienda es el de la XP, que te permite subir de nivel y poder colocar más tótems en el tablero.
-- <img src="/IMAGENES_GDD/precioXP.png" alt="Habilidades del águila" width=100% height=100%>
+- <img src="/IMAGENES_GDD/precioXP.png" alt="Habilidades del águila" width=75% height=75%>
     - **Fórmula del precio de los biomas:**
         - `a = Recompensa base fija por cada ronda utilizada en la fórmula de Recompensa`
         - `N = Nivel actual del jugador`
         - `h = Exponente para aumentar`
     - **Ejemplo:** Con `a = 20`, `h = 1.3`, los valores de compra de niveles serían:
-    <img src="/IMAGENES_GDD/DinNeRo.png" alt="Habilidades del águila" width=100% height=100%>
+    <img src="/IMAGENES_GDD/DinNeRo.png" alt="Habilidades del águila" width=50% height=50%>
 
 - **Venta:**   Además de comprar piezas, se pueden vender todas aquellas piezas que se posean, siempre que estén en el inventario y no en un tótem. El precio de venta será siempre el mismo para cada tipo de pieza, el cual será un 50% del valor original.
 
