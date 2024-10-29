@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using tienda;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,9 +12,8 @@ namespace Totems
     {
         [SerializeField]
         private TotemStats stats;
-        
-        //TODO: Make it choose the corresponding language at Start function when a language choosing system is implemented
-        //TODO: Make a tool that helps choose between options (eg: head/torso/feet for bodyParts) so as to avoid mistakes like misspellings
+
+        public ScriptableObjectTienda scriptableObjectTienda;
         private TotemInfo _info;
         public Totem totem;
         [SerializeField]

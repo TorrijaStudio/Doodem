@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using tienda;
 using Totems;
 using UnityEngine;
 
@@ -16,8 +17,18 @@ public class Totem : MonoBehaviour
     
 
     private bool isLocked = false;
-    
-    
+
+    public List<TotemPiece> GetTotem()
+    {
+        var list = new List<TotemPiece>();
+        if(head)
+            list.Add(head.GetComponent<TotemPiece>());
+        if(body)
+            list.Add(body.GetComponent<TotemPiece>());
+        if(feet)
+            list.Add(feet.GetComponent<TotemPiece>());
+        return list;
+    }
     public void CreateTotem(GameObject h, GameObject b, GameObject f)
     {
         _transform = transform;
@@ -27,18 +38,53 @@ public class Totem : MonoBehaviour
         var position = _transform.position;
         var up = _transform.up * TotemOffset;
         if(ValidatePartDebug(h, "Head"))
-            head = Instantiate(h, position + up, Quaternion.identity, _transform).transform;
+            head = Instantiate(h, position + up, Quaternion.Euler(0, 180, 0), _transform).transform;
         // head.transform.SetParent(_transform);
         
         if(ValidatePartDebug(b, "Body"))
-            body = Instantiate(b, position, Quaternion.identity, _transform).transform;
+            body = Instantiate(b, position, Quaternion.Euler(0, 180, 0), _transform).transform;
         // body.transform.SetParent(_transform);
         
         if(ValidatePartDebug(f, "Feet"))
-            feet = Instantiate(f, position - up, Quaternion.identity, _transform).transform;
+            feet = Instantiate(f, position - up, Quaternion.Euler(0, 180, 0), _transform).transform;
         // feet.transform.SetParent(_transform);
     }
+    public void CreateTotem(ScriptableObjectTienda soh, ScriptableObjectTienda sob, ScriptableObjectTienda sof)
+    {
+        _transform = transform;
+        // if(!(ValidatePartDebug(h, "Head") && ValidatePartDebug(b, "Body") && ValidatePartDebug(f, "Feet")))
+        //     return;
 
+        var position = _transform.position;
+        var up = _transform.up * TotemOffset;
+        var h = soh.objectsToSell[0].gameObject;
+        var b = sob.objectsToSell[0].gameObject;
+        var f = sof.objectsToSell[0].gameObject;
+        if(ValidatePartDebug(h, "Head"))
+        {
+            var tempHead = Instantiate(soh.objectsToSell[0], position + up, 
+                Quaternion.Euler(0, 180, 0), _transform);
+            tempHead.scriptableObjectTienda = soh;
+            head = tempHead.transform;
+        }        // head.transform.SetParent(_transform);
+        
+        if(ValidatePartDebug(b, "Body"))
+        {
+            var tempBody = Instantiate(sob.objectsToSell[0], position, 
+                Quaternion.Euler(0, 180, 0), _transform);
+            tempBody.scriptableObjectTienda = sob;
+            body = tempBody.transform;
+        }
+        // body.transform.SetParent(_transform);
+        
+        if(ValidatePartDebug(f, "Feet"))
+        {
+            var tempFeet = Instantiate(sof.objectsToSell[0], position - up, 
+                Quaternion.Euler(0, 180, 0), _transform);
+            tempFeet.scriptableObjectTienda = sof;
+            feet = tempFeet.transform;
+        }        // feet.transform.SetParent(_transform);
+    }
     private bool ValidatePartDebug(GameObject g, string type)
     {
         if (!g) return false;

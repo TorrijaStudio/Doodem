@@ -146,7 +146,7 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
     
     private void PointerController(Ray ray)
     {
-        if (Physics.Raycast(ray, out var hit, 10f, LayerMask.GetMask("Wall", "Totem")))
+        if (Physics.Raycast(ray, out var hit, 30f, LayerMask.GetMask("Wall", "Totem")))
         {
             pointer.position = hit.point;
         }

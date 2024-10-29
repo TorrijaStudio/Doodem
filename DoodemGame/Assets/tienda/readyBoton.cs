@@ -7,6 +7,7 @@ public class readyBoton : MonoBehaviour
     // Start is called before the first frame update
     public objetoTienda[] storeObjects;
     public playerInfoStore tienda;
+    public Transform storeItems;
     void Start()
     {
         
@@ -20,8 +21,9 @@ public class readyBoton : MonoBehaviour
 
    public void OnClickPlayButton()
     {
-        foreach (var ob in storeObjects)
+        foreach (Transform obTr in storeItems)
         {
+            var ob = obTr.GetComponent<objetoTienda>();
             if (ob.selected)
             {
                 tienda.boughtObjects.Add(ob.gameObject);
@@ -29,6 +31,6 @@ public class readyBoton : MonoBehaviour
         }
         FindObjectOfType<Inventory>().GetTotemsFromShop();
         FindObjectOfType<Inventory>().SpawnTotems();
-        FindObjectOfType<Canvas>().gameObject.SetActive(false);
+        // FindObjectOfType<Canvas>().gameObject.SetActive(false);
     }
 }

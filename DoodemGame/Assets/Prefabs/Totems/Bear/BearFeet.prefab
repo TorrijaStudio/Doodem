@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 596ab11cc4ff68940a23ef42a9565ca1, type: 2}
+  scriptableObjectTienda: {fileID: 11400000, guid: fe98c059c42d5614090517d48c5003d2, type: 2}
   totem: {fileID: 0}
   type: 2
   animalName: Bear
