@@ -351,20 +351,6 @@ De este modo, el factor de ajuste k según las ligas es:
   
 Los controles básicos permiten al jugador interactuar de manera intuitiva con el entorno y las criaturas, haciendo más accesible el flujo de juego en múltiples plataformas.
 
-### 2.11 Ejemplo de partida
-A continuación, se presenta un ejemplo de cómo se desarrolla una partida de *Doodem*, describiendo las fases y las estrategias que un jugador podría usar para competir eficazmente.
-
-1. **Fase preparatoria:**  
-   El jugador elige dos tótems iniciales y combina sus partes para crear criaturas con habilidades estratégicas.
-   
-2. **Fase de combate:**  
-   Las criaturas generadas se enfrentan automáticamente a las del jugador rival hasta que uno de los equipos sea derrotado. Al finalizar, ambos jugadores reciben oro en función del rendimiento.
-
-3. **Fase de compra:**  
-   Con el oro obtenido, el jugador puede comprar nuevas partes de tótems o biomas en la tienda, ajustar su estrategia de combate y preparar su equipo para la siguiente ronda.
-   
-Este proceso se repite durante cinco rondas, con la posibilidad de ganar la partida al acumular tres puntos de victoria. Los jugadores deben adaptar sus estrategias, combinando criaturas y personalizando el terreno de juego para maximizar su ventaja competitiva.
-
 ---
 
 ## 3. Arte
