@@ -59,7 +59,6 @@ public class Inventory : MonoBehaviour
             Debug.Log(obj.name);
             _totemPieces.Add(obj.info.objectsToSell);
         }
-        boton.DeleteShopItems();
     }
 
     public void DespawnItems()
@@ -127,5 +126,10 @@ public class Inventory : MonoBehaviour
             pos += Vector3.right * separationDistance;
         }
         SetDrag(true);
+    }
+
+    public void SpawnSeleccionables()
+    {
+        //TODO: esto esta azul
     }
 }
