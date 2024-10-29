@@ -27,6 +27,7 @@ public class GameManager : NetworkBehaviour
     public List<Transform> Bases;
     public GameObject objectSelected;
     public List<GameObject> playerObjects = new List<GameObject>();
+    public bool statedGame;
     
     public List<Entity> enemies;
     public List<Entity> allies;
@@ -79,7 +80,7 @@ public class GameManager : NetworkBehaviour
                     Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
             }
         }
-        if (Input.GetMouseButtonDown(0))
+        if (!statedGame && Input.GetMouseButtonDown(0))
         {
             Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -114,9 +115,9 @@ public class GameManager : NetworkBehaviour
     }
     
     [ClientRpc]
-    void ExecuteOnAllClientsClientRpc()
-    {
-        Debug.Log("Esta función se ejecuta en todos los clientes.");
+   public void ExecuteOnAllClientsClientRpc()
+   {
+       statedGame = true;
         foreach (var p in playerObjects)
         {
             if(p)
@@ -212,6 +213,10 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    public void StartTime()
+    {
+        GameObject.Find("Canvas").transform.GetChild(2).GetComponent<wall>().enabled = true;
+    }
     public void RemoveEntity(Vector3 pos)
     {
         entidades.Remove(_terreno.PositionToGrid(pos));

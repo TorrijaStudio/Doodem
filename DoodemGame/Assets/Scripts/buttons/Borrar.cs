@@ -28,6 +28,15 @@ public class Borrar : MonoBehaviour
         }
         if (g.TryGetComponent(out NetworkObject n))
         {
+            Seleccionable s = null;
+            if(g.name=="personaje1(Clone)")
+                s =transform.parent.GetChild(0).GetChild(0).GetComponent<Seleccionable>();
+            else if(g.name=="bioma(Clone)")
+                s =transform.parent.GetChild(0).GetChild(1).GetComponent<Seleccionable>();
+            else if(g.name=="bioma1(Clone)")
+                s =transform.parent.GetChild(0).GetChild(2).GetComponent<Seleccionable>();
+            if(s!=null)
+                s.AddNumCarta();
             GameManager.Instance.DespawnServerRpc(n, default);
             GameManager.Instance.objectSelected = null;
         }

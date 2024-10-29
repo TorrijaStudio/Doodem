@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/AnimalWhat.unity
     guid: 6c34db2bfba30e24ca9718e7c759d8b3
+  - enabled: 0
+    path: Assets/Scenes/mainDiego.unity
+    guid: 6e1b7b972de50004dbb5439610945573
   m_configObjects: {}

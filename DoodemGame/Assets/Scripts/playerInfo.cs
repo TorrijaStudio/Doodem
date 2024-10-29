@@ -19,8 +19,8 @@ public class playerInfo : NetworkBehaviour
     void Start()
     {
         GameManager.Instance.players[PlayerId] = this;
-        //if(idPlayer.Value == 1)
-        //    GameManager.Instance.StartTime();
+        if(idPlayer.Value == 1)
+            GameManager.Instance.StartTime();
         Debug.Log(name + ": " + PlayerId);
     }
 

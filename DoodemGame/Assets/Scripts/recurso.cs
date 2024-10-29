@@ -39,7 +39,8 @@ public class recurso : MonoBehaviour
     public void PickRecurso()
     {
         // gameObject.SetActive(false);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        transform.position += Vector3.right*100;
     }
 
     public void CheckIfItsInMyBiome()

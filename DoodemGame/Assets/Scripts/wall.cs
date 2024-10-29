@@ -6,16 +6,18 @@ using UnityEngine;
 
 public class wall : NetworkBehaviour
 {
-    public int contadorInicial = 60; 
+    public int contadorInicial = 30; 
     public bool cuentaRegresiva = true; 
-    public float intervalo = 1f; 
-    public TextMeshPro[] contadorTexto = new TextMeshPro[2]; 
+    public float intervalo = 1f;
+  
 
+    private TextMeshProUGUI _text;
     private int contadorActual;
     private float tiempoTranscurrido;
 
     void Start()
     {
+        _text = GetComponent<TextMeshProUGUI>();
         contadorActual = contadorInicial;
         ActualizarTexto();
     }
@@ -31,9 +33,9 @@ public class wall : NetworkBehaviour
                 contadorActual--;
                 if (contadorActual <= 0)
                 {
-                    if (IsHost)
+                    if (GameManager.Instance.clientId==0)
                     {
-                        GameManager.Instance.StartGame();
+                        GameManager.Instance.ExecuteOnAllClientsClientRpc();
                     }
                     transform.position +=Vector3.up*100;
                     contadorActual = 0;
@@ -51,12 +53,9 @@ public class wall : NetworkBehaviour
 
     void ActualizarTexto()
     {
-        if (contadorTexto != null)
-        {
-            int minutos =contadorActual / 60;
-            int segundos = contadorActual % 60;
-            contadorTexto[0].text = string.Format("{0:00}:{1:00}", minutos, segundos);
-            contadorTexto[1].text = string.Format("{0:00}:{1:00}", minutos, segundos);
-        }
+        int minutos =contadorActual / 60;
+        int segundos = contadorActual % 60;
+        _text.text = string.Format("{0:00}:{1:00}", minutos, segundos);
+        _text.text = string.Format("{0:00}:{1:00}", minutos, segundos);
     }
 }

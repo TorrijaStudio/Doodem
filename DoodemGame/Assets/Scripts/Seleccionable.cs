@@ -17,6 +17,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     public static int ClientID;
     public int indexPrefab;
     public bool CanDropEnemySide;
+    public int numCartas;
 
 
     [SerializeField] private MeshRenderer terreno;
@@ -50,7 +51,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     {
         if (Input.GetMouseButton(0))
         {
-            if (_selected)
+            if (_selected && !GameManager.Instance.statedGame && numCartas>0)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -96,6 +97,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
         // Debug.Log(playerId);
         if(IsSpawned)
             GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos);
+        numCartas--;
     }
     
     public void OnPointerDown(PointerEventData eventData)
@@ -110,5 +112,10 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     public void SetFalse()
     {
         _selected = false;
+    }
+
+    public void AddNumCarta()
+    {
+        numCartas++;
     }
 }
