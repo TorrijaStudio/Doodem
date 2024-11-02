@@ -146,7 +146,6 @@ public class Inventory : MonoBehaviour
         { 
             var totem = Instantiate(seleccionableToSpawn, pos, Quaternion.identity, seleccionableParent);
             totem.gameObject.SetActive(true);
-            // totem.transform.localRotation = Quaternion.Euler(0, 0, 0);
             totem.SetInfo(totemPiece[0].scriptableObjectTienda.num, totemPiece[1].scriptableObjectTienda.num, totemPiece[2].scriptableObjectTienda.num);
             pos += Vector3.down * separationDistance;
         }

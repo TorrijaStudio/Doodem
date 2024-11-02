@@ -232,7 +232,8 @@ public class Entity : NetworkBehaviour ,IAtackable
             {
                 if (Vector3.Distance(objetive.position, transform.position) <= 1f)
                 {
-                    objetive.GetComponent<recurso>().PickRecurso();
+                    if(objetive.TryGetComponent<recurso>(out var res))
+                        res.PickRecurso();
                     return; 
                 }
             }

@@ -10,15 +10,15 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public class Seleccionable : NetworkBehaviour, IPointerDownHandler
+public class Seleccionable : MonoBehaviour, IPointerDownHandler
 {
     public GameObject objetoACrear;
     private GameObject objeto;
-    public static int ClientID;
+    public static int ClientID = -1;
     public int indexPrefab;
     public bool CanDropEnemySide;
     public int numCartas;
-    private int[] info;
+    [SerializeField] private int[] info;
 
 
     [SerializeField] private MeshRenderer terreno;
@@ -35,7 +35,7 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
                 cartas.Add(t);
         }
         _grid = terreno.gameObject.GetComponent<terreno>().GetGrid();
-        ClientID = -1;
+        // ClientID = -1;
     }
     
     GameObject InstanciarObjeto(Vector3 position)
@@ -104,8 +104,8 @@ public class Seleccionable : NetworkBehaviour, IPointerDownHandler
     private void SpawnServer(Vector3 pos, int playerId)
     {
         // Debug.Log(playerId);
-        if(IsSpawned)
-            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0], info[1], info[2]);
+        // if(IsSpawned)
+        GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0], info[1], info[2]);
         numCartas--;
     }
 

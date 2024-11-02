@@ -24,7 +24,7 @@ public class GameManager : NetworkBehaviour
     public playerInfo[] players = new playerInfo[2];
     public ABiome[] biomasGame = new ABiome[5]; 
     public List<ABiome> biomasInMatch = new ();
-    private NetworkVariable<int> _id = new();
+    private NetworkVariable<int> _id = new(0);
     public int clientId;
     public List<Transform> Bases;
     public GameObject objectSelected;
@@ -152,6 +152,7 @@ public class GameManager : NetworkBehaviour
            gameCanvas.gameObject.SetActive(true);
            storeCanvas.gameObject.SetActive(false);
            startedGame = false;
+           Debug.LogWarning("Empezando timer en ExecuteOnAllClients)");
            StartTime();
        }
     }
@@ -167,6 +168,7 @@ public class GameManager : NetworkBehaviour
             storeCanvas.gameObject.SetActive(true);
             startMatchAfterTimer = false;
             _store.InitialSelection();
+            Debug.LogWarning("Empezando timer en StartRound (if)");
             StartTime();
             return;
         }
@@ -206,6 +208,7 @@ public class GameManager : NetworkBehaviour
             gameCanvas.gameObject.SetActive(false);
             storeCanvas.gameObject.SetActive(true);
             _store.SetUpShop();
+            Debug.LogWarning("Empezando timer en StartRound (else)");
             StartTime();
         }
         
@@ -248,14 +251,21 @@ public class GameManager : NetworkBehaviour
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos, int head, int body, int feet)
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
+        player.name = "AAAAAAAAAAACABO DE SPAWNEAR";
+        Debug.LogWarning("ID: " + playerId);
        
         player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);
         var entity = player.GetComponent<Entity>();
+        var text = player.name;
+        var par = player.transform;
+        while (par.parent)
+        {
+            par = par.parent;
+            text = text.Insert(0, par.name + "/");
+        }
+        Debug.LogWarning(text);
         if(entity)
         {
-        //     SetAnimalParts(GameManager.Instance._heads[Random.Range(0, GameManager.Instance._heads.Length)], 
-        //         GameManager.Instance._body[Random.Range(0, GameManager.Instance._body.Length)], 
-        //         GameManager.Instance._feet[Random.Range(0, GameManager.Instance._feet.Length)]);
             entity.SpawnClientRpc(head, body, feet);
         }
         if (player.TryGetComponent(out NavMeshAgent nav))
@@ -265,6 +275,7 @@ public class GameManager : NetworkBehaviour
             var posInGid = terrenoGO.GetComponent<terreno>().PositionToGrid(pos);
             if (entidades.ContainsKey(posInGid) && entidades[posInGid])
             {
+                Debug.Log("Me fui");
                 Destroy(player);
             }
             else
@@ -380,6 +391,7 @@ public class GameManager : NetworkBehaviour
         {
             if(Seleccionable.ClientID == -1)
             {
+                Debug.Log("Scooby dooby do, who are you? ");
                 Seleccionable.ClientID = _id.Value;
                 clientId = _id.Value;
                 // Camera.main.enabled = false;

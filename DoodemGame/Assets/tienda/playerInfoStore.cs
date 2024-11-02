@@ -56,7 +56,7 @@ public class playerInfoStore : MonoBehaviour
 
     public void CloseShopAfterTimer()
     {
-        Debug.LogWarning("PREVIOUS POSITION: " + _prevCameraPos);
+        // Debug.LogWarning("PREVIOUS POSITION: " + _prevCameraPos);
         Camera.main!.transform.SetPositionAndRotation(_prevCameraPos, cameraRot);
         if (isFirstTime && boughtObjects.Count == 0 && totemItems.childCount > 0)
         {
