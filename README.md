@@ -169,6 +169,7 @@ En el juego base hay ocho tótems:
 - Abeja ibérica
 - Tortuga mediterránea
 - Lagarto bético
+- Mantis
 
 Cada parte de los tótems tiene una estadística de vida asociada. Además de esto, las habilidades pueden estar asignadas a cualquier parte del cuerpo, y pueden tener ciertas estadísticas asociadas como ataque, velocidad y recursos necesarios o proporcionar diferentes estados como volar o sanar, que se explicarán más adelante.
 
