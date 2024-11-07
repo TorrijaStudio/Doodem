@@ -7966,7 +7966,7 @@ MonoBehaviour:
   - {fileID: 1734961144}
   objectSelected: {fileID: 0}
   playerObjects: []
-  statedGame: 0
+  startedGame: 0
   numRondas: 3
   enemies: []
   allies: []
@@ -33894,7 +33894,7 @@ MonoBehaviour:
   objetoACrear: {fileID: 6808021979460418278, guid: 8d533e54a124ac24f8b151c428fbc843, type: 3}
   indexPrefab: 3
   CanDropEnemySide: 1
-  numCartas: 0
+  numCartas: 1
   terreno: {fileID: 1337947988}
 --- !u!114 &1331882688
 MonoBehaviour:
@@ -47990,7 +47990,7 @@ MonoBehaviour:
   objetoACrear: {fileID: 1055867863741169039, guid: 7643080009b39504398d6bb9c9047991, type: 3}
   indexPrefab: 2
   CanDropEnemySide: 1
-  numCartas: 0
+  numCartas: 1
   terreno: {fileID: 1337947988}
 --- !u!114 &1786226305
 MonoBehaviour:
@@ -49912,7 +49912,7 @@ MonoBehaviour:
   objetoACrear: {fileID: 8061729011767845096, guid: 37be5248b2fe3334e8b327bc281c00f0, type: 3}
   indexPrefab: 0
   CanDropEnemySide: 0
-  numCartas: 0
+  numCartas: 1
   terreno: {fileID: 1337947988}
 --- !u!114 &1842492387
 MonoBehaviour:

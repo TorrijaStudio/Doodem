@@ -123,12 +123,21 @@ public class GameManager : NetworkBehaviour
    {
        startedGame = true;
        _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
-        foreach (var p in playerObjects)
-        {
-            if(p)
-                p.SetActive(true);
-        }
-    }
+       Debug.LogError(players.Length);
+       for (var index = 0; index < playerObjects.Count; index++)
+       {
+           var p = playerObjects[index];
+           if (p.TryGetComponent(out ABiome ab))
+           {
+               ab.EnableMeshesRecursively(p);
+               ab.SetColorsGridBiome();
+               Debug.LogError(p.name);
+               //p.SetActive(true);
+           }else
+               p.SetActive(true);
+       }
+       //StartCoroutine(updateEntidades());
+   }
 
    [ClientRpc]
     public void StartRoundClientRpc(string winner)

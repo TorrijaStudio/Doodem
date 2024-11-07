@@ -32,8 +32,40 @@ public abstract class ABiome : NetworkBehaviour
     
     private void Awake()
     {
-        //GameManager.Instance.playerObjects.Add(gameObject);
-        //gameObject.SetActive(false);
+            GameManager.Instance.playerObjects.Add(gameObject);
+            DisableMeshesRecursively(gameObject);
+        
+    }
+    void DisableMeshesRecursively(GameObject obj)
+    {
+        // Desactiva el MeshRenderer si el objeto lo tiene
+        MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            meshRenderer.enabled = false;
+        }
+
+        // Recorre todos los hijos del objeto y llama recursivamente a esta función
+        foreach (Transform child in obj.transform)
+        {
+            DisableMeshesRecursively(child.gameObject);
+        }
+    }
+   public void EnableMeshesRecursively(GameObject obj)
+    {
+        // Desactiva el MeshRenderer si el objeto lo tiene
+        MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            Debug.LogError("ACTIVO");
+            meshRenderer.enabled = true;
+        }
+
+        // Recorre todos los hijos del objeto y llama recursivamente a esta función
+        foreach (Transform child in obj.transform)
+        {
+            EnableMeshesRecursively(child.gameObject);
+        }
     }
     
     // Start is called before the first frame update
@@ -73,9 +105,22 @@ public abstract class ABiome : NetworkBehaviour
         //}
     }
 
-    
+    public void SetColorsGridBiome()
+    {
+        Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale/2f, transform.rotation,
+            LayerMask.GetMask("casilla"));
+        Debug.LogError(colliders.Length);
+        foreach (var c in colliders)
+        {
+            var casillaMesh = c.GetComponent<MeshRenderer>();
+            var casilla = c.GetComponent<casilla>();
+            var materialBiome = casilla.GetBiome().GetComponent<ABiome>().mat;
+            casillaMesh.material = materialBiome;
+        }
 
-     private IEnumerator UpdateEntities()
+    }
+     
+    private IEnumerator UpdateEntities()
      {
          yield return new WaitForSeconds(0.5f);
          GameManager.Instance.updateEntidades();
@@ -95,7 +140,9 @@ public abstract class ABiome : NetworkBehaviour
                 casilla.SetPreviousMat(mesh.material);
                 casilla.SetPreviousBiome(casilla.GetBiome());
                 
-                mesh.material = mat;
+                if(IsOwner)
+                    mesh.material = mat;
+                casilla.SetMat(mat);
                 casilla.SetBiome(gameObject);
                 casilla.SetAreaNav(indexLayerArea);
         }
@@ -153,6 +200,7 @@ public abstract class ABiome : NetworkBehaviour
         return recursos;
     }
 
+    //nunca se destruye
     void OnDestroy()
     {
         //GameManager.Instance.playerObjects[_idPlayer.Value].Remove(gameObject);

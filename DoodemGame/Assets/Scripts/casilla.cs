@@ -12,12 +12,14 @@ public class casilla : MonoBehaviour
     private NavMeshModifier _navMeshModifier;
     private int previousIndexArea;
     private Material originalMaterial;
+    private Material material;
     
     // Start is called before the first frame update
     void Start()
     {
         _navMeshModifier = GetComponent<NavMeshModifier>();
         originalMaterial = GetComponent<MeshRenderer>().material;
+        material = originalMaterial;
     }
 
     // Update is called once per frame
@@ -53,6 +55,15 @@ public class casilla : MonoBehaviour
     public Material GetPrevousMat()
     {
         return previousMaterial;
+    }
+    public void SetMat(Material m)
+    {
+        material = m;
+        
+    }
+    public Material GetMat()
+    {
+        return material;
     }
     public void SetAreaNav(int index)
     {
