@@ -166,7 +166,7 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
         }
         if(!grabbedPiece)   return;
         
-        Debug.Log("Im pressing " + selectedPiece);
+        // Debug.Log("Im pressing " + selectedPiece);
         grabbedPiece.transform.position = CalculatePosition();
 
     }
@@ -191,7 +191,7 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
                 case "Totem":
                     if(selectedTotem)
                     {
-                        Debug.Log("Deactivating...");
+                        // Debug.Log("Deactivating...");
                         selectedTotem.Deactivate();
                     }
                     selectedTotem = other.GetComponent<Totem>();
@@ -230,7 +230,7 @@ public class TotemManager : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
     
         private void OnTriggerExit(Collider other)
         {
-            Debug.Log("Exiting: " + other.name + " with tag " + other.tag);
+            // Debug.Log("Exiting: " + other.name + " with tag " + other.tag);
             switch (other.tag)
             {
                 case "Totem":

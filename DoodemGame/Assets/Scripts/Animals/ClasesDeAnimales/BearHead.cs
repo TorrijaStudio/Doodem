@@ -1,12 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Animals.Interfaces;
+using Totems;
 using UnityEngine;
 
 namespace Animals.ClasesDeAnimales
 {
     public class BearHead :MonoBehaviour,  IAnimalHead
     {
+        private Entity _entity;
+        private void Start()
+        {
+            _entity = transform.GetComponentInParent<Entity>();
+            _entity.SubscribeAttack(TotemPiece.Type.Head, new Entity.AttackStruct(AttackDistance, _entity.Attack));
+            // _entity.att
+        }
         public List<float> AssignValuesToResources(IList<Transform> resources)
         {
             var a = new float[resources.Count];
@@ -31,8 +39,10 @@ namespace Animals.ClasesDeAnimales
         }
 
         public Resources Resources { get; set; }
-        public float Life { get; set; }
-        public float Health { get; set; }
-        public float Damage { get; set; }
+
+        [field: SerializeField] public float Speed { get; set; }
+        [field: SerializeField] public float Health { get; set; }
+        [field: SerializeField] public float Damage { get; set; }
+        [field: SerializeField] public float AttackDistance { get; set; }
     }
 }

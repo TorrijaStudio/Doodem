@@ -150,6 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376cb975bb074d05b4cd10007d130ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Speed>k__BackingField: 2
+  <Health>k__BackingField: 125
+  <Damage>k__BackingField: 0
 --- !u!1 &3777964404581530398
 GameObject:
   m_ObjectHideFlags: 0

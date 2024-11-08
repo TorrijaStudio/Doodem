@@ -251,7 +251,7 @@ public class GameManager : NetworkBehaviour
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos, int head, int body, int feet)
     {
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
-        player.name = "AAAAAAAAAAACABO DE SPAWNEAR";
+        // player.name = "AAAAAAAAAAACABO DE SPAWNEAR";
         Debug.LogWarning("ID: " + playerId);
        
         player.GetComponent<NetworkObject>().SpawnWithOwnership(players[playerId].obj);

@@ -8594,7 +8594,7 @@ MonoBehaviour:
   recs: []
   _heads:
   - {fileID: 4743716353546243484, guid: 4f1162bc0c6684d40847dc057c0c69a1, type: 3}
-  - {fileID: 6596802920627415814, guid: 026fa932d8507c14295c2fc5674cc301, type: 3}
+  - {fileID: 6596802920627415814, guid: 1f43b662952001e4184e54afff042750, type: 3}
   - {fileID: 6596802920627415814, guid: d95237832f459f444baba0f71c1fd013, type: 3}
   _body:
   - {fileID: 7197332935426439036, guid: 6ffb3bc3932436e469986bf0131ef97b, type: 3}
@@ -8602,7 +8602,7 @@ MonoBehaviour:
   - {fileID: 6963791943007721694, guid: 794e3825106c16e48b76dfb74a5714dc, type: 3}
   _feet:
   - {fileID: 1470985371071878847, guid: ab3f7006e713dc841bf01bbf67a64e95, type: 3}
-  - {fileID: 1062466098516003971, guid: 0255d1c8d95a01b4abf70262013c1437, type: 3}
+  - {fileID: 1062466098516003971, guid: 76f7307e5f93cca45b5bf719a48a99e8, type: 3}
   - {fileID: 1062466098516003971, guid: b576cbab974477e40aaf92853c574201, type: 3}
   gameCanvas: {fileID: 45081609}
   storeCanvas: {fileID: 1467104579}

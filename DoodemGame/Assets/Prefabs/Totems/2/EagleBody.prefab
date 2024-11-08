@@ -384,3 +384,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headPoint: {fileID: 8089608110334112670}
   feetPoint: {fileID: 1127461276784088364}
+  <Speed>k__BackingField: 5
+  <Health>k__BackingField: 35
+  <Damage>k__BackingField: 0

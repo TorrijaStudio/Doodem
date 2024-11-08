@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using HelloWorld;
 using Unity.AI.Navigation;
 using Unity.Netcode;
@@ -52,7 +53,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         if (Input.GetMouseButton(0))
         {
-            Debug.Log($"{_selected} + {!GameManager.Instance.startedGame} yy {numCartas}");
+            // Debug.Log($"{_selected} + {!GameManager.Instance.startedGame} yy {numCartas}");
             if (_selected && !GameManager.Instance.startedGame && numCartas>0)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -118,7 +119,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         _selected = true;
         GameManager.Instance.objectSelected = null;
-        foreach (var c in cartas)
+        foreach (var c in cartas.Where(c => c))
         {
             c.GetComponent<Seleccionable>().SetFalse();
         }

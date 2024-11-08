@@ -22,8 +22,9 @@ namespace Animals.Interfaces
         public abstract List<float> AssignValuesToEnemies(IList<Transform> enemies);
 
         public Resources Resources { get; set; }
-        public float Life { get; set; }
-        public float Health { get; set; }
-        public float Damage { get; set; }
+        
+        [field: SerializeField] public float Speed { get; set; }
+        [field: SerializeField] public float Health { get; set; }
+        [field: SerializeField] public float Damage { get; set; }
     }
 }

@@ -61,7 +61,7 @@ public class Attack : MonoBehaviour,IAttack
                 float aux = 0;
                 if (currentObjective.TryGetComponent(out IAtackable m))
                 {
-                    aux = m.Attacked(entity.GetCurrentDamage());
+                    aux = m.Attacked(entity.GetCurrentDamageModifier());
                 }
                 if (aux < 0)
                 {
@@ -109,7 +109,7 @@ public class Attack : MonoBehaviour,IAttack
                 float aux = 0;
                 if (c.TryGetComponent(out IAtackable m))
                 {
-                    aux = m.Attacked(entity.GetCurrentDamage());
+                    aux = m.Attacked(entity.GetCurrentDamageModifier());
                 }
                 if (aux < 0)
                 {

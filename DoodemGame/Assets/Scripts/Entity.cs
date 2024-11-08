@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Animals.Interfaces;
+using Totems;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +25,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     private int currentAreaIndex;
     [SerializeField] private float currentDamage;
     private bool isEnemy;
+    private Coroutine _followCoroutine;
 
     // public int PlayerId
     // {
@@ -38,6 +41,20 @@ public class Entity : NetworkBehaviour ,IAtackable
         
     public Transform objetive;
     public float speed;
+    public float maxAttackDistance;
+
+    private float _speedModifier;
+    public float SpeedModifier
+    {
+        get => _speedModifier;
+        set
+        {
+            _speedModifier = value;
+            if(agente)
+                agente.speed = speed + _speedModifier;
+        }
+    }
+
     public float health;
     public float damage;
     public float attackDistance;
@@ -63,25 +80,48 @@ public class Entity : NetworkBehaviour ,IAtackable
     public void SetAnimalParts(GameObject head, GameObject body, GameObject feet)
     {
         _body = Instantiate(body, transform).GetComponent<AnimalBody>();
+        SetHealthAndSpeed(_body.Health,_body.Speed);
+        
         _head = Instantiate(head, _body.GetHeadAttachmentPoint().position, _body.GetHeadAttachmentPoint().rotation,
             transform).GetComponent<IAnimalHead>();
+        SetHealthAndSpeed(_head.Health,_head.Speed);
+        damage = _head.Damage;
+        
         _feet = Instantiate(feet, _body.GetFeetAttachmentPoint().position, _body.GetFeetAttachmentPoint().rotation,
             transform).GetComponent<IAnimalFeet>();
+        SetHealthAndSpeed(_feet.Health,_feet.Speed);
         var a = transform.GetChild(0).GetComponentsInChildren<MeshRenderer>();
+        
+        name = $"{body.name}_{head.name}_{feet.name}";
+        //Turn off the totem mesh renderers
         foreach (var meshRenderer in a)
         {
             meshRenderer.enabled = false;
         }
     }
 
-    private void Attack()
+    private void SetHealthAndSpeed(float h, float s)
     {
+        health += h;
+        speed += s;
+        if (agente)
+            agente.speed = (speed + _speedModifier) / 5f;
+    }
+
+    
+    public void SetSpeedModifier(float speedChange)
+    {
+        _speedModifier = speedChange;
+    }
+    public void Attack()
+    {
+        Debug.Log(name + " attacking!");
         if (Time.time - timeLastHit >= 1f / attackSpeed)
         {
             float aux = 0;
             if (objetive.TryGetComponent(out IAtackable m))
             {
-                aux = m.Attacked(GetCurrentDamage());
+                aux = m.Attacked(GetCurrentDamageModifier() + damage);
             }
             if (aux < 0)
             {
@@ -113,13 +153,17 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         //GameManager.Instance.playerObjects.Add(gameObject);
         //gameObject.SetActive(false);
+        
+        _attacksMap = new Dictionary<TotemPiece.Type, AttackStruct>();
     }
+
+
 
     void Start()
     {        
         _resources = new Dictionary<Recursos, int>();
         SetLayer(0, _idPlayer.Value);
-        currentDamage = damage;
+        // currentDamage = damage;
         _idPlayer.OnValueChanged += SetLayer; 
         SetAgent();
         agente.speed = speed;
@@ -135,12 +179,53 @@ public class Entity : NetworkBehaviour ,IAtackable
             ReevaluateSituation();
         }
     }
+
+    private IEnumerator FollowEnemy()
+    {
+        if (!agente.isOnNavMesh) yield return null;
+        Debug.LogWarning("Following enemy");
+        while (!agente.isStopped && isEnemy && objetive)
+        {
+            var position = objetive.position;
+            agente.SetDestination(position);
+            var distance = Vector3.Distance(transform.position, position);
+            if (distance <= maxAttackDistance)
+            {
+                agente.isStopped = true;
+                break;
+            }
+            yield return new WaitForNextFrameUnit();
+        }
+    }
+    
     void Update()
     {
         checkAreaAgent();
-        if (isEnemy && objetive && Vector3.Distance(objetive.position, transform.position) <= attackDistance)
+
+        // var d = _attacksMap.Select(a => a.Value.AttackDistance).Max();
+        if (isEnemy && objetive)
         {
-            agente.isStopped = true;
+            var distance = Vector3.Distance(transform.position, objetive.position);
+            // Debug.Log(maxAttackDistance + " ... " + Vector3.Distance(transform.position, objetive.position));
+            if (distance <= maxAttackDistance)
+            {
+                if(_followCoroutine != null)
+                    StopCoroutine(_followCoroutine);
+                agente.isStopped = true;
+                if (Time.time - timeLastHit >= 1f / attackSpeed)
+                {
+                    if (TryAttack(distance))
+                    {
+                        timeLastHit = Time.time;
+                        // agente.isStopped = true;
+                    }
+                }
+            }
+            else if(agente.isStopped)
+            {
+                agente.isStopped = false;
+                _followCoroutine = StartCoroutine(FollowEnemy());
+            }
         }
     }
     
@@ -164,7 +249,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         agente = GetComponent<NavMeshAgent>();
         isOnGround = true;
-        agente.speed = speed;
+        // agente.speed = speed;
 
         StartCoroutine(SetDestination(objetive));
     }
@@ -191,7 +276,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         return isOnGround;
     }
 
-    public float GetCurrentDamage()
+    public float GetCurrentDamageModifier()
     {
         return currentDamage;
     }
@@ -221,12 +306,21 @@ public class Entity : NetworkBehaviour ,IAtackable
             // agente.isStopped = true;
             if (isEnemy)
             {
-                if (Vector3.Distance(objetive.position, transform.position) <= attackDistance)
+                if (Vector3.Distance(objetive.position, transform.position) > maxAttackDistance)
                 {
-                    Debug.Log($"Atacando a {objetive} en {timeLastHit}");
-                    Attack();
-                    return; 
+                    // Debug.Log($"Atacando a {objetive} en {timeLastHit}");
+                    // Attack();
+                    agente.isStopped = false;
+                    _followCoroutine = StartCoroutine(FollowEnemy());
                 }
+                return; 
+                
+                // if(TryAttack(Vector3.Distance(objetive.position, transform.position)))
+                // {
+                //     agente.isStopped = true;
+                //     return;
+                // }
+                // if(agente.isStopped)    return;
             }
             else
             {
@@ -239,6 +333,7 @@ public class Entity : NetworkBehaviour ,IAtackable
             }
         }
 
+        Debug.LogWarning("Searching for new objective");
         agente.isStopped = false;
         var enemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == layerEnemy).Select(entity => entity.transform).ToList();
         var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected()).Select((recurso =>recurso.transform)).ToList();
@@ -268,7 +363,8 @@ public class Entity : NetworkBehaviour ,IAtackable
         objetive = values.First().Key;
         isEnemy = (bool)objetive.GetComponent<Entity>();
         // Debug.LogWarning($"Next objective is {objetive.name} and is {isEnemy} an enemy??");
-        agente.SetDestination(objetive.position);
+        // agente.SetDestination(objetive.position);
+        _followCoroutine = StartCoroutine(FollowEnemy());
         // Debug.Log(objetive.name);
     }
 
@@ -287,13 +383,48 @@ public class Entity : NetworkBehaviour ,IAtackable
     }
     public delegate void EmptyEvent();
     public delegate void ResourcesEvent(Recursos res, int n);
-     
+
+    
     public EmptyEvent OnDeath;
     public EmptyEvent OnKilledEnemy;
      
     public ResourcesEvent OnResourcesChanged;
     private float timeLastHit;
 
+    public struct AttackStruct
+    {
+        public AttackStruct(float d, Action a)
+        {
+            AttackDistance = d;
+            Attack = a;
+            // Type = type;
+        }
+
+        // public TotemPiece.Type Type;
+        public float AttackDistance;
+        public Action Attack;
+    }
+    private Dictionary<TotemPiece.Type, AttackStruct> _attacksMap;
+    // private List<AttackStruct> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+
+    public void SubscribeAttack(TotemPiece.Type type, AttackStruct attackStruct)
+    {
+        _attacksMap.TryAdd(type, attackStruct);
+        maxAttackDistance = _attacksMap.Select(a => a.Value.AttackDistance).Max();
+    }
+
+    private bool TryAttack(float distance)
+    {
+        string blah = string.Join(", ", _attacksMap.Select(v => v.Value.AttackDistance.ToString(CultureInfo.InvariantCulture)).ToArray());
+        // Debug.Log(blah);
+        var possibleAttacks = _attacksMap.ToArray().Where(a => a.Value.AttackDistance >= distance).ToArray();
+        if (!possibleAttacks.Any()) return false;
+        // Debug.Log("Evaluating attacks");
+        possibleAttacks[Random.Range(0, possibleAttacks.Count())].Value.Attack.Invoke();
+        return true;
+        // possibleAttacks.
+    }
+    
     public int GetResources(Recursos res)
     {
         return _resources.TryGetValue(res, out var value) ? value : 0;

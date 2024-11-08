@@ -31,8 +31,9 @@ namespace Animals.ClasesDeAnimales
         }
 
         public Resources Resources { get; set; }
-        public float Life { get; set; }
-        public float Health { get; set; }
-        public float Damage { get; set; }
+        [field: SerializeField] public float Speed { get; set; }
+        [field: SerializeField] public float Health { get; set; }
+        [field: SerializeField] public float Damage { get; set; }
+        [field: SerializeField] public float AttackDistance { get; set; }
     }
 }

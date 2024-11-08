@@ -136,6 +136,7 @@ public class Inventory : MonoBehaviour
 
     public void SpawnSeleccionables()
     {
+        DeleteSeleccionables();
         var infoForSeleccionables = _totemPieces.Where((list => list.Count == 3)).ToList();
         Debug.Log(infoForSeleccionables.Count);
         var objectsToSpawn = infoForSeleccionables.Count;
@@ -150,5 +151,12 @@ public class Inventory : MonoBehaviour
             pos += Vector3.down * separationDistance;
         }
         SetDrag(true);
+    }
+    public void DeleteSeleccionables()
+    {
+        for(var i = seleccionableParent.childCount - 1; i >= 0; i--)
+        {
+            Destroy(seleccionableParent.GetChild(i).gameObject);
+        }
     }
 }

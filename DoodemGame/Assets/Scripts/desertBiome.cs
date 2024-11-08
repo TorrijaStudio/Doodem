@@ -17,13 +17,13 @@ public class desertBiome : ABiome
     public override void ActionBioma(GameObject o)
     {
         var entity = o.GetComponent<Entity>();
-        entity.SetCurrentDamage( entity.GetCurrentDamage() - entity.damage * damageReduction/100f);
+        entity.SetCurrentDamage( entity.GetCurrentDamageModifier() - entity.damage * damageReduction/100f);
     }
 
     public override void LeaveBiome(GameObject o)
     {
         var entity = o.GetComponent<Entity>();
-        entity.SetCurrentDamage( entity.GetCurrentDamage() + entity.damage * damageReduction/100f);
+        entity.SetCurrentDamage( entity.GetCurrentDamageModifier() + entity.damage * damageReduction/100f);
     }
  
 }
