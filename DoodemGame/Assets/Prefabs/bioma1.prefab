@@ -234,6 +234,7 @@ MonoBehaviour:
   zSize: 2
   mat: {fileID: 2100000, guid: d4596f00c84a3e84e8dacb08fddaf02a, type: 2}
   indexLayerArea: 4
+  typeResource: 1
 --- !u!1001 &2015948576149722664
 PrefabInstance:
   m_ObjectHideFlags: 0

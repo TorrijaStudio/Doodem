@@ -26,6 +26,7 @@ public abstract class ABiome : NetworkBehaviour
     public int zSize;
     public Material mat;
     public int indexLayerArea;
+    public Recursos typeResource;
 
     private static Random random;
     
