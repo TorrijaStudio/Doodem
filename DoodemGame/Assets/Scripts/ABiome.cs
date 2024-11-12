@@ -26,7 +26,8 @@ public abstract class ABiome : NetworkBehaviour
     public int zSize;
     public Material mat;
     public int indexLayerArea;
-    public Recursos typeResource;
+    public Recursos[] typeResource;
+    
 
     private static Random random;
     
@@ -207,6 +208,7 @@ public abstract class ABiome : NetworkBehaviour
         }
 
         recursos = transform.GetChild(1);
+        int aux = 0;
         foreach (Transform r in recursos)
         {
             recursos.localScale = Vector3.one;
@@ -219,7 +221,12 @@ public abstract class ABiome : NetworkBehaviour
                 r.position = newPos;
             }else
                 r.gameObject.SetActive(false);
-           
+            
+            if (IsHost)
+            {
+                GameManager.Instance.GenerateRandomNumberServerRpc(typeResource.Length-1,GetComponent<NetworkObject>(),aux);
+            }
+            aux++;
         }
         //terreno.transform.GetComponent<NavMeshSurface>().BuildNavMesh();
     }

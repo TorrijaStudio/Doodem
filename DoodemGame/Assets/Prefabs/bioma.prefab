@@ -277,7 +277,7 @@ MonoBehaviour:
   zSize: 2
   mat: {fileID: 2100000, guid: 79105fdee0a99c04c8e45b37e39932f6, type: 2}
   indexLayerArea: 3
-  casillas: []
+  typeResource: 05000000
   damageReduction: 30
 --- !u!1001 &271605121214307717
 PrefabInstance:

@@ -8,6 +8,7 @@ public class recurso : MonoBehaviour
 {
     private bool isSelected;
     private int indexLayerArea;
+    public Recursos _typeRecurso;
     
     // Start is called before the first frame update
     void Start()
