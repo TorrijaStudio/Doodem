@@ -140,6 +140,7 @@ public class GameManager : NetworkBehaviour
            for (var index = 0; index < playerObjects.Count; index++)
            {
                var p = playerObjects[index];
+               if (!p) continue;
                if (p.TryGetComponent(out ABiome ab))
                {
                    ab.EnableMeshesRecursively(p);
