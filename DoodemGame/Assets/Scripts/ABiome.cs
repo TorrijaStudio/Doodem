@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Numerics;
 using Unity.AI.Navigation;
@@ -131,21 +132,46 @@ public abstract class ABiome : NetworkBehaviour
      private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent &&
-                   other.transform.parent.name == "Tiles" && 
-                  (!other.GetComponent<casilla>().GetBiome() || gameObject!=other.GetComponent<casilla>().GetBiome()))
+                   other.transform.parent.name == "Tiles" 
+                   //&& (!other.GetComponent<casilla>().GetBiome() || gameObject!=other.GetComponent<casilla>().GetBiome())
+                   )
         {
-                var mesh = other.transform.GetComponent<MeshRenderer>();
+            var biomaCasilla = other.GetComponent<casilla>().GetBiome();
+            var mesh = other.transform.GetComponent<MeshRenderer>();
+            if (IsOwner)
+                mesh.material = mat;
+            //Debug.LogError(biomaCasilla.name);
+            //if(biomaCasilla.GetComponent<NetworkObject>().OwnerClientId == GetComponent<NetworkObject>().OwnerClientId)
+            //{
+            if(!other.GetComponent<casilla>().GetBiome() || GetComponent<NetworkObject>().OwnerClientId == biomaCasilla.GetComponent<NetworkObject>().OwnerClientId)
+            {
                 var casilla = other.GetComponent<casilla>();
                 var index = casilla.GetAreaNav();
                 casilla.SetPreviousIndexArea(index);
                 casilla.SetPreviousMat(mesh.material);
                 casilla.SetPreviousBiome(casilla.GetBiome());
                 
-                if(IsOwner)
-                    mesh.material = mat;
                 casilla.SetMat(mat);
                 casilla.SetBiome(gameObject);
                 casilla.SetAreaNav(indexLayerArea);
+            }
+            else
+            {
+                var positionCasilla = terreno.PositionToGrid(other.transform.position);
+                if ((positionCasilla.y < 10 && _idPlayer.Value == 1) || (positionCasilla.y > 9 && _idPlayer.Value == 0) )//terreno cliente / host
+                {
+                    var casilla = other.GetComponent<casilla>();
+                    var index = casilla.GetAreaNav();
+                    casilla.SetPreviousIndexArea(index);
+                    casilla.SetPreviousMat(mesh.material);
+                    casilla.SetPreviousBiome(casilla.GetBiome());
+                
+                    casilla.SetMat(mat);
+                    casilla.SetBiome(gameObject);
+                    casilla.SetAreaNav(indexLayerArea);
+                }
+            }
+            //}
         }
     }
 

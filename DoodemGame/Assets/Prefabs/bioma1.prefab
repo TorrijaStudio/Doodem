@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4113380851
+  GlobalObjectIdHash: 2960396963
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -243,6 +243,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8236855968258552969}
     m_Modifications:
+    - target: {fileID: 284642731270717216, guid: 7643080009b39504398d6bb9c9047991, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d7128020e0e91c4cbc381e030980208, type: 2}
     - target: {fileID: 1055867863741169039, guid: 7643080009b39504398d6bb9c9047991, type: 3}
       propertyPath: m_Name
       value: Sphere (1)
@@ -566,6 +570,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8236855968258552969}
     m_Modifications:
+    - target: {fileID: 284642731270717216, guid: 7643080009b39504398d6bb9c9047991, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d7128020e0e91c4cbc381e030980208, type: 2}
     - target: {fileID: 1055867863741169039, guid: 7643080009b39504398d6bb9c9047991, type: 3}
       propertyPath: m_Name
       value: Sphere
