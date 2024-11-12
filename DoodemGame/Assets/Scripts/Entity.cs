@@ -26,6 +26,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     [SerializeField] private float currentDamage;
     private bool isEnemy;
     private Coroutine _followCoroutine;
+    public bool isFlying;
 
     // public int PlayerId
     // {
@@ -232,14 +233,13 @@ public class Entity : NetworkBehaviour ,IAtackable
     public float Attacked(float enemyDamage)
     {
         // Debug.Log(gameObject.name + " -- "+health);
+        if (isFlying) enemyDamage = Mathf.CeilToInt(enemyDamage * 0.95f);
         health -= enemyDamage;
         if (health <= 0)
         {
             Destroy(gameObject);
             if (IsHost)
                 GameManager.Instance.checkIfRoundEnded(layer);
-
-
         }
 
         return health;
@@ -253,7 +253,22 @@ public class Entity : NetworkBehaviour ,IAtackable
 
         StartCoroutine(SetDestination(objetive));
     }
+    private void flyUpdate()
+    {
+        if (transform.position.y < 1F)
+        {
+            gameObject.transform.Translate(Vector3.up* (Time.deltaTime * speed));
+            return;
+        }
 
+        if (!objetive) return;
+        if ((transform.position - objetive.position).magnitude > maxAttackDistance)
+        {
+            Vector3 dir = objetive.position - transform.position;
+            dir.Normalize();
+            transform.Translate(dir* (Time.deltaTime * speed),Space.World);
+        }
+    }
     private IEnumerator SetDestination(Transform d)
     {
         yield return new WaitUntil((() => agente.isOnNavMesh));
