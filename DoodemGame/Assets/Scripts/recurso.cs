@@ -3,16 +3,33 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using Unity.Netcode;
 using UnityEngine;
+using Random = Unity.Mathematics.Random;
 
 public class recurso : MonoBehaviour
 {
     private bool isSelected;
     private int indexLayerArea;
+    public Recursos _typeRecurso;
+    private static Random random;
     
     // Start is called before the first frame update
     void Start()
     {
         // Debug.Log(transform.parent.parent.name);
+        //var mesh = GetComponent<MeshRenderer>();
+        //switch (_typeRecurso)
+        //{
+        //    case Recursos.Arbol:
+        //        mesh.material.color = Color.magenta;
+        //        break;
+        //    case Recursos.Hierba:
+        //        mesh.material.color = Color.black;
+        //        break;
+        //    case Recursos.Nido:    
+        //        mesh.material.color = Color.white;
+        //        break;
+        //}
+        
         indexLayerArea = transform.parent.parent.GetComponent<ABiome>().indexLayerArea;
         StartCoroutine(AddPosition());
     }

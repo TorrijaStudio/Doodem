@@ -8,6 +8,7 @@ using Unity.AI.Navigation;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Random = Unity.Mathematics.Random;
 using Vector2 = UnityEngine.Vector2;
@@ -27,8 +28,9 @@ public abstract class ABiome : NetworkBehaviour
     public int zSize;
     public Material mat;
     public int indexLayerArea;
-    public Recursos typeResource;
-
+    public Recursos[] typeResource;
+    
+    public int[] indexTypeRecursos;
     private static Random random;
     
     
@@ -36,7 +38,13 @@ public abstract class ABiome : NetworkBehaviour
     {
             GameManager.Instance.playerObjects.Add(gameObject);
             DisableMeshesRecursively(gameObject);
-        
+            //var numRecursos = transform.GetChild(1).childCount;
+            //_indexTypeRecursos = new int[numRecursos];
+            //for (int i = 0; i < numRecursos; i++)
+            //{
+            //    _indexTypeRecursos[i] = UnityEngine.Random.Range(0, typeResource.Length - 1);
+            //}
+
     }
     void DisableMeshesRecursively(GameObject obj)
     {
@@ -91,6 +99,7 @@ public abstract class ABiome : NetworkBehaviour
         
         pos = positions.ToList();
         transform.localScale = new Vector3(2*xSize*cellSize.x+cellSize.x,transform.localScale.y,2*zSize*cellSize.y+cellSize.y);
+        
         SetHijos();
         //if (IsOwner)
         //{
@@ -205,6 +214,14 @@ public abstract class ABiome : NetworkBehaviour
         }
 
         recursos = transform.GetChild(1);
+        //var aux = 0;
+        //var numRecursos = transform.GetChild(1).childCount;
+        //indexTypeRecursos = new int[numRecursos];
+        //for (int i = 0; i < numRecursos; i++)
+        //{
+        //    indexTypeRecursos[i] = UnityEngine.Random.Range(0, typeResource.Length - 1);
+        //}
+        int aux = 0;
         foreach (Transform r in recursos)
         {
             recursos.localScale = Vector3.one;
@@ -217,7 +234,28 @@ public abstract class ABiome : NetworkBehaviour
                 r.position = newPos;
             }else
                 r.gameObject.SetActive(false);
-           
+
+            if (IsHost)
+            {
+                GameManager.Instance.GenerateRandomNumberServerRpc(typeResource.Length-1,GetComponent<NetworkObject>(),aux);
+            }
+           //var recurso = r.GetComponent<recurso>();
+           //int index1 = (int)(r.position.x + r.position.y + r.position.z);
+           //recurso._typeRecurso = typeResource[index1%3];
+           //var mesh = r.GetComponent<MeshRenderer>();
+           //switch (recurso._typeRecurso)
+           //{
+           //    case Recursos.Arbol:
+           //        mesh.material.color = Color.magenta;
+           //        break;
+           //    case Recursos.Hierba:
+           //        mesh.material.color = Color.black;
+           //        break;
+           //    case Recursos.Nido:    
+           //        mesh.material.color = Color.white;
+           //        break;
+           //}
+            aux++;
         }
         //terreno.transform.GetComponent<NavMeshSurface>().BuildNavMesh();
     }

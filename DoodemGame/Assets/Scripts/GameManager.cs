@@ -258,6 +258,12 @@ public class GameManager : NetworkBehaviour
         if (player.TryGetComponent(out ABiome b))
         {
             b._idPlayer.Value = playerId;
+            //var numRecursos = b.transform.GetChild(1).childCount;
+            //b.indexTypeRecursos = new int[numRecursos];
+            //for (int i = 0; i < numRecursos; i++)
+            //{
+            //    b.indexTypeRecursos[i] = Random.Range(0, b.typeResource.Length - 1);
+            //}
             biomasInMatch.Add(b);
         }
         
@@ -275,6 +281,51 @@ public class GameManager : NetworkBehaviour
         {
             Destroy(targetObject.gameObject);
         }
+    }
+    
+    [ServerRpc]
+    public void GenerateRandomNumberServerRpc(int maxValue,NetworkObjectReference target,int posHijo)
+    {
+        int generatedNumber = Random.Range(0, maxValue); 
+        SendRandomNumberClientRpc(generatedNumber,target,posHijo);
+    }
+
+    [ClientRpc]
+    public void SendRandomNumberClientRpc(int number,NetworkObjectReference target,int posHijo)
+    {
+        if (target.TryGet(out NetworkObject targetObject))
+        {
+            var r = targetObject.transform.GetChild(1).GetChild(posHijo);
+            var typeResource = targetObject.GetComponent<ABiome>().typeResource;
+            var recurso = r.GetComponent<recurso>();
+            recurso._typeRecurso = typeResource[number];
+            var mesh = r.GetComponent<MeshRenderer>();
+            switch (recurso._typeRecurso)
+            {
+                case Recursos.Arbol:
+                    mesh.material.color = Color.magenta;
+                    break;
+                case Recursos.Hierba:
+                    mesh.material.color = Color.black;
+                    break;
+                case Recursos.Nido:    
+                    mesh.material.color = Color.white;
+                    break;
+                case Recursos.Piedra:
+                    mesh.material.color = Color.gray;
+                    break;
+                case Recursos.Arena:
+                    mesh.material.color = Color.green;
+                    break;
+                case Recursos.Hielo:
+                    mesh.material.color = Color.blue;
+                    break;
+                case Recursos.Agua:
+                    mesh.material.color = Color.yellow;
+                    break;
+            }
+        }
+        
     }
 
     public void StartTime()
