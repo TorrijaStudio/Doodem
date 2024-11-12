@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using tienda;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -20,6 +21,7 @@ public class playerInfoStore : MonoBehaviour
     [SerializeField] private Transform[] positionsToSpawn;
     [SerializeField] private Transform totemItems;
     [SerializeField] public GameObject botones;
+    [SerializeField] private TextMeshProUGUI playerMoneyText;
     public Inventory inventory;
     public bool canOnlyChooseOne;
     private objetoTienda _selectedObject;
@@ -27,7 +29,27 @@ public class playerInfoStore : MonoBehaviour
     public Transform _cameraPos;
     public Quaternion cameraRot;
     public bool isFirstTime = true;
+    public int playerMoney = 8;
+    private int _selectedItemsCost;
 
+    public int SelectedItemsCost
+    {
+        get => _selectedItemsCost;
+        set
+        {
+            _selectedItemsCost = Math.Max(0, value);
+            Debug.Log("Objeto tienda (de)seleccionado " + OnItemSelected.Method.Name + " new precio: " + _selectedItemsCost + " player " + playerMoney);
+            OnItemSelected.Invoke();
+        }
+    }
+    public delegate void ItemSelected();
+
+    public ItemSelected OnItemSelected;
+    
+    public bool CanBuyItem(int cost)
+    {
+        return SelectedItemsCost + cost <= playerMoney;
+    }
 
     public objetoTienda SelectedObject
     {
@@ -47,6 +69,9 @@ public class playerInfoStore : MonoBehaviour
         cameraRot = cam.rotation;
         // Debug.LogWarning("camara camara camaramsd asfddjasd " + _prevCameraPos);
         cam.SetPositionAndRotation(_cameraPos.position, _cameraPos.rotation);
+        
+        playerMoneyText.gameObject.SetActive(true);
+        playerMoneyText.SetText(_selectedItemsCost + "/" + playerMoney);
     }
     
     private void Start()
@@ -67,6 +92,7 @@ public class playerInfoStore : MonoBehaviour
         DeleteShopItems();
         inventory.DespawnItems();
         
+        playerMoneyText.gameObject.SetActive(false);
     }
 
     public void DeleteShopItems()
@@ -83,6 +109,7 @@ public class playerInfoStore : MonoBehaviour
     public void InitialSelection()
     {
         isFirstTime = true;
+        playerMoney = 10;
         MoveCameraToShop();
         canOnlyChooseOne = true;
         var index = 1;
@@ -96,8 +123,9 @@ public class playerInfoStore : MonoBehaviour
             index++;
         }
     }
-    public void SetUpShop()
+    public void SetUpShop(int moneyGained)
     {
+        playerMoney += moneyGained;
         MoveCameraToShop();
         DeleteShopItems();
         canOnlyChooseOne = false;

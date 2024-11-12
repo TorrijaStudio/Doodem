@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec6c18489b56204fb800ece69d138a8, type: 3}
   m_Name: BeeBody
   m_EditorClassIdentifier: 
-  price: 0
+  price: 8
   objectsToSell:
   - {fileID: 696707142782113798, guid: e47e4cd05c08f5c4b9f40bb87cf0a7b3, type: 3}
   animalParts:

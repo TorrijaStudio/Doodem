@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec6c18489b56204fb800ece69d138a8, type: 3}
   m_Name: EagleBody
   m_EditorClassIdentifier: 
-  price: 0
+  price: 9
   objectsToSell:
   - {fileID: 696707142782113798, guid: 385b45355f0356043ab1c9c3f746f33b, type: 3}
   animalParts:

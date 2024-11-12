@@ -217,7 +217,7 @@ public class GameManager : NetworkBehaviour
             startMatchAfterTimer = false;
             gameCanvas.gameObject.SetActive(false);
             storeCanvas.gameObject.SetActive(true);
-            _store.SetUpShop();
+            _store.SetUpShop(15);
             Debug.LogWarning("Empezando timer en StartRound (else)");
             StartTime();
         }

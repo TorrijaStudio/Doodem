@@ -23,7 +23,7 @@ namespace Animals.ClasesDeAnimales
 
         private void AreaAttack()
         {
-            Debug.Log("Area attack :) from " + transform.parent.name);
+            // Debug.Log("Area attack :) from " + transform.parent.name);
             Collider[] hitColliders = Physics.OverlapSphere(_entity.transform.position, AttackDistance, LayerMask.GetMask(_entity.layerEnemy));
             foreach (var c in hitColliders)
             {

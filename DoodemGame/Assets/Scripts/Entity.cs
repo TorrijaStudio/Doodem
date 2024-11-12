@@ -115,7 +115,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     }
     public void Attack()
     {
-        Debug.Log(name + " attacking!");
+        // Debug.Log(name + " attacking!");
         if (Time.time - timeLastHit >= 1f / attackSpeed)
         {
             float aux = 0;
@@ -231,7 +231,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     
     public float Attacked(float enemyDamage)
     {
-        Debug.Log(gameObject.name + " -- "+health);
+        // Debug.Log(gameObject.name + " -- "+health);
         health -= enemyDamage;
         if (health <= 0)
         {
