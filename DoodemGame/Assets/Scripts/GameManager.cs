@@ -284,14 +284,14 @@ public class GameManager : NetworkBehaviour
     }
     
     [ServerRpc]
-    public void GenerateRandomNumberServerRpc(int maxValue,NetworkObjectReference target,int posHijo)
+    public void GenerateRandomResourceServerRpc(int maxValue,NetworkObjectReference target,int posHijo)
     {
         int generatedNumber = Random.Range(0, maxValue); 
-        SendRandomNumberClientRpc(generatedNumber,target,posHijo);
+        SendRandomResourceClientRpc(generatedNumber,target,posHijo);
     }
 
     [ClientRpc]
-    public void SendRandomNumberClientRpc(int number,NetworkObjectReference target,int posHijo)
+    public void SendRandomResourceClientRpc(int number,NetworkObjectReference target,int posHijo)
     {
         if (target.TryGet(out NetworkObject targetObject))
         {

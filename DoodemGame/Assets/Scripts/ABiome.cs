@@ -223,7 +223,7 @@ public abstract class ABiome : NetworkBehaviour
 
             if (IsHost)
             {
-                GameManager.Instance.GenerateRandomNumberServerRpc(typeResource.Length-1,GetComponent<NetworkObject>(),aux);
+                GameManager.Instance.GenerateRandomResourceServerRpc(typeResource.Length-1,GetComponent<NetworkObject>(),aux);
             }
             aux++;
         }
