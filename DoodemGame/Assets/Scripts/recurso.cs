@@ -15,21 +15,6 @@ public class recurso : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Debug.Log(transform.parent.parent.name);
-        //var mesh = GetComponent<MeshRenderer>();
-        //switch (_typeRecurso)
-        //{
-        //    case Recursos.Arbol:
-        //        mesh.material.color = Color.magenta;
-        //        break;
-        //    case Recursos.Hierba:
-        //        mesh.material.color = Color.black;
-        //        break;
-        //    case Recursos.Nido:    
-        //        mesh.material.color = Color.white;
-        //        break;
-        //}
-        
         indexLayerArea = transform.parent.parent.GetComponent<ABiome>().indexLayerArea;
         StartCoroutine(AddPosition());
     }
