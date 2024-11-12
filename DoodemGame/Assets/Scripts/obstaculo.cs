@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.Netcode;
 using UnityEngine;
 
 public class obstaculo : MonoBehaviour
@@ -23,6 +24,7 @@ public class obstaculo : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         GameManager.Instance.AddPositionSomething(transform.position,gameObject);
+        GameManager.Instance.entidatesPrueba.Add(gameObject);
     }
     
     public void CheckIfItsInMyBiome()
@@ -30,7 +32,8 @@ public class obstaculo : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down,out hit, 1f, LayerMask.GetMask("casilla")))
         {
-            if (indexLayerArea != hit.transform.GetComponent<NavMeshModifier>().area)
+            if (indexLayerArea != hit.transform.GetComponent<NavMeshModifier>().area || hit.transform.GetComponent<casilla>().GetBiome().
+                    GetComponent<NetworkObject>().OwnerClientId != transform.root.GetComponent<NetworkObject>().OwnerClientId)
             {
                 gameObject.SetActive(false);
             }

@@ -32,6 +32,7 @@ public class GameManager : NetworkBehaviour
     public bool startedGame;
     private int numPlayers;
     public int numRondas;
+    public List<GameObject> entidatesPrueba = new();
     
     public List<Entity> enemies;
     public List<Entity> allies;
@@ -135,12 +136,21 @@ public class GameManager : NetworkBehaviour
        // if(IsServer)
        if(startMatchAfterTimer){
            startedGame = true;
-           _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
-           foreach (var p in playerObjects)
+           
+           for (var index = 0; index < playerObjects.Count; index++)
            {
-               if (p)
+               var p = playerObjects[index];
+               if (p.TryGetComponent(out ABiome ab))
+               {
+                   ab.EnableMeshesRecursively(p);
+                   ab.SetColorsGridBiome();
+                   Debug.LogError(p.name);
+                   //p.SetActive(true);
+               }else
                    p.SetActive(true);
            }
+           updateEntidades();
+           _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
        }
        else
        {
@@ -232,10 +242,10 @@ public class GameManager : NetworkBehaviour
 
     public void AddPositionSomething(Vector3 p,GameObject o)
     {
-        var v = terrenoGO.GetComponent<terreno>().PositionToGrid(p);
-        if(entidades.ContainsKey(v) && entidades[v])
-            entidades[v].SetActive(false);
-        entidades[v] = o;
+        //var v = terrenoGO.GetComponent<terreno>().PositionToGrid(p);
+        //if(entidades.ContainsKey(v) && entidades[v])
+        //    entidades[v].SetActive(false);
+        //entidades[v] = o;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -370,18 +380,30 @@ public class GameManager : NetworkBehaviour
     public void updateEntidades()
     {
         // Debug.LogError(entidades.Count);
-        foreach (GameObject g in entidades.Values)
+        //foreach (GameObject g in entidades.Values)
+        //{
+        //        if(!g) continue;
+        //    // Debug.LogError(g.name);
+        //    // Debug.LogError(g.name);
+        //    if (g.TryGetComponent(out recurso r))
+        //    {
+        //        r.CheckIfItsInMyBiome();
+        //    }else if (g.TryGetComponent(out obstaculo o))
+        //    {
+        //        o.CheckIfItsInMyBiome();
+        //    }
+        //}
+        foreach (var e in entidatesPrueba)
         {
-                if(!g) continue;
-            // Debug.LogError(g.name);
-            // Debug.LogError(g.name);
-            if (g.TryGetComponent(out recurso r))
+            if(!e) continue;
+            if (e.TryGetComponent(out recurso r))
             {
                 r.CheckIfItsInMyBiome();
-            }else if (g.TryGetComponent(out obstaculo o))
+            }else if (e.TryGetComponent(out obstaculo o))
             {
                 o.CheckIfItsInMyBiome();
             }
+            
         }
     }
     private void OnClientConnected(ulong obj)
