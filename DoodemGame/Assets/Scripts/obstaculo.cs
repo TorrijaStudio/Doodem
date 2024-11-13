@@ -7,6 +7,8 @@ using UnityEngine;
 public class obstaculo : MonoBehaviour
 {
     private int indexLayerArea;
+
+    public bool isSet;
     // Start is called before the first frame update
     void Start()
     {

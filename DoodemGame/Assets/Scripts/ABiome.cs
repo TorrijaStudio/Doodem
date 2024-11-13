@@ -193,18 +193,42 @@ public abstract class ABiome : NetworkBehaviour
     public void SetHijos()
     {
         obstaculos = transform.GetChild(0);
+        int aux1 = 0;
         foreach (Transform t in obstaculos)
         {
             obstaculos.localScale = Vector3.one;
-           int index = UnityEngine.Random.Range(0, pos.Count);
-           Vector2 v =pos[index];
-           pos.Remove(v);
-           Vector3 newPos = new Vector3(v.x*cellSize.x+transform.position.x,transform.position.y,v.y*cellSize.y+transform.position.z);
-           if(terreno.IsInside(newPos))
-           {
-                t.position = newPos;
-           }else
-               t.gameObject.SetActive(false);
+            if(!t.GetComponent<obstaculo>().isSet)
+            {
+                int index = UnityEngine.Random.Range(0, pos.Count);
+                Vector2 v = pos[index];
+                //pos.Remove(v);
+                //Vector3 newPos = new Vector3(v.x * cellSize.x + transform.position.x, transform.position.y,v.y * cellSize.y + transform.position.z);
+                
+                var u = index%2==0 ? SetT(v, obstaculos, aux1) :SetL(v,obstaculos,aux1);
+                //var u = SetL(v, obstaculos, aux1);
+                Debug.LogError(u+" : "+v);
+                if (!u)
+                {
+                    t.GetComponent<obstaculo>().isSet = true;   
+                    pos.Remove(v);
+                    Vector3 newPos = new Vector3(v.x * cellSize.x + transform.position.x, transform.position.y,
+                    v.y * cellSize.y + transform.position.z);
+                    if (terreno.IsInside(newPos))
+                    {
+                        t.position = newPos;
+                    }
+                    else
+                        t.gameObject.SetActive(false);
+                }
+                
+                //if (terreno.IsInside(newPos))
+                //{
+                //    t.position = newPos;
+                //}
+                //else
+                //    t.gameObject.SetActive(false);
+            }
+            aux1++;
         }
 
         recursos = transform.GetChild(1);
@@ -229,6 +253,171 @@ public abstract class ABiome : NetworkBehaviour
             aux++;
         }
         //terreno.transform.GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+
+    private bool SetT(Vector2 v,Transform obs,int numHijo)
+    {
+        if (obs.childCount - numHijo < 4) return false;//no hay obstaculos suficientes; 5 bloques forman una T
+        //comprobamos izq y derecha
+        
+        if (CheckBlocksAvailability(v, Vector2.left, 1) && CheckBlocksAvailability(v, Vector2.right, 1))
+        {
+            //comprobamos 2 arriba 
+            if (CheckBlocksAvailability(v, Vector2.up, 1))
+            {
+                //asignar posiciones a la izq, der, y 2 arriba y centro
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.left);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.right);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.up);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+            //comprobamos 2 abajo
+            if (CheckBlocksAvailability(v, Vector2.down, 1))
+            {
+                //asignar posiciones a la izq, der y 2 abajo y centro
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.left);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.right);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.down);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+        }
+        else
+        {
+            //comprobamos arriba y abajo
+            if (CheckBlocksAvailability(v, Vector2.up, 1) && CheckBlocksAvailability(v, Vector2.down, 1))
+            {
+                //Comprobamos 2 derecha
+                if (CheckBlocksAvailability(v, Vector2.right, 1))
+                {
+                    //asignamos posiciones arriba, abajo y 2 derecha y centro
+                    SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.up);
+                    SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.down);
+                    SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.right);
+                    SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                    return true;
+                }
+                //comprobamos 2 izquierda
+                if (CheckBlocksAvailability(v, Vector2.left, 1))
+                {
+                    //asignamos posiciones arriba, abajo y 2 izquierda y centro
+                    SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.up);
+                    SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.down);
+                    SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.left);
+                    SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool SetL(Vector2 v,Transform obs,int numHijo)
+    {
+        if (obs.childCount - numHijo < 4) return false;
+        if (CheckBlocksAvailability(v, Vector2.up, 2))
+        {
+            if (CheckBlocksAvailability(v, Vector2.left, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.up);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.up*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.left);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+
+            if (CheckBlocksAvailability(v, Vector2.right, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.up);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.up*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.right);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+        }
+        if (CheckBlocksAvailability(v, Vector2.down, 2))
+        {
+            if (CheckBlocksAvailability(v, Vector2.left, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.down);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.down*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.left);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+
+            if (CheckBlocksAvailability(v, Vector2.right, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.down);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.down*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.right);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+        }
+        if (CheckBlocksAvailability(v, Vector2.right, 2))
+        {
+            if (CheckBlocksAvailability(v, Vector2.up, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.right);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.right*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.up);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+
+            if (CheckBlocksAvailability(v, Vector2.down, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.right);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.right*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.down);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+        }
+        if (CheckBlocksAvailability(v, Vector2.left, 2))
+        {
+            if (CheckBlocksAvailability(v, Vector2.up, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.left);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.left*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.up);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+
+            if (CheckBlocksAvailability(v, Vector2.down, 1))
+            {
+                SetPositionObstacle(v,obs.GetChild(numHijo),Vector2.left);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 1),Vector2.left*2);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 2),Vector2.down);
+                SetPositionObstacle(v,obs.GetChild(numHijo + 3),Vector2.zero);
+                return true;
+            }
+        }
+        return false;
+    }
+    private void SetPositionObstacle(Vector2 v,Transform t,Vector2 dir)
+    {
+        var newV = v + dir;
+        var newPos = new Vector3(newV.x*cellSize.x+transform.position.x,transform.position.y,newV.y*cellSize.y+transform.position.z);
+        t.position = newPos;
+        t.GetComponent<obstaculo>().isSet = true;
+        pos.Remove(newV);
+    }
+    private bool CheckBlocksAvailability(Vector2 v,Vector2 dir,int numBlocks)
+    {
+        for (int i = 1; i <= numBlocks; i++)
+        {
+            var newV = v + dir * i;
+            var newPos = new Vector3(newV.x*cellSize.x+transform.position.x,transform.position.y,newV.y*cellSize.y+transform.position.z);
+            if (!pos.Contains(newV) || !terreno.IsInside(newPos))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Transform GetRecursos()

@@ -106,7 +106,10 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         // Debug.Log(playerId);
         // if(IsSpawned)
-        GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0], info[1], info[2]);
+        if(info.Length>3)
+            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0], info[1], info[2]);
+        else
+            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, 0,0,0);
         numCartas--;
     }
 
