@@ -29,7 +29,7 @@ public class playerInfoStore : MonoBehaviour
     public Transform _cameraPos;
     public Quaternion cameraRot;
     public bool isFirstTime = true;
-    public int playerMoney = 8;
+    public int playerMoney;
     private int _selectedItemsCost;
 
     public int SelectedItemsCost
@@ -38,7 +38,8 @@ public class playerInfoStore : MonoBehaviour
         set
         {
             _selectedItemsCost = Math.Max(0, value);
-            Debug.Log("Objeto tienda (de)seleccionado " + OnItemSelected.Method.Name + " new precio: " + _selectedItemsCost + " player " + playerMoney);
+            // Debug.Log("Objeto tienda (de)seleccionado " + OnItemSelected.Method.Name + " new precio: " + _selectedItemsCost + " player " + playerMoney);
+            playerMoneyText.SetText(_selectedItemsCost + "/" + playerMoney);
             OnItemSelected.Invoke();
         }
     }
@@ -109,7 +110,7 @@ public class playerInfoStore : MonoBehaviour
     public void InitialSelection()
     {
         isFirstTime = true;
-        playerMoney = 10;
+        // playerMoney = 10000;
         MoveCameraToShop();
         canOnlyChooseOne = true;
         var index = 1;
