@@ -211,6 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b89017f6ca459aaa5b147a8127749a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDistance: 0
+  resource: 2
+  resourceQuantity: 2
   <Speed>k__BackingField: 2
   <Health>k__BackingField: 20
   <Damage>k__BackingField: 40

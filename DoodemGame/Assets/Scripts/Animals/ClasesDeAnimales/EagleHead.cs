@@ -38,7 +38,6 @@ namespace Animals.ClasesDeAnimales
             return a.ToList();
         }
 
-        public Resources Resources { get; set; }
         
         [field: SerializeField] public float Speed { get; set; }
         [field: SerializeField] public float Health { get; set; }

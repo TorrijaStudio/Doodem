@@ -8,7 +8,6 @@ namespace Animals.Interfaces
         public List<float> AssignValuesToResources(IList<Transform> resources);
         public List<float> AssignValuesToEnemies(IList<Transform> enemies);
 
-        Resources Resources { get; set; }
         float Speed { get; set; }
         float Health { get; set; }
         float Damage { get; set; }

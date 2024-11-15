@@ -64653,6 +64653,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6155017358225567385, guid: ecfbafd27a2ace442849a70e7e248aad, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8418144411756796690, guid: ecfbafd27a2ace442849a70e7e248aad, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.321425
@@ -64709,6 +64713,10 @@ PrefabInstance:
     - target: {fileID: 3646101065516955129, guid: f9995dbee08a58b49b3f2dfade792ad7, type: 3}
       propertyPath: m_Name
       value: totem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646101065516955129, guid: f9995dbee08a58b49b3f2dfade792ad7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6099393148114431009, guid: f9995dbee08a58b49b3f2dfade792ad7, type: 3}
       propertyPath: terreno

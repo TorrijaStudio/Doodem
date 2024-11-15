@@ -10,6 +10,9 @@ namespace Animals.ClasesDeAnimales
     public class BearBody : AnimalBody
     {
         private Entity _entity;
+        [SerializeField] private Recursos resource;
+        [SerializeField] private int resourceQuantity;
+        private bool _isSubscribed;
         private const float AttackDistance = 2.5f;
         private const float AttackAngle = 60f;
         private const float AttackDamage = 10f;
@@ -17,10 +20,33 @@ namespace Animals.ClasesDeAnimales
         private void Start()
         {
             _entity = transform.GetComponentInParent<Entity>();
-            _entity.SubscribeAttack(TotemPiece.Type.Body, new Entity.AttackStruct(AttackDistance, AreaAttack));
+            _entity.OnResourcesChanged += HasResourcesForAttack;
+            // _entity.SubscribeAttack(TotemPiece.Type.Body, new Entity.AttackStruct(AttackDistance, AreaAttack));
             // _entity.att
         }
 
+        private void HasResourcesForAttack(Recursos resources, int number)
+        {
+            if(resources != resource)   return;
+
+            if (number >= resourceQuantity)
+            {
+                if(!_isSubscribed){
+                    Debug.Log("Ataque oso suscrito");
+                    _entity.SubscribeAttack(TotemPiece.Type.Body, new Entity.AttackStruct(AttackDistance, AreaAttack));
+                    _isSubscribed = true;
+                }
+            }
+            else
+            {
+                if (_isSubscribed)
+                {
+                    Debug.Log("Ataque oso desuscrito");
+                    _entity.UnsubscribeAttack(TotemPiece.Type.Body);
+                    _isSubscribed = false;
+                }
+            }
+        }
         private void AreaAttack()
         {
             // Debug.Log("Area attack :) from " + transform.parent.name);

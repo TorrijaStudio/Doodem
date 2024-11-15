@@ -1,12 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using Animals.Interfaces;
+using Totems;
 using UnityEngine;
 
 namespace Animals.ClasesDeAnimales
 {
     public class EagleBody : AnimalBody
     {
+        private Entity _entity;
+        
+        private void Start()
+        {
+            _entity = transform.GetComponentInParent<Entity>();
+            _entity.isFlying = true;
+        }
+        
+        
+        
         public override List<float> AssignValuesToResources(IList<Transform> resources)
         {
             var a = new float[resources.Count];

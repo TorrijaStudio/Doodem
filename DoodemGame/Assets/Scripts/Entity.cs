@@ -185,7 +185,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         if (!agente.isOnNavMesh) yield return null;
         Debug.LogWarning("Following enemy");
-        while (!agente.isStopped && isEnemy && objetive)
+        while (!agente.isStopped && isEnemy && objetive && !isFlying)
         {
             var position = objetive.position;
             agente.SetDestination(position);
@@ -225,7 +225,12 @@ public class Entity : NetworkBehaviour ,IAtackable
             else if(agente.isStopped)
             {
                 agente.isStopped = false;
-                _followCoroutine = StartCoroutine(FollowEnemy());
+                if(isFlying)
+                    flyUpdate();
+                else
+                {
+                    _followCoroutine = StartCoroutine(FollowEnemy());
+                }
             }
         }
     }
@@ -245,6 +250,25 @@ public class Entity : NetworkBehaviour ,IAtackable
         return health;
     }
 
+    public void ApplyBleeding()
+    {
+        StartCoroutine(ChangeHealthOverTime(-10, 3));
+    }
+
+    public void ApplyHealing()
+    {
+        StartCoroutine(ChangeHealthOverTime(5, 10));
+    }
+    
+    private IEnumerator ChangeHealthOverTime(int healthChange, int seconds)
+    {
+        for (int i = 0; i < seconds; i++)
+        {
+            yield return new WaitForSeconds(1.0f);
+            health += healthChange;
+        }
+    }
+    
     private void SetAgent()
     {
         agente = GetComponent<NavMeshAgent>();
@@ -427,7 +451,11 @@ public class Entity : NetworkBehaviour ,IAtackable
         _attacksMap.TryAdd(type, attackStruct);
         maxAttackDistance = _attacksMap.Select(a => a.Value.AttackDistance).Max();
     }
-
+    public void UnsubscribeAttack(TotemPiece.Type type)
+    {
+        _attacksMap.Remove(type);
+        maxAttackDistance = _attacksMap.Select(a => a.Value.AttackDistance).Max();
+    }
     private bool TryAttack(float distance)
     {
         string blah = string.Join(", ", _attacksMap.Select(v => v.Value.AttackDistance.ToString(CultureInfo.InvariantCulture)).ToArray());
