@@ -28,7 +28,11 @@ public class MenuhOJAS : MonoBehaviour
     public GameObject parteArriba;
     private Animator animArriba;
 
+    public GameObject torrijaLogo;
+    private Animator animLogo;
 
+    public GameObject cartel;
+    private Animator animCartel;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +48,8 @@ public class MenuhOJAS : MonoBehaviour
         animMedia = parteMedia.GetComponent<Animator>();
         animArriba = parteArriba.GetComponent<Animator>();
 
+        animLogo = torrijaLogo.GetComponent<Animator>();
+        animCartel = cartel.GetComponent<Animator>();
 
     }
 
@@ -61,7 +67,14 @@ public class MenuhOJAS : MonoBehaviour
 
             Invoke("caerTotem", 1.29f);
 
+            Invoke("aparecerLogo", 3.5f);
+
             
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            animCartel.SetTrigger("Start");
         }
     }
 
@@ -69,5 +82,11 @@ public class MenuhOJAS : MonoBehaviour
         animAbajo.SetTrigger("Start");
         animMedia.SetTrigger("Start");
         animArriba.SetTrigger("Start");
+    }
+
+    void aparecerLogo() {
+
+        animLogo.SetTrigger("Start");
+        Debug.Log("saas");
     }
 }
