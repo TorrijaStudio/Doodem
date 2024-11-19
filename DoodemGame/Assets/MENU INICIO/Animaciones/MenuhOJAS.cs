@@ -34,6 +34,15 @@ public class MenuhOJAS : MonoBehaviour
     public GameObject cartel;
     private Animator animCartel;
 
+    public GameObject senalAbajo;
+    private Animator animSenalAbajo;
+
+    public GameObject senalMedio;
+    private Animator animSenalMedio;
+
+    public GameObject senalArriba;
+    private Animator animSenalArriba;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +58,12 @@ public class MenuhOJAS : MonoBehaviour
         animArriba = parteArriba.GetComponent<Animator>();
 
         animLogo = torrijaLogo.GetComponent<Animator>();
+        animCartel = cartel.GetComponent<Animator>();
+
+        animSenalAbajo = senalAbajo.GetComponent<Animator>();
+        animSenalMedio = senalMedio.GetComponent<Animator>();
+        animSenalArriba = senalArriba.GetComponent<Animator>();
+
         animCartel = cartel.GetComponent<Animator>();
 
     }
@@ -76,17 +91,26 @@ public class MenuhOJAS : MonoBehaviour
         {
             animCartel.SetTrigger("Start");
         }
+
+       
     }
 
     void caerTotem() {
         animAbajo.SetTrigger("Start");
         animMedia.SetTrigger("Start");
         animArriba.SetTrigger("Start");
+        animSenalAbajo.SetTrigger("Start");
+        animSenalMedio.SetTrigger("Start");
+        animSenalArriba.SetTrigger("Start");
     }
 
     void aparecerLogo() {
 
         animLogo.SetTrigger("Start");
         Debug.Log("saas");
+    }
+
+    public void hacealgo() {
+        animCartel.SetTrigger("pulsarSenal");
     }
 }
