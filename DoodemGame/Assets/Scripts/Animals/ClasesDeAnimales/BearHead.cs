@@ -15,14 +15,9 @@ namespace Animals.ClasesDeAnimales
             _entity.SubscribeAttack(TotemPiece.Type.Head, new Entity.AttackStruct(AttackDistance, _entity.Attack));
             // _entity.att
         }
-        public List<float> AssignValuesToResources(IList<Transform> resources)
+        public List<float> AssignValuesToResources(List<recurso> resources)
         {
             var a = new float[resources.Count];
-            for (var i = 0; i < resources.Count; i++)
-            {
-                var dist = transform.position - resources[i].position;
-                a[i] = Mathf.Pow(dist.magnitude / GameManager.Instance.MaxDistance, 3);
-            }
             return a.ToList();
         }
 

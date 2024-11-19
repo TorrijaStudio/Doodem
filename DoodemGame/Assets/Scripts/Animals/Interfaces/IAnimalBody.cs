@@ -18,7 +18,7 @@ namespace Animals.Interfaces
             return feetPoint;
         }
 
-        public abstract List<float> AssignValuesToResources(IList<Transform> resources);
+        public abstract List<float> AssignValuesToResources(List<recurso> resources);
         public abstract List<float> AssignValuesToEnemies(IList<Transform> enemies);
 
         

@@ -16,14 +16,9 @@ namespace Animals.ClasesDeAnimales
             // _entity.att
         }
         
-        public List<float> AssignValuesToResources(IList<Transform> resources)
+        public List<float> AssignValuesToResources(List<recurso> resources)
         {
             var a = new float[resources.Count];
-            for (var i = 0; i < resources.Count; i++)
-            {
-                var dist = transform.position - resources[i].position;
-                a[i] = Mathf.Log10(dist.magnitude / GameManager.Instance.MaxDistance);
-            }
             return a.ToList();
         }
 

@@ -45,7 +45,23 @@ namespace Animals.ClasesDeAnimales
 
         private void EagleAttack()
         {
-            // if(Physics.)
+            var colliders = Physics.OverlapSphere(transform.position, 0.25f, LayerMask.GetMask(_entity.layerEnemy));
+            switch (colliders.Length)
+            {
+                case 0:
+                    return;
+                case 1:
+                    var enemy = colliders[0].GetComponent<Entity>();
+                    enemy.Attacked(Damage);
+                    enemy.Attacked(Damage);
+                    break;
+                case 2:
+                    foreach (var colliderEnemy in colliders)
+                    {
+                        colliderEnemy.GetComponent<Entity>().Attacked(Damage);
+                    }
+                    break;
+            }
         }
         
         private void AttackEagleFeet()
@@ -57,13 +73,16 @@ namespace Animals.ClasesDeAnimales
             _entity.AddOrTakeResources(resource, resourceQuantity);
         }
         
-        public List<float> AssignValuesToResources(IList<Transform> resources)
+        public List<float> AssignValuesToResources(List<recurso> resources)
         {
             var a = new float[resources.Count];
             for (var i = 0; i < resources.Count; i++)
             {
-                var dist = transform.position - resources[i].position;
-                a[i] = Mathf.Sqrt(dist.magnitude / GameManager.Instance.MaxDistance);
+                if(resources[i]._typeRecurso == resource)
+                {
+                    var dist = transform.position - resources[i].transform.position;
+                    a[i] = Mathf.Sqrt(dist.magnitude / GameManager.Instance.MaxDistance);
+                }
             }
             return a.ToList();
         }
