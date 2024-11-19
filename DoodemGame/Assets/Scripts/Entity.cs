@@ -52,7 +52,10 @@ public class Entity : NetworkBehaviour ,IAtackable
         {
             _speedModifier = value;
             if(agente)
-                agente.speed = speed + _speedModifier;
+            {
+                agente.speed = Math.Max(speed + _speedModifier, 1) / 5f;
+                Debug.Log(agente.speed);
+            }
         }
     }
 
@@ -106,7 +109,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         health += h;
         speed += s;
         if (agente)
-            agente.speed = (speed + _speedModifier) / 5f;
+            agente.speed = Mathf.Max(speed + _speedModifier, 1) / 5f;
     }
 
     
@@ -163,6 +166,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         //gameObject.SetActive(false);
         
         _attacksMap = new Dictionary<TotemPiece.Type, AttackStruct>();
+        _speedModifier = 0;
     }
 
 
@@ -266,7 +270,10 @@ public class Entity : NetworkBehaviour ,IAtackable
         {
             Destroy(gameObject);
             if (IsHost)
+            {
+                Debug.Log("uwulandia");
                 GameManager.Instance.checkIfRoundEnded(layer);
+            }
         }
 
         return health;
@@ -383,21 +390,18 @@ public class Entity : NetworkBehaviour ,IAtackable
                 // }
                 // if(agente.isStopped)    return;
             }
-            else
+            if (Vector3.Distance(objetive.position, transform.position) <= 2f)
             {
-                if (Vector3.Distance(objetive.position, transform.position) <= 1f)
-                {
-                    if(objetive.TryGetComponent<recurso>(out var res))
-                        res.PickRecurso();
-                    return; 
-                }
+                if(objetive.TryGetComponent<recurso>(out var res))
+                    res.PickRecurso();
+                return; 
             }
         }
 
         Debug.LogWarning("Searching for new objective");
         agente.isStopped = false;
         var enemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == layerEnemy).Select(entity => entity.transform).ToList();
-        var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected() && Vector3.Distance(transform.position, recurso.transform.position) <= GameManager.Instance.MaxDistance).Select((recurso =>recurso)).ToList();
+        var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected() && Vector3.Distance(transform.position, recurso.transform.position) <= GameManager.Instance.MaxDistance && recurso.GetComponent<MeshRenderer>().enabled).Select((recurso =>recurso)).ToList();
         if(resources.Count == 0 && enemies.Count == 0)  return;
 
         var values = enemies.Select(transform1 => new KeyValuePair<Transform, float>(transform1, 0f)).ToList();
@@ -429,6 +433,7 @@ public class Entity : NetworkBehaviour ,IAtackable
             _followCoroutine = StartCoroutine(FollowEnemy());
         else
         {
+            objetive.GetComponent<recurso>().SetSelected(true);
             agente.SetDestination(objetive.position);
             Debug.LogWarning("Going to " + objetive.position);
         }

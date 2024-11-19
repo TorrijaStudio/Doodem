@@ -14,13 +14,15 @@ public class glacierBiome : ABiome
     public override void ActionBioma(GameObject o)
     {
         var entity = o.GetComponent<Entity>();
-        entity.SetSpeed(entity.GetSpeed()-3.0f);
+        if(entity.isFlying) return;
+        entity.SpeedModifier -= 3;
     }
 
     public override void LeaveBiome(GameObject o)
     {
         var entity = o.GetComponent<Entity>();
-        entity.SetSpeed(entity.GetSpeed()+3.0f);
+        if(entity.isFlying) return;
+        entity.SpeedModifier += 3;
     }
     
 }
