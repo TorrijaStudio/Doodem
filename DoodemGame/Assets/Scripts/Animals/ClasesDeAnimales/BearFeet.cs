@@ -33,18 +33,20 @@ namespace Animals.ClasesDeAnimales
                     {
                         //... y el bonus esta activado... desactivalo!
                         _entity.SetCurrentDamage(_entity.GetCurrentDamageModifier() - 10);
+                        _isBonusActive = false;
                     }
                 }else if (!_isBonusActive)
                 {
                     //Si NO hay aliados en el rango y el bonus NO esta activado... activalo!
                     _entity.SetCurrentDamage(_entity.GetCurrentDamageModifier() + 10);
+                    _isBonusActive = true;
                 }
             }
         }
 
         private bool AreAlliesInRange()
         {
-            return FindObjectsOfType<Entity>().Where(entity => entity.layerEnemy == _entity.layerEnemy)
+            return FindObjectsOfType<Entity>().Where(entity => entity.layerEnemy == _entity.layerEnemy && _entity!= entity)
                 .Any(entity => Distance(entity) <= range);
             
         }
@@ -54,14 +56,9 @@ namespace Animals.ClasesDeAnimales
             return Vector3.Distance(entity.transform.position, transform.position);
         }
         
-        public List<float> AssignValuesToResources(IList<Transform> resources)
+        public List<float> AssignValuesToResources(List<recurso> resources)
         {
             var a = new float[resources.Count];
-            for (var i = 0; i < resources.Count; i++)
-            {
-                var dist = transform.position - resources[i].position;
-                a[i] = Mathf.Pow(dist.magnitude / GameManager.Instance.MaxDistance, 2f);
-            }
             return a.ToList();
         }
 

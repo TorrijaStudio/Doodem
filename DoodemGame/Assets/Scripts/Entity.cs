@@ -138,6 +138,13 @@ public class Entity : NetworkBehaviour ,IAtackable
             timeLastHit = Time.time;
         }   
     }
+    public void PoisonAttack()
+    {
+        if (objetive && isEnemy && objetive.TryGetComponent<Entity>(out var enemy))
+        {
+            enemy.ApplyBleeding();
+        }
+    }
     
     [ClientRpc]
     public void SpawnClientRpc(int h, int b, int f)
@@ -185,7 +192,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         if (!agente.isOnNavMesh) yield return null;
         Debug.LogWarning("Following enemy");
-        while (!agente.isStopped && isEnemy && objetive && !isFlying)
+        while (!isFlying && !agente.isStopped && isEnemy && objetive)
         {
             var position = objetive.position;
             agente.SetDestination(position);
@@ -204,33 +211,48 @@ public class Entity : NetworkBehaviour ,IAtackable
         checkAreaAgent();
 
         // var d = _attacksMap.Select(a => a.Value.AttackDistance).Max();
-        if (isEnemy && objetive)
+        if (objetive)
         {
-            var distance = Vector3.Distance(transform.position, objetive.position);
-            // Debug.Log(maxAttackDistance + " ... " + Vector3.Distance(transform.position, objetive.position));
-            if (distance <= maxAttackDistance)
+            if (isFlying)
             {
-                if(_followCoroutine != null)
-                    StopCoroutine(_followCoroutine);
-                agente.isStopped = true;
-                if (Time.time - timeLastHit >= 1f / attackSpeed)
+                flyUpdate();
+            }
+            else if(isEnemy)
+            {
+                var distance = Vector3.Distance(transform.position, objetive.position);
+                // Debug.Log(maxAttackDistance + " ... " + Vector3.Distance(transform.position, objetive.position));
+                if (distance <= maxAttackDistance)
                 {
-                    if (TryAttack(distance))
+                    if (_followCoroutine != null)
+                        StopCoroutine(_followCoroutine);
+                    agente.isStopped = true;
+                    if (Time.time - timeLastHit >= 1f / attackSpeed)
                     {
-                        timeLastHit = Time.time;
-                        // agente.isStopped = true;
+                        if (TryAttack(distance))
+                        {
+                            timeLastHit = Time.time;
+                            // agente.isStopped = true;
+                        }
+                    }
+                }
+                // else if (isFlying)
+                // {
+                //     flyUpdate();
+                // }
+                else if (agente.isStopped)
+                {
+                    agente.isStopped = false;
+                    // if(isFlying)
+                    //     flyUpdate();
+                    // else
+                    {
+                        _followCoroutine = StartCoroutine(FollowEnemy());
                     }
                 }
             }
-            else if(agente.isStopped)
+            else
             {
-                agente.isStopped = false;
-                if(isFlying)
-                    flyUpdate();
-                else
-                {
-                    _followCoroutine = StartCoroutine(FollowEnemy());
-                }
+                
             }
         }
     }
@@ -238,7 +260,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     public float Attacked(float enemyDamage)
     {
         // Debug.Log(gameObject.name + " -- "+health);
-        if (isFlying) enemyDamage = Mathf.CeilToInt(enemyDamage * 0.95f);
+        if (isFlying) enemyDamage *= 0.95f;
         health -= enemyDamage;
         if (health <= 0)
         {
@@ -279,7 +301,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     }
     private void flyUpdate()
     {
-        if (transform.position.y < 1F)
+        if (transform.position.y < 2.5F)
         {
             gameObject.transform.Translate(Vector3.up* (Time.deltaTime * speed));
             return;
@@ -375,11 +397,11 @@ public class Entity : NetworkBehaviour ,IAtackable
         Debug.LogWarning("Searching for new objective");
         agente.isStopped = false;
         var enemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == layerEnemy).Select(entity => entity.transform).ToList();
-        var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected()).Select((recurso =>recurso.transform)).ToList();
+        var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected() && Vector3.Distance(transform.position, recurso.transform.position) <= GameManager.Instance.MaxDistance).Select((recurso =>recurso)).ToList();
         if(resources.Count == 0 && enemies.Count == 0)  return;
 
         var values = enemies.Select(transform1 => new KeyValuePair<Transform, float>(transform1, 0f)).ToList();
-        values.AddRange(resources.Select(transform1 => new KeyValuePair<Transform, float>(transform1, 0f)));
+        values.AddRange(resources.Select(transform1 => new KeyValuePair<Transform, float>(transform1.transform, 0f)));
 
         
         // var aaaaaaa = values.Aggregate("", (current, pair) => current + (pair.Key + " " + pair.Value + "\n"));
@@ -403,7 +425,13 @@ public class Entity : NetworkBehaviour ,IAtackable
         isEnemy = (bool)objetive.GetComponent<Entity>();
         // Debug.LogWarning($"Next objective is {objetive.name} and is {isEnemy} an enemy??");
         // agente.SetDestination(objetive.position);
-        _followCoroutine = StartCoroutine(FollowEnemy());
+        if(isEnemy)
+            _followCoroutine = StartCoroutine(FollowEnemy());
+        else
+        {
+            agente.SetDestination(objetive.position);
+            Debug.LogWarning("Going to " + objetive.position);
+        }
         // Debug.Log(objetive.name);
     }
 
