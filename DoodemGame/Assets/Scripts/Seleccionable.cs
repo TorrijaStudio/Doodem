@@ -35,6 +35,8 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
             if(t!=transform)
                 cartas.Add(t);
         }
+
+        terreno = GameObject.Find("terreno").GetComponent<MeshRenderer>();
         _grid = terreno.gameObject.GetComponent<terreno>().GetGrid();
         // ClientID = -1;
     }
@@ -120,6 +122,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("esto no Funciona");
         _selected = true;
         GameManager.Instance.objectSelected = null;
         foreach (var c in cartas.Where(c => c))

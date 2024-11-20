@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Totems;
 using Unity.Mathematics;
+using Unity.Services.Authentication;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -26,9 +27,26 @@ public class Inventory : MonoBehaviour
 
     [SerializeField]
     private Transform totemParent;
+
+    [SerializeField] private Transform seleccionableTotemParent;
+    private Transform _seleccionableTotemPositions;
+    private int _clientID;
+    public int clientID
+    {
+        get => _clientID ;
+        set {
+            _clientID = value;
+            _seleccionableTotemPositions = GameObject.Find("TotemSeleccionablePositionsP" + (1 - _clientID)).transform;
+        }
+    }
+
+    public static Inventory Instance;
     // Start is called before the first frame update
     void Start()
     {
+        if (Instance) Destroy(gameObject);
+        else Instance = this;
+        
         _totemPieces = new List<List<TotemPiece>>();
     }
 
@@ -134,6 +152,39 @@ public class Inventory : MonoBehaviour
         boton.DeleteShopItems();
     }
 
+    public void SpawnTotemsAsSeleccionables()
+    {
+        DeleteSeleccionableTotems();
+        var infoForSeleccionables = _totemPieces.Where((list => list.Count == 3)).ToList();
+        Debug.Log(infoForSeleccionables.Count);
+        var objectsToSpawn = infoForSeleccionables.Count;
+        
+        // var separationDistance = selecDistance / objectsToSpawn;
+        var pos = _seleccionableTotemPositions.GetChild(0).position;
+        var rotation = _seleccionableTotemPositions.GetChild(0).rotation;
+        var offset = Vector3.Distance(pos, _seleccionableTotemPositions.GetChild(1).position) / (objectsToSpawn + 1);
+        var dir = (_seleccionableTotemPositions.GetChild(1).position - pos).normalized;
+        foreach (var totemPiece in infoForSeleccionables)
+        {
+            pos += dir * offset;
+            var totem = Instantiate(totemToInstantiate, pos, rotation, seleccionableTotemParent);
+            totem.gameObject.SetActive(true);
+            totem.CreateTotem(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
+            var a = totem.gameObject.AddComponent<Seleccionable>();
+            a.indexPrefab = 0;
+            a.numCartas = 1;
+            a.SetInfo(totemPiece[0].scriptableObjectTienda.num, totemPiece[1].scriptableObjectTienda.num, totemPiece[2].scriptableObjectTienda.num);
+            // pos += Vector3.down * separationDistance;
+        }
+        SetDrag(false);
+    }
+    public void DeleteSeleccionableTotems()
+    {
+        for(var i = seleccionableTotemParent.childCount - 1; i >= 0; i--)
+        {
+            Destroy(seleccionableTotemParent.GetChild(i).gameObject);
+        }
+    }
     public void SpawnSeleccionables()
     {
         DeleteSeleccionables();
@@ -150,7 +201,7 @@ public class Inventory : MonoBehaviour
             totem.SetInfo(totemPiece[0].scriptableObjectTienda.num, totemPiece[1].scriptableObjectTienda.num, totemPiece[2].scriptableObjectTienda.num);
             pos += Vector3.down * separationDistance;
         }
-        SetDrag(true);
+        // SetDrag(true);
     }
     public void DeleteSeleccionables()
     {

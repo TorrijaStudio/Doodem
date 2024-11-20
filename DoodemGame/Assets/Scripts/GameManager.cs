@@ -160,6 +160,7 @@ public class GameManager : NetworkBehaviour
            startMatchAfterTimer = true;
            
            FindObjectOfType<Inventory>().SpawnSeleccionables();
+           FindObjectOfType<Inventory>().SpawnTotemsAsSeleccionables();
            gameCanvas.gameObject.SetActive(true);
            storeCanvas.gameObject.SetActive(false);
            startedGame = false;
@@ -460,6 +461,7 @@ public class GameManager : NetworkBehaviour
             {
                 Debug.Log("Scooby dooby do, who are you? ");
                 Seleccionable.ClientID = _id.Value;
+                Inventory.Instance.clientID = _id.Value;
                 clientId = _id.Value;
                 // Camera.main.enabled = false;
                 GameObject.Find(clientId == 0 ? "Main Camera" : "Main Camera1").GetComponent<Camera>().gameObject.SetActive(false);
