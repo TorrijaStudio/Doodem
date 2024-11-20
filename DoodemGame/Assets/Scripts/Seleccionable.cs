@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HelloWorld;
+using tienda;
 using Unity.AI.Navigation;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -19,7 +20,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     public int indexPrefab;
     public bool CanDropEnemySide;
     public int numCartas;
-    [SerializeField] private int[] info;
+    [SerializeField] private ScriptableObjectTienda[] info;
 
 
     [SerializeField] private MeshRenderer terreno;
@@ -47,7 +48,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         var a = Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
         if (info.Length >= 3)
         {
-            a.GetComponent<Totem>().CreateTotem(GameManager.Instance._heads[info[0]], GameManager.Instance._heads[info[1]], GameManager.Instance._heads[info[2]]);
+            a.GetComponent<Totem>().CreateTotem(info[0], info[1], info[2]);
         }
         a.name = "Dummy Totem";
         return a;
@@ -113,13 +114,13 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         // Debug.Log(playerId);
         // if(IsSpawned)
         if(info.Length>=3)
-            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0], info[1], info[2]);
+            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0].num, info[1].num, info[2].num);
         else
             GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, 0,0,0);
         numCartas--;
     }
 
-    public void SetInfo(int h, int b, int f)
+    public void SetInfo(ScriptableObjectTienda h, ScriptableObjectTienda b, ScriptableObjectTienda f)
     {
         info = new[] { h, b, f };
     }

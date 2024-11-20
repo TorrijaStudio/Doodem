@@ -38127,7 +38127,7 @@ MonoBehaviour:
   indexPrefab: 3
   CanDropEnemySide: 1
   numCartas: 1
-  info: 
+  info: []
   terreno: {fileID: 1337947988}
 --- !u!114 &1331882688
 MonoBehaviour:
@@ -54183,7 +54183,7 @@ MonoBehaviour:
   indexPrefab: 2
   CanDropEnemySide: 1
   numCartas: 5
-  info: 
+  info: []
   terreno: {fileID: 1337947988}
 --- !u!114 &1786226305
 MonoBehaviour:
