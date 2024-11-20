@@ -174,7 +174,7 @@ public class Inventory : MonoBehaviour
             a.indexPrefab = 0;
             a.numCartas = 1;
             a.objetoACrear = totemToInstantiate.gameObject;
-            a.SetInfo(totemPiece[0].scriptableObjectTienda.num, totemPiece[1].scriptableObjectTienda.num, totemPiece[2].scriptableObjectTienda.num);
+            a.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
             // pos += Vector3.down * separationDistance;
         }
         SetDrag(false);
@@ -199,7 +199,7 @@ public class Inventory : MonoBehaviour
         { 
             var totem = Instantiate(seleccionableToSpawn, pos, Quaternion.identity, seleccionableParent);
             totem.gameObject.SetActive(true);
-            totem.SetInfo(totemPiece[0].scriptableObjectTienda.num, totemPiece[1].scriptableObjectTienda.num, totemPiece[2].scriptableObjectTienda.num);
+            totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
             pos += Vector3.down * separationDistance;
         }
         // SetDrag(true);

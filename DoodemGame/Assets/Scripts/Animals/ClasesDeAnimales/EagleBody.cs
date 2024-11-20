@@ -3,6 +3,7 @@ using System.Linq;
 using Animals.Interfaces;
 using Totems;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Animals.ClasesDeAnimales
 {
@@ -14,6 +15,7 @@ namespace Animals.ClasesDeAnimales
         {
             _entity = transform.GetComponentInParent<Entity>();
             _entity.isFlying = true;
+            _entity.GetComponent<NavMeshAgent>().enabled = false;
         }
         
         
