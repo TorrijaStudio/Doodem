@@ -66,10 +66,11 @@ namespace Animals.ClasesDeAnimales
         
         private void AttackEagleFeet()
         {
-            var entityDamage = _entity.damage;
-            _entity.damage = Damage;
-            _entity.Attack();
-            _entity.damage = entityDamage;
+            // var entityDamage = _entity.damage;
+            // _entity.damage = Damage;
+            // _entity.Attack();
+            // _entity.damage = entityDamage;
+            EagleAttack();
             _entity.AddOrTakeResources(resource, resourceQuantity);
         }
         

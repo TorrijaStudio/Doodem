@@ -65258,6 +65258,10 @@ PrefabInstance:
       propertyPath: terreno
       value: 
       objectReference: {fileID: 1337947988}
+    - target: {fileID: 6099393148114431009, guid: f9995dbee08a58b49b3f2dfade792ad7, type: 3}
+      propertyPath: objetoACrear
+      value: 
+      objectReference: {fileID: 2182309676066600710, guid: 06ae647b221c886439a6f47cf5293358, type: 3}
     - target: {fileID: 7321203720607363203, guid: f9995dbee08a58b49b3f2dfade792ad7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

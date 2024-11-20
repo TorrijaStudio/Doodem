@@ -401,7 +401,8 @@ public class Entity : NetworkBehaviour ,IAtackable
         Debug.LogWarning("Searching for new objective");
         agente.isStopped = false;
         var enemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == layerEnemy).Select(entity => entity.transform).ToList();
-        var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected() && Vector3.Distance(transform.position, recurso.transform.position) <= GameManager.Instance.MaxDistance && recurso.GetComponent<MeshRenderer>().enabled).Select((recurso =>recurso)).ToList();
+        var resources = FindObjectsOfType<recurso>().Where(recurso => !recurso.GetSelected() && Vector3.Distance(transform.position, recurso.transform.position) <= GameManager.Instance.MaxDistance && recurso.GetComponent<MeshRenderer>().enabled).ToList();
+        Debug.LogWarning("MaxDist: " + GameManager.Instance.MaxDistance);
         if(resources.Count == 0 && enemies.Count == 0)  return;
 
         var values = enemies.Select(transform1 => new KeyValuePair<Transform, float>(transform1, 0f)).ToList();
@@ -423,8 +424,12 @@ public class Entity : NetworkBehaviour ,IAtackable
         MergeInformation(ref values, partRange);
 
         // var a = from entry in values orderby entry.Value descending select entry;
-        values.Sort((kp, kp1) => (int)Mathf.CeilToInt((kp.Value - kp1.Value)*100));
+        values.Sort((kp, kp1) => (int)Mathf.CeilToInt((kp.Value - kp1.Value)*1000));
         // Debug.Log(resources.Count());
+        if (objetive.TryGetComponent<recurso>(out var a))
+        {
+            a.SetSelected(false);
+        }
         objetive = values.First().Key;
         isEnemy = (bool)objetive.GetComponent<Entity>();
         // Debug.LogWarning($"Next objective is {objetive.name} and is {isEnemy} an enemy??");

@@ -47,9 +47,9 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         var a = Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
         if (info.Length >= 3)
         {
-            // a.GetComponent<Totem>().CreateTotem(info[0], info[1], info[2]);
+            a.GetComponent<Totem>().CreateTotem(GameManager.Instance._heads[info[0]], GameManager.Instance._heads[info[1]], GameManager.Instance._heads[info[2]]);
         }
-        a.name = " soy un objeto tonto que explota";
+        a.name = "Dummy Totem";
         return a;
 
     }
