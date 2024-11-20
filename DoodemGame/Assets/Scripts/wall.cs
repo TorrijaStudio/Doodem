@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class wall : NetworkBehaviour
 {
-    public int contadorInicial = 30; 
-    public bool cuentaRegresiva = true; 
-    public float intervalo = 1f;
+    public int contadorInicial; 
+    public bool cuentaRegresiva; 
+    public float intervalo;
   
 
     private TextMeshProUGUI _text;
@@ -37,10 +37,9 @@ public class wall : NetworkBehaviour
                     startTimer = false;
                     if (GameManager.Instance.clientId==0)
                     {
-                        GameManager.Instance.ExecuteOnAllClientsClientRpc();
+                        GameManager.Instance.StartRoundClientRpc();
                     }
                     //transform.position +=Vector3.up*100;
-                    contadorActual = 30;
                 }
             }
             else

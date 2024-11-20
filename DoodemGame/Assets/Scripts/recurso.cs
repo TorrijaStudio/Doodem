@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.AI.Navigation;
 using Unity.Netcode;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class recurso : MonoBehaviour
 {
-    private bool isSelected;
+    public bool isSelected;
     private int indexLayerArea;
     public Recursos _typeRecurso;
+    public Vector3 originPosition;
     
     // Start is called before the first frame update
     void Start()
@@ -39,8 +42,15 @@ public class recurso : MonoBehaviour
         isSelected = b;
     }
 
+    public void ResetResource()
+    {
+        Debug.LogWarning("me vuelvo a "+originPosition+" desde: "+transform.position);
+        transform.position=originPosition;
+        isSelected = false;
+    }   
     public void PickRecurso()
     {
+        if (GetComponent<MeshRenderer>().enabled == false) return;
         // gameObject.SetActive(false);
         //Destroy(gameObject);
         transform.position += Vector3.right*100;

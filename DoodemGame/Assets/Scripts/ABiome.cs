@@ -71,6 +71,7 @@ public abstract class ABiome : NetworkBehaviour
             EnableMeshesRecursively(child.gameObject);
         }
     }
+    
     public void SetColorsGridBiome()
     {
         Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale/2f, transform.rotation,
@@ -82,6 +83,14 @@ public abstract class ABiome : NetworkBehaviour
             var casilla = c.GetComponent<casilla>();
             var materialBiome = casilla.GetBiome().GetComponent<ABiome>().mat;
             casillaMesh.material = materialBiome;
+        }
+        foreach (Transform r in recursos)
+        {
+            if(r.gameObject)
+            {
+                Debug.LogError(r.name+" : "+r.position);
+                r.GetComponent<recurso>().originPosition = r.position;
+            }
         }
 
     }
@@ -128,7 +137,7 @@ public abstract class ABiome : NetworkBehaviour
      private IEnumerator UpdateEntities()
      {
          yield return new WaitForSeconds(0.5f);
-         GameManager.Instance.updateEntidades();
+         GameManager.Instance.UpdateBiomeThings();
      }
 
 
@@ -253,6 +262,20 @@ public abstract class ABiome : NetworkBehaviour
             aux++;
         }
         //terreno.transform.GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+    
+    public IEnumerator SetResourcesDespawn(int time)
+    {
+        yield return new WaitForSeconds(time);
+        foreach (Transform r in recursos)
+        {
+            if(r!=null)
+            {
+                r.GetComponent<MeshRenderer>().enabled = false;
+                if (IsHost)
+                    r.GetComponent<recurso>().ResetResource();
+            }
+        }
     }
 
     private bool SetT(Vector2 v,Transform obs,int numHijo)
@@ -438,7 +461,7 @@ public abstract class ABiome : NetworkBehaviour
                casilla.ResetCasilla();
            }
        }
-       GameManager.Instance.updateEntidades();
+       GameManager.Instance.UpdateBiomeThings();
     }
 
     public abstract void ActionBioma(GameObject o);

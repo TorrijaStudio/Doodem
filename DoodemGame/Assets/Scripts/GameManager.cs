@@ -32,6 +32,7 @@ public class GameManager : NetworkBehaviour
     public bool startedGame;
     private int numPlayers;
     public int numRondas;
+    public int secondsBiome;
     public List<GameObject> entidatesPrueba = new();
     
     public List<Entity> enemies;
@@ -83,6 +84,12 @@ public class GameManager : NetworkBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if(IsHost)
+                checkIfRoundEnded("jk");
+        }
+        
         
         //if (Input.GetKeyDown(KeyCode.L) && IsHost)
         //{
@@ -131,7 +138,7 @@ public class GameManager : NetworkBehaviour
     }
     
     [ClientRpc]
-   public void ExecuteOnAllClientsClientRpc()
+   public void StartRoundClientRpc()
    {
        // if(IsServer)
        if(startMatchAfterTimer){
@@ -143,14 +150,15 @@ public class GameManager : NetworkBehaviour
                if (!p) continue;
                if (p.TryGetComponent(out ABiome ab))
                {
-                   ab.EnableMeshesRecursively(p);
-                   ab.SetColorsGridBiome();
-                   Debug.LogError(p.name);
+                  //ab.EnableMeshesRecursively(p);
+                  //ab.SetColorsGridBiome();
+                  //Debug.LogError(p.name);
+                  StartCoroutine(StartBiome(ab, p));
                    //p.SetActive(true);
                }else
                    p.SetActive(true);
            }
-           updateEntidades();
+           UpdateBiomeThings();
            _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
        }
        else
@@ -169,9 +177,17 @@ public class GameManager : NetworkBehaviour
        }
     }
    
+    private IEnumerator StartBiome(ABiome ab,GameObject p)
+    {
+        yield return new WaitForSeconds(secondsBiome);
+        ab.EnableMeshesRecursively(p);
+        ab.SetColorsGridBiome();
+        StartCoroutine(ab.SetResourcesDespawn(secondsBiome*15));
+        _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
    
    [ClientRpc]
-    public void StartRoundClientRpc(string winner)
+    public void EndRoundClientRpc(string winner)
     {
         if(winner==" ")
         {
@@ -217,15 +233,20 @@ public class GameManager : NetworkBehaviour
         {
             startedGame = false;
             startMatchAfterTimer = false;
-            gameCanvas.gameObject.SetActive(false);
-            storeCanvas.gameObject.SetActive(true);
-            _store.SetUpShop(15);
+            StartCoroutine(DelayToChangeCanvas());
             Debug.LogWarning("Empezando timer en StartRound (else)");
             StartTime();
         }
         
     }
 
+    private IEnumerator DelayToChangeCanvas()
+    {
+        yield return new WaitForSeconds(2.0f);
+        gameCanvas.gameObject.SetActive(false);
+        storeCanvas.gameObject.SetActive(true);
+        _store.SetUpShop(15);
+    }
     private IEnumerator ChangeScene(string s)
     {
         yield return new WaitForSeconds(3.0f);
@@ -396,20 +417,20 @@ public class GameManager : NetworkBehaviour
         {
             if (RedEnemies.Count > 0)
             {
-                StartCoroutine(RoundEnded(RedEnemies));
-                StartRoundClientRpc("Rojo");
+                StartCoroutine(DespawnAllEntityRoundEnded(RedEnemies));
+                EndRoundClientRpc("Rojo");
             }
             else
             {
-                StartCoroutine(RoundEnded(BlueEnemies));
-                StartRoundClientRpc("Azul");
+                StartCoroutine(DespawnAllEntityRoundEnded(BlueEnemies));
+                EndRoundClientRpc("Azul");
             }
             
             
         }
     }
 
-    private IEnumerator RoundEnded(List<Entity> lista)
+    private IEnumerator DespawnAllEntityRoundEnded(List<Entity> lista)
     {
         yield return new WaitForSeconds(2.0f);
         foreach (var r in lista)
@@ -423,7 +444,7 @@ public class GameManager : NetworkBehaviour
     
     
     
-    public void updateEntidades()
+    public void UpdateBiomeThings()
     {
         // Debug.LogError(entidades.Count);
         //foreach (GameObject g in entidades.Values)
@@ -477,7 +498,7 @@ public class GameManager : NetworkBehaviour
             // players[id] = playerInfo;
             _id.Value++;
             if (_id.Value == 2)
-                StartRoundClientRpc(" ");
+                EndRoundClientRpc(" ");
         } 
         // var player = Instantiate(_playerPrefab);
         // player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);Debug.Log(_idPlayer);
