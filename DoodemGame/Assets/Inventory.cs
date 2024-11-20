@@ -173,6 +173,7 @@ public class Inventory : MonoBehaviour
             var a = totem.gameObject.AddComponent<Seleccionable>();
             a.indexPrefab = 0;
             a.numCartas = 1;
+            a.objetoACrear = totemToInstantiate.gameObject;
             a.SetInfo(totemPiece[0].scriptableObjectTienda.num, totemPiece[1].scriptableObjectTienda.num, totemPiece[2].scriptableObjectTienda.num);
             // pos += Vector3.down * separationDistance;
         }

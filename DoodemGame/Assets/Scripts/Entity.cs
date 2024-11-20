@@ -390,7 +390,7 @@ public class Entity : NetworkBehaviour ,IAtackable
                 // }
                 // if(agente.isStopped)    return;
             }
-            if (Vector3.Distance(objetive.position, transform.position) <= 2f)
+            if (Vector3.Distance(objetive.position, transform.position) <= 3f)
             {
                 if(objetive.TryGetComponent<recurso>(out var res))
                     res.PickRecurso();

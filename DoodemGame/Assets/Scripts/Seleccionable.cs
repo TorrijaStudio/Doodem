@@ -45,6 +45,10 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         
         var a = Instantiate(objetoACrear, position, objetoACrear.transform.rotation);
+        if (info.Length >= 3)
+        {
+            // a.GetComponent<Totem>().CreateTotem(info[0], info[1], info[2]);
+        }
         a.name = " soy un objeto tonto que explota";
         return a;
 
@@ -108,7 +112,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         // Debug.Log(playerId);
         // if(IsSpawned)
-        if(info.Length>3)
+        if(info.Length>=3)
             GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0], info[1], info[2]);
         else
             GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, 0,0,0);
