@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuhOJAS : MonoBehaviour
 {
+
+    public Button abajo;
+    public Button medio;
+    public Button arriba;
+
+
     public GameObject hojas1;
     private Animator anim1;
     
@@ -31,8 +38,6 @@ public class MenuhOJAS : MonoBehaviour
     public GameObject torrijaLogo;
     private Animator animLogo;
 
-    public GameObject cartel;
-    private Animator animCartel;
 
     public GameObject senalAbajo;
     private Animator animSenalAbajo;
@@ -42,6 +47,9 @@ public class MenuhOJAS : MonoBehaviour
 
     public GameObject senalArriba;
     private Animator animSenalArriba;
+
+    public GameObject cartelDoodem;
+    private Animator animCartelDoodem;
 
     // Start is called before the first frame update
     void Start()
@@ -58,14 +66,15 @@ public class MenuhOJAS : MonoBehaviour
         animArriba = parteArriba.GetComponent<Animator>();
 
         animLogo = torrijaLogo.GetComponent<Animator>();
-        animCartel = cartel.GetComponent<Animator>();
 
         animSenalAbajo = senalAbajo.GetComponent<Animator>();
         animSenalMedio = senalMedio.GetComponent<Animator>();
         animSenalArriba = senalArriba.GetComponent<Animator>();
+        animCartelDoodem = cartelDoodem.GetComponent<Animator>();
 
-        animCartel = cartel.GetComponent<Animator>();
-
+        arriba.gameObject.SetActive(false);
+        medio.gameObject.SetActive(false);
+        abajo.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -81,15 +90,12 @@ public class MenuhOJAS : MonoBehaviour
             animTexto.SetTrigger("Start");
 
             Invoke("caerTotem", 1.29f);
+            
 
             Invoke("aparecerLogo", 3.5f);
-
+            Invoke("caerDoodem",4.5f);
+            Invoke("ActivarBotones", 4.5f); 
             
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            animCartel.SetTrigger("Start");
         }
 
        
@@ -110,7 +116,25 @@ public class MenuhOJAS : MonoBehaviour
         Debug.Log("saas");
     }
 
-    public void hacealgo() {
-        animCartel.SetTrigger("pulsarSenal");
+    public void BotonAbajo(){
+        Debug.Log("abajo");
+    }
+    public void BotonMedio(){
+        Debug.Log("medio");
+    }
+    public void BotonArriba(){
+        Debug.Log("arriba");
+    }
+
+    public void ActivarBotones()
+    {
+        arriba.gameObject.SetActive(true);
+        medio.gameObject.SetActive(true);
+        abajo.gameObject.SetActive(true);
+    }
+
+    public void caerDoodem(){
+        animCartelDoodem.SetTrigger("Start");
+
     }
 }

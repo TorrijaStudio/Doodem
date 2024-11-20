@@ -1,57 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SenalHover : MonoBehaviour
 {
-    public float escalaX = 1.2f; // La escala en X cuando el cursor est� encima
-    public float velocidad = 5f; // La velocidad para hacer el cambio de escala
-    private Vector3 escalaInicial;
-    private bool cursorEncima = false;
-    private bool escaladoCompletado = false;
+    public float distancia = 0.5f; // Distancia que se moverá la señal a la derecha
+    public float velocidad = 5.0f; // Velocidad del desplazamiento
+
+    private Vector3 posicionOriginal; // Posición inicial de la señal
+    private Vector3 posicionDestino;  // Posición hacia donde se moverá
+    private bool moverDerecha = false; // Controla si la señal debe moverse a la derecha
 
     void Start()
     {
-        // Guarda la escala inicial del objeto
-        escalaInicial = transform.localScale;
-    }
+        // Guardar la posición original de la señal
+        posicionOriginal = transform.position;
 
-    void OnMouseEnter()
-    {
-        if (!escaladoCompletado)
-        {
-            cursorEncima = true;
-        }
-    }
-
-    void OnMouseExit()
-    {
-        cursorEncima = false;
+        // Calcular la posición destino (a la derecha)
+        posicionDestino = posicionOriginal + new Vector3(distancia, 0, 0);
     }
 
     void Update()
     {
-        // Si el cursor est� encima y la animaci�n a�n no se ha completado
-        if (cursorEncima && !escaladoCompletado)
+        if (moverDerecha)
         {
-            // Escala solo en el eje X hacia el valor de `escalaX`
-            Vector3 escalaObjetivo = new Vector3(escalaInicial.x * escalaX, escalaInicial.y, escalaInicial.z);
-            transform.localScale = Vector3.Lerp(transform.localScale, escalaObjetivo, velocidad * Time.deltaTime);
+            // Mover suavemente hacia la posición destino
+            transform.position = Vector3.Lerp(transform.position, posicionDestino, Time.deltaTime * velocidad);
+        }
+        else
+        {
+            // Volver suavemente a la posición original
+            transform.position = Vector3.Lerp(transform.position, posicionOriginal, Time.deltaTime * velocidad);
+        }
+    }
 
-            // Marca el escalado como completado cuando est� suficientemente cerca del objetivo
-            if (Mathf.Abs(transform.localScale.x - escalaObjetivo.x) < 0.01f)
-            {
-                transform.localScale = escalaObjetivo; // Asegura que llegue exactamente al objetivo
-                escaladoCompletado = true;
-            }
-        }
-        else if (!cursorEncima && escaladoCompletado)
-        {
-            // Vuelve a la escala inicial cuando el cursor se va (opcional, puedes omitir esto)
-            transform.localScale = Vector3.Lerp(transform.localScale, escalaInicial, velocidad * Time.deltaTime);
-            if (Mathf.Abs(transform.localScale.x - escalaInicial.x) < 0.01f)
-            {
-                transform.localScale = escalaInicial;
-                escaladoCompletado = false;
-            }
-        }
+    void OnMouseEnter()
+    {
+        // Activar el movimiento hacia la derecha
+        Debug.Log("esta el cursor encima sabes");
+        moverDerecha = true;
+    }
+
+    void OnMouseExit()
+    {
+        // Regresar a la posición original
+        Debug.Log("YA NO esta el cursor encima sabes");
+        moverDerecha = false;
     }
 }
