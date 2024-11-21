@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SenalHover : MonoBehaviour
 {
-    public float distancia = 0.5f; // Distancia que se moverá la señal a la derecha
-    public float velocidad = 5.0f; // Velocidad del desplazamiento
+    public float distancia = 50.0f; // Distancia que se moverá la señal a la derecha
+    public float velocidad = 50.0f; // Velocidad del desplazamiento
 
     private Vector3 posicionOriginal; // Posición inicial de la señal
     private Vector3 posicionDestino;  // Posición hacia donde se moverá
@@ -17,7 +17,7 @@ public class SenalHover : MonoBehaviour
         posicionOriginal = transform.position;
 
         // Calcular la posición destino (a la derecha)
-        posicionDestino = posicionOriginal + new Vector3(distancia, 0, 0);
+        posicionDestino = posicionOriginal + transform.right * distancia;
     }
 
     void Update()
@@ -25,6 +25,7 @@ public class SenalHover : MonoBehaviour
         if (moverDerecha)
         {
             // Mover suavemente hacia la posición destino
+            Debug.Log("ahora deberia estar moviendose");
             transform.position = Vector3.Lerp(transform.position, posicionDestino, Time.deltaTime * velocidad);
         }
         else
