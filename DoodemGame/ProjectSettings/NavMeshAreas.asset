@@ -15,11 +15,11 @@ NavMeshProjectSettings:
     cost: 1
   - name: bioma2
     cost: 1
-  - name: 
+  - name: lago
     cost: 1
-  - name: 
+  - name: "monta\xF1a"
     cost: 1
-  - name: 
+  - name: bosque
     cost: 1
   - name: 
     cost: 1

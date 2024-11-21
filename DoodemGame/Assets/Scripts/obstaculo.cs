@@ -35,7 +35,8 @@ public class obstaculo : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down,out hit, 1f, LayerMask.GetMask("casilla")))
         {
             if (indexLayerArea != hit.transform.GetComponent<NavMeshModifier>().area || hit.transform.GetComponent<casilla>().GetBiome().
-                    GetComponent<NetworkObject>().OwnerClientId != transform.root.GetComponent<NetworkObject>().OwnerClientId)
+                    GetComponent<NetworkObject>().OwnerClientId != transform.root.GetComponent<NetworkObject>().OwnerClientId || 
+                transform.root.gameObject!=hit.transform.GetComponent<casilla>().GetBiome())
             {
                 gameObject.SetActive(false);
             }

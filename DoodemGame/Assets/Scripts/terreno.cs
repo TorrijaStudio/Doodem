@@ -14,6 +14,7 @@ public class terreno : NetworkBehaviour
     private static readonly int ScaleX = Shader.PropertyToID("_ScaleX");
     private static readonly int ScaleY = Shader.PropertyToID("_ScaleY");
     [SerializeField] private bool generate;
+    public List<GameObject> casillas = new();
     
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,7 @@ public class terreno : NetworkBehaviour
             for (int y = 0; y < grid.y; y++)
             {
                 var tile = Instantiate(tilePrefab, GridToPosition(new Vector2Int(x, y)), Quaternion.Euler(90,0,0), parent);
+                casillas.Add(tile);
                 tile.name = $"[{x}, {y}]";
                 var cellSize = new Vector2(transform.lossyScale.x, transform.lossyScale.z) / grid;
                 tile.transform.localScale = new Vector3(cellSize.x-0.1f, cellSize.y-0.1f, 1);
@@ -67,6 +69,7 @@ public class terreno : NetworkBehaviour
         _meshRenderer.sharedMaterial.SetFloat(ScaleY, grid.y);
         if(generate)
         {
+            casillas = new();
             generate = false;
             GenerateTileMap();
         }

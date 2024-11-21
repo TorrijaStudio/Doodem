@@ -498,10 +498,30 @@ public class GameManager : NetworkBehaviour
             // players[id] = playerInfo;
             _id.Value++;
             if (_id.Value == 2)
+            {
+                SetTerreainBiomeDefaultClientRpc(Random.Range(0,2));
                 EndRoundClientRpc(" ");
+                
+            }
         } 
         // var player = Instantiate(_playerPrefab);
         // player.GetComponent<NetworkObject>().SpawnWithOwnership(obj);Debug.Log(_idPlayer);
+    }
+
+    [ClientRpc]
+    private void SetTerreainBiomeDefaultClientRpc(int index)
+    {
+        Debug.Log(index+"kdsjfnksdjfs");
+        var casillas = _terreno.casillas.Select((c)=> c.GetComponent<NavMeshModifier>());
+        var biome = biomasGame[index];
+        var material = biome.mat;
+        var indexLayerArea = biome.indexLayerArea;
+        foreach (var c in casillas)
+        {
+            c.area = indexLayerArea;
+            c.GetComponent<MeshRenderer>().material = material;
+        }
+        _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     public override void OnDestroy()
