@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5323126781628313546}
   - component: {fileID: 7666886780302631203}
   - component: {fileID: 6099393148114431009}
+  - component: {fileID: 9200672271449510207}
+  - component: {fileID: 3154121544899436391}
   m_Layer: 0
   m_Name: Seleccionable
   m_TagString: Untagged
@@ -89,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1913547721
+  GlobalObjectIdHash: 817459305
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
@@ -114,5 +116,39 @@ MonoBehaviour:
   indexPrefab: 0
   CanDropEnemySide: 0
   numCartas: 1
-  info: 
+  info: []
   terreno: {fileID: 0}
+--- !u!114 &9200672271449510207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646101065516955129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5163dcc6c8ae631479163309ea356bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 7400000, guid: c0c8a4bcfceeda242a953c7719440c26, type: 2}
+--- !u!95 &3154121544899436391
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646101065516955129}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bf91aaf0e141e5e439f0db2876ac6e51, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

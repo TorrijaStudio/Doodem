@@ -60,10 +60,16 @@ public class wall : NetworkBehaviour
         _text.text = string.Format("{0:00}:{1:00}", minutos, segundos);
     }
 
-    public void StartTimer()
+    public void StartTimer(int time)
     {
-        contadorActual = contadorInicial;
+        contadorActual = time;
         tiempoTranscurrido = 0;
         startTimer = true;
+    }
+
+    public void StopTimer()
+    {
+        startTimer = false;
+        tiempoTranscurrido = 0;
     }
 }

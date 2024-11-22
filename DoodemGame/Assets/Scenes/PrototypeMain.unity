@@ -9203,7 +9203,7 @@ MonoBehaviour:
   objectSelected: {fileID: 0}
   playerObjects: []
   startedGame: 0
-  numRondas: 2
+  numRondas: 3
   secondsBiome: 5
   entidatesPrueba: []
   enemies: []

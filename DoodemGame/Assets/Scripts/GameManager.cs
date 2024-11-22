@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using HelloWorld.formulas;
 using Unity.AI.Navigation;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -51,7 +52,12 @@ public class GameManager : NetworkBehaviour
     public Canvas storeCanvas;
     
     private playerInfoStore _store;
-    
+
+    public Reward reward = new (20,5,1.5F);
+    private int _victoryRojoPoints;
+    private int _victoryAzulPoints;
+    private int currentRound;
+   
     public float MaxDistance
     {
         get
@@ -84,66 +90,30 @@ public class GameManager : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if(IsHost)
-                checkIfRoundEnded("jk");
-        }
         
-        
-        //if (Input.GetKeyDown(KeyCode.L) && IsHost)
-        //{
-        //    ExecuteOnAllClientsClientRpc();
-        //}
-        //if (Input.GetKeyDown(KeyCode.Y))
-        //{
-        //    foreach (var VARIABLE in entidades.Keys)
-        //    {
-        //        if(entidades[VARIABLE])
-        //            Debug.LogError(VARIABLE+" : "+entidades[VARIABLE].name);
-        //    }
-        //}
-        //if (!startedGame && Input.GetMouseButtonDown(0))
-        //{
-        //    Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(rayo, out hit,30,LayerMask.GetMask("Rojo","Azul","casilla")))
-        //    {
-        //        objectSelected = hit.collider.gameObject;
-        //    }
-        //    else
-        //    {
-        //        if (!EventSystem.current.IsPointerOverGameObject())
-        //        {
-        //            objectSelected = null;
-        //        }
-        //    }
-        //}
     }
-
-    public void StartGame()
-    {
-        foreach (GameObject g in entidades.Values)
-        {
-            if(!g) continue;
-            if (g.TryGetComponent(out recurso r))
-            {
-                r.CheckIfItsInMyBiome();
-            }else if (g.TryGetComponent(out obstaculo o))
-            {
-                o.CheckIfItsInMyBiome();
-            }
-        }
-        terrenoGO.GetComponent<NavMeshSurface>().BuildNavMesh();
-    }
+    
     
     [ClientRpc]
    public void StartRoundClientRpc()
    {
+       if (startedGame)
+       {
+           var rojos = FindObjectsOfType<Entity>().Where(entity => entity.layer =="Rojo").Sum(entity=> entity.health);
+           var azules = FindObjectsOfType<Entity>().Where(entity => entity.layer =="Azul").Sum(entity=> entity.health);
+           StartCoroutine(DespawnAllEntityRoundEnded(FindObjectsOfType<Entity>().ToList()));
+           if(rojos > azules)
+               EndRoundClientRpc("Rojo");
+           else if (azules>rojos)
+               EndRoundClientRpc("Azul");
+           else
+               EndRoundClientRpc("empate");
+           return;
+       }
        // if(IsServer)
        if(startMatchAfterTimer){
            startedGame = true;
-           
+           StartTime(25);
            for (var index = 0; index < playerObjects.Count; index++)
            {
                var p = playerObjects[index];
@@ -173,7 +143,7 @@ public class GameManager : NetworkBehaviour
            storeCanvas.gameObject.SetActive(false);
            startedGame = false;
            Debug.LogWarning("Empezando timer en ExecuteOnAllClients)");
-           StartTime();
+           StartTime(15);
        }
     }
    
@@ -197,55 +167,62 @@ public class GameManager : NetworkBehaviour
             startMatchAfterTimer = false;
             _store.InitialSelection();
             Debug.LogWarning("Empezando timer en StartRound (if)");
-            StartTime();
+            StartTime(30);
             return;
         }
+
+        StopTime();
         startedGame = false;
-        numRondas--;
-        if (numRondas == 0)
-        {
-            //if (IsHost)
-            //{
-            //    if (winner == "Rojo")
-            //    {
-            //        SceneManager.LoadScene("victory");
-            //    }
-            //    else
-            //    {
-            //        SceneManager.LoadScene("defeat");
-            //    }
-            //}
-            //else
-            //{
-            //    if (winner == "Rojo")
-            //    {
-            //        SceneManager.LoadScene("defeat");
-            //    }
-            //    else
-            //    {
-            //        SceneManager.LoadScene("victory");
-            //    }
-            //}
-            //SceneManager.LoadScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat");
-            StartCoroutine(ChangeScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat"));
-        }
-        else
-        {
+        currentRound++;
+       // if (currentRound==numRondas)
+       // {
+       //     //StartCoroutine(ChangeScene((IsHost == (winner == "Rojo")) ? "victory" : "defeat"));
+       //     Debug.LogError("victoria: "+_victoryRojoPoints+" : "+_victoryAzulPoints);
+       //     StartCoroutine(ChangeScene(IsHost == (_victoryRojoPoints > _victoryAzulPoints) ? "victory" : "defeat"));
+       // }
+        //else
+        //{
+            int gains = reward.GetReward(numRondas);
+            if (winner == "Rojo")
+            {
+                _victoryRojoPoints++;
+            }else if (winner == "Azul")
+            {
+                _victoryAzulPoints++;
+            }
+            else
+            {
+                _victoryAzulPoints++;
+                _victoryRojoPoints++;
+            }
+
+            if (Math.Abs(_victoryAzulPoints - _victoryRojoPoints) == 2 || currentRound == numRondas)
+            {
+                Debug.LogError("victoria: "+_victoryRojoPoints+" : "+_victoryAzulPoints);
+                if (_victoryAzulPoints == _victoryRojoPoints)
+                {
+                    StartCoroutine(ChangeScene("empate"));
+                    return;
+                }
+                StartCoroutine(ChangeScene(IsHost == (_victoryRojoPoints > _victoryAzulPoints) ? "victory" : "defeat"));
+                return;
+            }
             startedGame = false;
             startMatchAfterTimer = false;
-            StartCoroutine(DelayToChangeCanvas());
+            StartCoroutine(DelayToChangeCanvas(gains));
             Debug.LogWarning("Empezando timer en StartRound (else)");
-            StartTime();
-        }
+            StartTime(10);
+       // }
         
     }
 
-    private IEnumerator DelayToChangeCanvas()
+    private IEnumerator DelayToChangeCanvas(int moneyGained)
     {
         yield return new WaitForSeconds(2.0f);
         gameCanvas.gameObject.SetActive(false);
         storeCanvas.gameObject.SetActive(true);
-        _store.SetUpShop(15);
+        Debug.Log("Ganas: "+moneyGained);
+        _store.SetUpShop(moneyGained);
     }
     private IEnumerator ChangeScene(string s)
     {
@@ -257,12 +234,7 @@ public class GameManager : NetworkBehaviour
     {
         print("Server ready");
     }
-
-    public void AddPosition(Vector2 v)
-    {
-        Positions.Add(v);
-    }
-
+    
     public void AddPositionSomething(Vector3 p,GameObject o)
     {
         //var v = terrenoGO.GetComponent<terreno>().PositionToGrid(p);
@@ -271,14 +243,6 @@ public class GameManager : NetworkBehaviour
         //entidades[v] = o;
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void SpawnRecursoServerRpc(int resourceType, Vector3 pos)
-    {
-        var resource = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[4].Prefab, pos, Quaternion.identity);
-        resource.GetComponent<NetworkObject>().Spawn();
-        transform.SetParent(GameObject.Find("RECURSOS").transform);
-        
-    }
     
     [ServerRpc(RequireOwnership = false)]
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos, int head, int body, int feet)
@@ -392,18 +356,22 @@ public class GameManager : NetworkBehaviour
         
     }
 
-    public void StartTime()
+    public void StartTime(int time)
     {
         var w = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<wall>();
         w.enabled = true;
-        w.StartTimer();
+        w.StartTimer(time);
 
     }
-    public void RemoveEntity(Vector3 pos)
+
+    public void StopTime()
     {
-        entidades.Remove(_terreno.PositionToGrid(pos));
+        var w = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<wall>();
+        w.enabled = true;
+        w.StopTimer();
     }
-
+    
+    
     public void checkIfRoundEnded(string layer)
     {
         var RedEnemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == "Rojo").ToList();

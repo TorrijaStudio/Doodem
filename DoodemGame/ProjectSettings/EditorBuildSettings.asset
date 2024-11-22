@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/defeat.unity
     guid: 583b0ded1392d7f47b7bef49ab5bc730
+  - enabled: 1
+    path: Assets/Scenes/empate.unity
+    guid: 04adcc47813ec9340ba442e24b96f303
   m_configObjects: {}
