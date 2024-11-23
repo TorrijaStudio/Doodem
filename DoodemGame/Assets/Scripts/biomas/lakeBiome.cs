@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class lakeBiome : ABiome
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public override void ActionBioma(GameObject o)
     {
         // throw new System.NotImplementedException();

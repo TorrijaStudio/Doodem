@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class forestBiome : ABiome
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public override void ActionBioma(GameObject o)
     {

@@ -114,7 +114,6 @@ public class GameManager : NetworkBehaviour
        // if(IsServer)
        if(startMatchAfterTimer){
            startedGame = true;
-           OnStartMatch.Invoke();
            StartTime(25);
            for (var index = 0; index < playerObjects.Count; index++)
            {
@@ -132,6 +131,7 @@ public class GameManager : NetworkBehaviour
            }
            UpdateBiomeThings();
            _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+           OnStartMatch.Invoke();
        }
        else
        {
@@ -249,6 +249,7 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SpawnServerRpc(int playerId, int prefab, Vector3 pos, int head, int body, int feet)
     {
+        // Debug.Log($"PREFAB: {prefab} y maximo {NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs.Count}");
         var player = Instantiate(NetworkManager.Singleton.NetworkConfig.Prefabs.Prefabs[prefab].Prefab, pos, Quaternion.identity);
         // player.name = "AAAAAAAAAAACABO DE SPAWNEAR";
         Debug.LogWarning("ID: " + playerId);

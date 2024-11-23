@@ -54,7 +54,7 @@ namespace Animals.ClasesDeAnimales
                 if(resources[i]._typeRecurso == resource)
                 {
                     var dist = transform.position - resources[i].transform.position;
-                    a[i] = Mathf.Pow(dist.magnitude / GameManager.Instance.MaxDistance, 4f);
+                    a[i] = Mathf.Pow(dist.magnitude / GameManager.Instance.MaxDistance, 8f);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Animals.ClasesDeAnimales
             for (var i = 0; i < enemies.Count; i++)
             {
                 var dist = transform.position - enemies[i].position;
-                a[i] = Mathf.Sqrt(dist.magnitude / GameManager.Instance.MaxDistance);
+                a[i] = (dist.magnitude / GameManager.Instance.MaxDistance);
             }
             return a.ToList();
 

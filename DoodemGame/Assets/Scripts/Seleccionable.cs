@@ -30,6 +30,8 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     private bool _selected;
     private List<Transform> cartas;
     public Inventory inventory;
+
+    private int _activeDestroyCoroutines;
     
     void Start()
     {
@@ -120,8 +122,9 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         {
             SpawnServer(objeto.transform.position, ClientID);
             _objectsToDelete.Add(objeto);
-            // GameObject o = objeto;
-            // StartCoroutine(DestroyObject(o));
+            GameObject o = objeto;
+            StartCoroutine(DestroyObject(o));
+            _activeDestroyCoroutines++;
             _selected = false;
             objeto = null;
             Transform casillas = terreno.transform.GetChild(0);
@@ -136,6 +139,11 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         yield return  new WaitUntil(()=>GameManager.Instance.startedGame);
         Destroy(o);
+        _activeDestroyCoroutines--;
+        if (_activeDestroyCoroutines == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void SpawnServer(Vector3 pos, int playerId)
@@ -221,12 +229,12 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     private void OnStartMatch()
     {
         TryDrop();
-        foreach (GameObject o in _objectsToDelete)
-        {
-            Destroy(o);
-        }
-        _objectsToDelete.Clear();
+        // foreach (GameObject o in _objectsToDelete)
+        // {
+        //     Destroy(o);
+        // }
+        // _objectsToDelete.Clear();
         // gameObject.SetActive(false);
-        Destroy(gameObject);
+        // Destroy(gameObject);
     }
 }

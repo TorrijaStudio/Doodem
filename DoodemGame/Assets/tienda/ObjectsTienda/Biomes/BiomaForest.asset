@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   price: 0
   objectsToSell: []
-  indexBioma: 7
+  indexBioma: 5
   animalParts: []
   image: {fileID: 21300000, guid: 70212dfe191d26d4a8ca6cc1e2e8d22b, type: 3}
   num: 2

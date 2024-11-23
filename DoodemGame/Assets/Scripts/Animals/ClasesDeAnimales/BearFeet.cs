@@ -68,7 +68,7 @@ namespace Animals.ClasesDeAnimales
             for (var i = 0; i < enemies.Count; i++)
             {
                 var dist = transform.position - enemies[i].position;
-                a[i] = Mathf.Sqrt(dist.magnitude / GameManager.Instance.MaxDistance);
+                a[i] = (dist.magnitude / GameManager.Instance.MaxDistance);
             }
             return a.ToList();
         }

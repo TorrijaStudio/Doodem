@@ -156,7 +156,7 @@ public class Entity : NetworkBehaviour ,IAtackable
              GameManager.Instance._body[b], 
              GameManager.Instance._feet[f]);
          GameManager.Instance.playerObjects.Add(gameObject);
-         gameObject.SetActive(false);
+         gameObject.SetActive(GameManager.Instance.startedGame);
     }
 
 
@@ -308,6 +308,9 @@ public class Entity : NetworkBehaviour ,IAtackable
         if(!isFlying)
             StartCoroutine(SetDestination(objetive));
     }
+
+    private Vector3 lookat;
+    private Quaternion _targetRot;
     private void flyUpdate()
     {
         if (transform.position.y < 2.5F)
@@ -318,6 +321,15 @@ public class Entity : NetworkBehaviour ,IAtackable
 
         if (!objetive) return;
         Debug.Log("Flying");
+
+        _targetRot = Quaternion.LookRotation(objetive.transform.position - transform.position, Vector3.up);
+        
+        if (!Mathf.Approximately(Quaternion.Angle(transform.rotation, _targetRot), 0))
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRot, 150 * Time.deltaTime);
+        }
+        
+
         if ((transform.position - objetive.position).magnitude > maxAttackDistance)
         {
             Vector3 dir = objetive.position - transform.position;
@@ -392,7 +404,7 @@ public class Entity : NetworkBehaviour ,IAtackable
                         _followCoroutine = StartCoroutine(FollowEnemy());
                     }
                 }
-                return; 
+                // return; 
                 
                 // if(TryAttack(Vector3.Distance(objetive.position, transform.position)))
                 // {
@@ -400,12 +412,12 @@ public class Entity : NetworkBehaviour ,IAtackable
                 //     return;
                 // }
                 // if(agente.isStopped)    return;
-            }
+            }else
             if (Vector3.Distance(objetive.position, transform.position) <= 3f)
             {
                 if(objetive.TryGetComponent<recurso>(out var res))
                     res.PickRecurso();
-                return; 
+                // return; 
             }
         }
 
@@ -451,7 +463,9 @@ public class Entity : NetworkBehaviour ,IAtackable
         // Debug.LogWarning($"Next objective is {objetive.name} and is {isEnemy} an enemy??");
         // agente.SetDestination(objetive.position);
         if(isEnemy)
+        {
             _followCoroutine = StartCoroutine(FollowEnemy());
+        }
         else
         {
             objetive.GetComponent<recurso>().SetSelected(true);
