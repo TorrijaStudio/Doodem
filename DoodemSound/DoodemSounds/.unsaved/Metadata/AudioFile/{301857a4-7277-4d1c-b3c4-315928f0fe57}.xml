@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{301857a4-7277-4d1c-b3c4-315928f0fe57}">
+		<property name="assetPath">
+			<value>Música/BatallaTotémica.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>131</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{8d8b1804-d70c-4771-99a2-2c12c168ad0d}</destination>
+		</relationship>
+	</object>
+</objects>
