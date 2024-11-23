@@ -442,7 +442,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         }
         values.Sort((kp, kp1) => (int)Mathf.CeilToInt((kp.Value - kp1.Value)*1000));
         // Debug.Log(resources.Count());
-        if (objetive.TryGetComponent<recurso>(out var a))
+        if (objetive && objetive.TryGetComponent<recurso>(out var a))
         {
             a.SetSelected(false);
         }

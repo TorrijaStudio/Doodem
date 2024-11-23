@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 991896127592144101}
   - component: {fileID: 5394858676067171762}
   m_Layer: 9
-  m_Name: bioma1
+  m_Name: Glaciar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

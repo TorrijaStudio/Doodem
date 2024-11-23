@@ -27,6 +27,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     private Vector2Int _grid;
     private bool _selected;
     private List<Transform> cartas;
+    public Inventory inventory;
     
     void Start()
     {
@@ -116,7 +117,10 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         if(info.Length>=3)
             GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, info[0].num, info[1].num, info[2].num);
         else
-            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, 0,0,0);
+        {
+            GameManager.Instance.SpawnServerRpc(playerId, indexPrefab, pos, 0, 0, 0);
+            inventory.UseBiome(info[0]);
+        }
         numCartas--;
     }
 
@@ -124,7 +128,10 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         info = new[] { h, b, f };
     }
-    
+    public void SetInfo(ScriptableObjectTienda b)
+    {
+        info = new[] { b};
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("esto no Funciona");

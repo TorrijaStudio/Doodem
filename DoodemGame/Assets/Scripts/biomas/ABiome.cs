@@ -61,7 +61,7 @@ public abstract class ABiome : NetworkBehaviour
         MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
         if (meshRenderer != null)
         {
-            Debug.LogError("ACTIVO");
+            // Debug.LogError("ACTIVO");
             meshRenderer.enabled = true;
         }
 
@@ -76,7 +76,7 @@ public abstract class ABiome : NetworkBehaviour
     {
         Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale/2f, transform.rotation,
             LayerMask.GetMask("casilla"));
-        Debug.LogError(colliders.Length);
+        // Debug.LogError(colliders.Length);
         foreach (var c in colliders)
         {
             var casillaMesh = c.GetComponent<MeshRenderer>();
@@ -88,7 +88,7 @@ public abstract class ABiome : NetworkBehaviour
         {
             if(r.gameObject)
             {
-                Debug.LogError(r.name+" : "+r.position);
+                // Debug.LogError(r.name+" : "+r.position);
                 r.GetComponent<recurso>().originPosition = r.position;
             }
         }
@@ -215,7 +215,7 @@ public abstract class ABiome : NetworkBehaviour
                 
                 var u = index%2==0 ? SetT(v, obstaculos, aux1) :SetL(v,obstaculos,aux1);
                 //var u = SetL(v, obstaculos, aux1);
-                Debug.LogError(u+" : "+v);
+                // Debug.LogError(u+" : "+v);
                 if (!u)
                 {
                     t.GetComponent<obstaculo>().isSet = true;   

@@ -138,7 +138,7 @@ public class GameManager : NetworkBehaviour
            startMatchAfterTimer = true;
            
            FindObjectOfType<Inventory>().SpawnSeleccionables();
-           FindObjectOfType<Inventory>().SpawnTotemsAsSeleccionables();
+           // FindObjectOfType<Inventory>().SpawnTotemsAsSeleccionables();
            gameCanvas.gameObject.SetActive(true);
            storeCanvas.gameObject.SetActive(false);
            startedGame = false;

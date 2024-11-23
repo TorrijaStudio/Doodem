@@ -28502,7 +28502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 936727009}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TiendaStuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40052,7 +40052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1331882686
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40090,6 +40090,7 @@ MonoBehaviour:
   numCartas: 1
   info: []
   terreno: {fileID: 1337947988}
+  inventory: {fileID: 0}
 --- !u!114 &1331882688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43873,6 +43874,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b17fd51a72d66a45837e800fce97ec2, type: 2}
   - {fileID: 11400000, guid: 3386761e90f3aac4fb5330ba7b862667, type: 2}
   - {fileID: 11400000, guid: 6dfb0941ef4888f45b4a1116fe90e35a, type: 2}
+  - {fileID: 11400000, guid: 64675ede88edc6c48bb44d8dd21fda8d, type: 2}
+  - {fileID: 11400000, guid: 895265fc78ebce94cbb93636c9226f1b, type: 2}
   totemsTienda:
   - {fileID: 11400000, guid: 076786b35a9ee264da375ae1847cfc1d, type: 2}
   - {fileID: 11400000, guid: 85ecd4303a100914f8250af8ce09dc32, type: 2}
@@ -55800,7 +55803,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1786226303
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55838,6 +55841,7 @@ MonoBehaviour:
   numCartas: 5
   info: []
   terreno: {fileID: 1337947988}
+  inventory: {fileID: 0}
 --- !u!114 &1786226305
 MonoBehaviour:
   m_ObjectHideFlags: 0
