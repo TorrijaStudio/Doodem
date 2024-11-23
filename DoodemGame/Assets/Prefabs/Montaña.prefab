@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3647514531
+  GlobalObjectIdHash: 3126646170
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -231,11 +231,11 @@ MonoBehaviour:
   terreno: {fileID: 0}
   _idPlayer:
     m_InternalValue: 0
-  xSize: 0
-  zSize: 0
+  xSize: 2
+  zSize: 2
   mat: {fileID: 2100000, guid: baf762dda392e6648915a22d72beade8, type: 2}
-  indexLayerArea: 0
-  typeResource: 
+  indexLayerArea: 6
+  typeResource: 020000000400000003000000
 --- !u!1001 &663471058380154595
 PrefabInstance:
   m_ObjectHideFlags: 0
