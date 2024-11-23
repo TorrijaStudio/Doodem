@@ -231,6 +231,8 @@ public class Inventory : MonoBehaviour
             biome.inventory = this;
             biome.objetoACrear = b.Key.biomeObject;
             biome.SetInfo(b.Key);
+            biome.CanDropEnemySide = true;
+            biome.GetComponent<SpriteRenderer>().sprite = b.Key.image;
             // totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
             pos += Vector3.down * separationDistance;
         }
