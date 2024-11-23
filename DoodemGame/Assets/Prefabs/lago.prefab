@@ -231,11 +231,11 @@ MonoBehaviour:
   terreno: {fileID: 0}
   _idPlayer:
     m_InternalValue: 0
-  xSize: 0
-  zSize: 0
+  xSize: 2
+  zSize: 2
   mat: {fileID: 2100000, guid: 1e96d55aa12540840ab3092044d55f73, type: 2}
-  indexLayerArea: 0
-  typeResource: 
+  indexLayerArea: 5
+  typeResource: 030000000000000001000000
 --- !u!1001 &663471058380154595
 PrefabInstance:
   m_ObjectHideFlags: 0
