@@ -39,7 +39,7 @@ public class GameManager : NetworkBehaviour
     public List<Entity> enemies;
     public List<Entity> allies;
     public List<recurso> recs;
-    private bool startMatchAfterTimer;
+    public bool startMatchAfterTimer;
 
     [SerializeField] public GameObject[] _heads;
     [SerializeField] public GameObject[] _body;
@@ -227,7 +227,6 @@ public class GameManager : NetworkBehaviour
             startMatchAfterTimer = false;
             StartCoroutine(DelayToChangeCanvas(gains));
             Debug.LogWarning("Empezando timer en StartRound (else)");
-            StartTime(10);
        // }
         
     }
@@ -238,6 +237,8 @@ public class GameManager : NetworkBehaviour
         gameCanvas.gameObject.SetActive(false);
         storeCanvas.gameObject.SetActive(true);
         Debug.Log("Ganas: "+moneyGained);
+        
+        StartTime(10);
         _store.SetUpShop(moneyGained);
     }
     private IEnumerator ChangeScene(string s)
@@ -409,7 +410,7 @@ public class GameManager : NetworkBehaviour
             Debug.LogError(RedEnemies.Count+" : "+BlueEnemies.Count);
             if (RedEnemies.Count > 0 && BlueEnemies.Count > 0)
             {
-                Debug.LogError("empiezo corr");
+                // Debug.LogError("empiezo corr");
                 for (var index = 0; index < playerObjects.Count; index++)
                 {
                     var p = playerObjects[index];
