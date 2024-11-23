@@ -67,6 +67,13 @@ public class MenuhOJAS : MonoBehaviour
     public GameObject cartelMenus;
     private Animator animCartelMenus;
 
+
+
+    public GameObject sliderGeneral;
+    private Animator animSliderGeneral;
+    
+    private Animator animSliderMusic;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,11 +95,15 @@ public class MenuhOJAS : MonoBehaviour
         animSenalArriba = senalArriba.GetComponent<Animator>();
         animCartelDoodem = cartelDoodem.GetComponent<Animator>();
         animCartelMenus = cartelMenus.GetComponent<Animator>();
+        
+        animSliderGeneral = general.GetComponent<Animator>();
+        animSliderMusic = music.GetComponent<Animator>();
+        
 
         DesactivarBotonesSenales();
         DesactivarBotonesMenuJugar();
         DesactivarBotonesTienda();
-        DesactivarBotonesOpciones();
+        //DesactivarBotonesOpciones();
     }
 
     // Update is called once per frame
@@ -111,8 +122,8 @@ public class MenuhOJAS : MonoBehaviour
             
 
             Invoke("aparecerLogo", 3.5f);
-            Invoke("caerDoodem",4.5f);
-            Invoke("ActivarBotonesSenales", 6.5f); 
+            Invoke("caerDoodem",4.2f);
+            Invoke("ActivarBotonesSenales", 5.5f); 
             
         }
 
@@ -128,8 +139,10 @@ public class MenuhOJAS : MonoBehaviour
         animSenalArriba.SetTrigger("Start");
     }
 
-    void aparecerLogo() {
+    void aparecerLogo()
+    {
 
+        //torrijaLogo.SetActive(true);
         animLogo.SetTrigger("Start");
         Debug.Log("saas");
     }
@@ -145,12 +158,16 @@ public class MenuhOJAS : MonoBehaviour
         animMedia.SetTrigger("pulsar");
         animArriba.SetTrigger("pulsar");
         animCartelMenus.SetTrigger("Start");
-        animLogo.SetTrigger("Pulsado");
+        animSliderGeneral.SetTrigger("Caer");
+        animSliderMusic.SetTrigger("Caer");
+        
+        
+        torrijaLogo.SetActive(false);
+        //animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
-        ActivarBotonesOpciones();
-
-
-
+        
+        Invoke("ActivarBotonesOpciones", 2f);
+        //ActivarBotonesOpciones();
     }
 
     public void PulsadoSenalMedio(){
@@ -163,9 +180,12 @@ public class MenuhOJAS : MonoBehaviour
         animMedia.SetTrigger("pulsar");
         animArriba.SetTrigger("pulsar");
         animCartelMenus.SetTrigger("Start");
-        animLogo.SetTrigger("Pulsado");
+        torrijaLogo.SetActive(false);
+        //animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
-        ActivarBotonesTienda();
+
+        Invoke("ActivarBotonesTienda", 2f);
+        //ActivarBotonesTienda();
 
     }
 
@@ -179,9 +199,12 @@ public class MenuhOJAS : MonoBehaviour
         animMedia.SetTrigger("pulsar");
         animArriba.SetTrigger("pulsar");
         animCartelMenus.SetTrigger("Start");
-        animLogo.SetTrigger("Pulsado");
+        torrijaLogo.SetActive(false);
+        //animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
-        ActivarBotonesMenuJugar();
+
+        Invoke("ActivarBotonesMenuJugar", 1.5f);
+        //ActivarBotonesMenuJugar();
 
     }
 
@@ -190,6 +213,7 @@ public class MenuhOJAS : MonoBehaviour
         arriba.gameObject.SetActive(true);
         medio.gameObject.SetActive(true);
         abajo.gameObject.SetActive(true);
+        torrijaLogo.SetActive(true);
     }
 
     public void DesactivarBotonesSenales(){
@@ -254,10 +278,21 @@ public class MenuhOJAS : MonoBehaviour
         DesactivarBotonesMenuJugar();
         DesactivarBotonesTienda();
         DesactivarBotonesOpciones();
-        ActivarBotonesSenales();
+        
+        Invoke("ActivarBotonesSenales", 3.5f);
+        //ActivarBotonesSenales();
+        Invoke("reproducirAnimacionesMenu", 1f);
+        
+
+    }
+
+    public void reproducirAnimacionesMenu()
+    {
         caerTotem();
         aparecerLogo();
-        caerDoodem();
+
+        Invoke("caerDoodem", 2f);
+        //caerDoodem();
     }
 
     public void BotonHost(){
