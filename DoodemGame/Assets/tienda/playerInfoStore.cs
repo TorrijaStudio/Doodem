@@ -91,7 +91,8 @@ public class playerInfoStore : MonoBehaviour
         }
         botones.SetActive(false);
         DeleteShopItems();
-        inventory.DespawnItems();
+        if(inventory.IsDragActive())
+            inventory.DespawnItems();
         
         playerMoneyText.gameObject.SetActive(false);
     }
@@ -132,7 +133,8 @@ public class playerInfoStore : MonoBehaviour
         canOnlyChooseOne = false;
         var index = 0;
         //List of objects that can appear in the shop. Totem pieces on the inventory are discarded
-        var spawnableObjects = objectsTiendas.Where(aux => (aux.isBiome || !inventory.Contains(aux.objectsToSell[0]))).ToList();
+        // var spawnableObjects = objectsTiendas.Where(aux => (aux.isBiome || !inventory.Contains(aux.objectsToSell[0]))).ToList();
+        var spawnableObjects = objectsTiendas;
         var spawnedBiomes = 0;
         var spawnedTotems = 0;
         int numOfSpawnables = 4;

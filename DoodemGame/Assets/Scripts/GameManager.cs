@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
-using HelloWorld.formulas;
+using formulas;
 using Unity.AI.Navigation;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -92,7 +92,8 @@ public class GameManager : NetworkBehaviour
     {
         
     }
-    
+
+    public Action OnStartMatch;
     
     [ClientRpc]
    public void StartRoundClientRpc()
@@ -113,6 +114,7 @@ public class GameManager : NetworkBehaviour
        // if(IsServer)
        if(startMatchAfterTimer){
            startedGame = true;
+           OnStartMatch.Invoke();
            StartTime(25);
            for (var index = 0; index < playerObjects.Count; index++)
            {
@@ -152,7 +154,7 @@ public class GameManager : NetworkBehaviour
         yield return new WaitForSeconds(secondsBiome);
         ab.EnableMeshesRecursively(p);
         ab.SetColorsGridBiome();
-        StartCoroutine(ab.SetResourcesDespawn(secondsBiome*15));
+        StartCoroutine(ab.SetResourcesDespawn(secondsBiome*20));
         _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
    
@@ -182,7 +184,7 @@ public class GameManager : NetworkBehaviour
        // }
         //else
         //{
-            int gains = reward.GetReward(numRondas);
+            int gains = reward.GetReward(currentRound);
             if (winner == "Rojo")
             {
                 _victoryRojoPoints++;

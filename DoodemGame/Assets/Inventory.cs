@@ -6,6 +6,7 @@ using Totems;
 using Unity.Mathematics;
 using Unity.Services.Authentication;
 using UnityEngine;
+using Image = UnityEngine.UI.Image;
 
 public class Inventory : MonoBehaviour
 {
@@ -82,7 +83,10 @@ public class Inventory : MonoBehaviour
         pointer.SetActive(active);
         wall.SetActive(active);
     }
-
+    public bool IsDragActive()
+    {
+        return pointer.activeSelf;
+    }
     public void GetItemsFromShop()
     {
         GetTotemsFromShop();
@@ -232,7 +236,7 @@ public class Inventory : MonoBehaviour
             biome.objetoACrear = b.Key.biomeObject;
             biome.SetInfo(b.Key);
             biome.CanDropEnemySide = true;
-            biome.GetComponent<SpriteRenderer>().sprite = b.Key.image;
+            biome.GetComponent<Image>().sprite = b.Key.image;
             // totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
             pos += Vector3.down * separationDistance;
         }

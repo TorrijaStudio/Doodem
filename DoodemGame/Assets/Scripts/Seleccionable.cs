@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class Seleccionable : MonoBehaviour, IPointerDownHandler
 {
@@ -21,6 +22,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     public bool CanDropEnemySide;
     public int numCartas;
     [SerializeField] private ScriptableObjectTienda[] info;
+    private List<GameObject> _objectsToDelete;
 
 
     [SerializeField] private MeshRenderer terreno;
@@ -31,6 +33,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     
     void Start()
     {
+        _objectsToDelete = new List<GameObject>();
         cartas = new List<Transform>();
         foreach (Transform t in transform.parent)
         {
@@ -41,6 +44,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         terreno = GameObject.Find("terreno").GetComponent<MeshRenderer>();
         _grid = terreno.gameObject.GetComponent<terreno>().GetGrid();
         // ClientID = -1;
+        GameManager.Instance.OnStartMatch += OnStartMatch;
     }
     
     GameObject InstanciarObjeto(Vector3 position)
@@ -52,6 +56,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
             a.GetComponent<Totem>().CreateTotem(info[0], info[1], info[2]);
         }
         a.name = "Dummy Totem";
+        SetChildrenActive(false);
         return a;
 
     }
@@ -88,14 +93,18 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     
         if (Input.GetMouseButtonUp(0))
         {
-            if (_selected && objeto)
-            {
-                SpawnServer(objeto.transform.position, ClientID);
-                GameObject o = objeto;
-                StartCoroutine(DestroyObject(o));
-                _selected = false;
-                objeto = null;
-            }
+            TryDrop();
+            // if (_selected && objeto)
+            // {
+            //     SpawnServer(objeto.transform.position, ClientID);
+            //     GameObject o = objeto;
+            //     StartCoroutine(DestroyObject(o));
+            //     _selected = false;
+            //     objeto = null;
+            // }else if (_selected && !objeto)
+            // {
+            //     // SetChildrenActive(true);
+            // }
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -104,6 +113,19 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    private void TryDrop()
+    {
+        if (_selected && objeto)
+        {
+            SpawnServer(objeto.transform.position, ClientID);
+            _objectsToDelete.Add(objeto);
+            // GameObject o = objeto;
+            // StartCoroutine(DestroyObject(o));
+            _selected = false;
+            objeto = null;
+        }
+    }
+    
     private IEnumerator DestroyObject(GameObject o)
     {
         yield return  new WaitUntil(()=>GameManager.Instance.startedGame);
@@ -122,8 +144,25 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
             inventory.UseBiome(info[0]);
         }
         numCartas--;
+        
+        // if(numCartas == 0)  Destroy(gameObject);
     }
 
+    private void SetChildrenActive(bool act)
+    {
+        if(transform.childCount > 0)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(act);
+            }
+        }
+        else
+        {
+            GetComponent<Image>().enabled = act;
+        }
+    }
+    
     public void SetInfo(ScriptableObjectTienda h, ScriptableObjectTienda b, ScriptableObjectTienda f)
     {
         info = new[] { h, b, f };
@@ -134,7 +173,6 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("esto no Funciona");
         _selected = true;
         GameManager.Instance.objectSelected = null;
         foreach (var c in cartas.Where(c => c))
@@ -150,5 +188,22 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     public void AddNumCarta()
     {
         numCartas++;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnStartMatch -= OnStartMatch;
+    }
+
+    private void OnStartMatch()
+    {
+        TryDrop();
+        foreach (GameObject o in _objectsToDelete)
+        {
+            Destroy(o);
+        }
+        _objectsToDelete.Clear();
+        // gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
