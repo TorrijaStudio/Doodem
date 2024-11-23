@@ -66,13 +66,7 @@ public class MenuhOJAS : MonoBehaviour
 
     public GameObject cartelMenus;
     private Animator animCartelMenus;
-
-
-
-    public GameObject sliderGeneral;
-    private Animator animSliderGeneral;
-    
-    private Animator animSliderMusic;
+    private bool iniciado = false;
 
     // Start is called before the first frame update
     void Start()
@@ -95,22 +89,22 @@ public class MenuhOJAS : MonoBehaviour
         animSenalArriba = senalArriba.GetComponent<Animator>();
         animCartelDoodem = cartelDoodem.GetComponent<Animator>();
         animCartelMenus = cartelMenus.GetComponent<Animator>();
-        
-        animSliderGeneral = general.GetComponent<Animator>();
-        animSliderMusic = music.GetComponent<Animator>();
-        
+
 
         DesactivarBotonesSenales();
         DesactivarBotonesMenuJugar();
         DesactivarBotonesTienda();
-        //DesactivarBotonesOpciones();
+        DesactivarBotonesOpciones();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+
+        if (Input.GetMouseButtonDown(0) && !iniciado)
         {
+            iniciado = true;
+            
             anim1.SetTrigger("Start");
             anim2.SetTrigger("Start");
             anim3.SetTrigger("Start");
@@ -158,16 +152,11 @@ public class MenuhOJAS : MonoBehaviour
         animMedia.SetTrigger("pulsar");
         animArriba.SetTrigger("pulsar");
         animCartelMenus.SetTrigger("Start");
-        animSliderGeneral.SetTrigger("Caer");
-        animSliderMusic.SetTrigger("Caer");
-        
-        
+
         torrijaLogo.SetActive(false);
-        //animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
         
-        Invoke("ActivarBotonesOpciones", 2f);
-        //ActivarBotonesOpciones();
+        Invoke("ActivarBotonesOpciones", 2.5f);
     }
 
     public void PulsadoSenalMedio(){
@@ -274,10 +263,14 @@ public class MenuhOJAS : MonoBehaviour
     }
 
     public void BotonAtras(){
+        
+        
+        DesactivarBotonesOpciones();
         animCartelMenus.SetTrigger("Back");
+        
         DesactivarBotonesMenuJugar();
         DesactivarBotonesTienda();
-        DesactivarBotonesOpciones();
+        
         
         Invoke("ActivarBotonesSenales", 3.5f);
         //ActivarBotonesSenales();
@@ -290,7 +283,6 @@ public class MenuhOJAS : MonoBehaviour
     {
         caerTotem();
         aparecerLogo();
-
         Invoke("caerDoodem", 2f);
         //caerDoodem();
     }
