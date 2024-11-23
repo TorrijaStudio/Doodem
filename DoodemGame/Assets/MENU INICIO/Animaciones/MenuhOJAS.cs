@@ -22,6 +22,7 @@ public class MenuhOJAS : MonoBehaviour
     public Scrollbar music;
     public Scrollbar sfx;
 
+    public GameObject camara;
 
     public GameObject hojas1;
     private Animator anim1;
@@ -109,6 +110,8 @@ public class MenuhOJAS : MonoBehaviour
             anim2.SetTrigger("Start");
             anim3.SetTrigger("Start");
             anim4.SetTrigger("Start");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.MoverHojas, camara.transform.position);
+
             
             animTexto.SetTrigger("Start");
 
