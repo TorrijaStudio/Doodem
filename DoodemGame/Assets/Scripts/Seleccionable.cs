@@ -187,6 +187,8 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(!_selected)
+            SetColorGridHolding();
         _selected = true;
         GameManager.Instance.objectSelected = null;
         foreach (var c in cartas.Where(c => c))
@@ -196,19 +198,15 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
                 s.SetFalse();
             }
         }
-        SetColorGridHolding();
     }
 
     private void SetColorGridHolding()
     {
-        if (_selected)
+        Debug.LogError("28");
+        Transform casillas = terreno.transform.GetChild(0);
+        foreach (Transform c in casillas)
         {
-            Debug.LogError("28");
-            Transform casillas = terreno.transform.GetChild(0);
-            foreach (Transform c in casillas)
-            {
-                c.GetComponent<casilla>().SetColorSeleccionable(CanDropEnemySide);
-            }
+            c.GetComponent<casilla>().SetColorSeleccionable(CanDropEnemySide);
         }
     }
     public void SetFalse()
@@ -229,6 +227,11 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     private void OnStartMatch()
     {
         TryDrop();
+        Transform casillas = terreno.transform.GetChild(0);
+        foreach (Transform c in casillas)
+        {
+            c.GetComponent<casilla>().SetPreviousColorSeleccionable();
+        }
         // foreach (GameObject o in _objectsToDelete)
         // {
         //     Destroy(o);
