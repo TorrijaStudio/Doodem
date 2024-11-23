@@ -26,7 +26,8 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
 
     private void OnDestroy()
     {
-        _store.OnItemSelected -= SetTextColour;
+        if(_store)
+            _store.OnItemSelected -= SetTextColour;
     }
 
     private void SetTextColour()

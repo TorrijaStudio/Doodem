@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4862490082178872168}
   - component: {fileID: 5952378354835211672}
   m_Layer: 0
-  m_Name: EmptyBiome
+  m_Name: Lake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 79105fdee0a99c04c8e45b37e39932f6, type: 2}
+  - {fileID: 2100000, guid: 1e96d55aa12540840ab3092044d55f73, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

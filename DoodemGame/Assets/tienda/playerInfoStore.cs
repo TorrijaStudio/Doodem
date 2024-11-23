@@ -84,14 +84,15 @@ public class playerInfoStore : MonoBehaviour
     {
         // Debug.LogWarning("PREVIOUS POSITION: " + _prevCameraPos);
         Camera.main!.transform.SetPositionAndRotation(_prevCameraPos, cameraRot);
-        if (isFirstTime && boughtObjects.Count == 0 && totemItems.childCount > 0)
+        if (inventory.GetFullTotems() == 0)
         {
             boughtObjects.Add(totemItems.GetChild(0).gameObject);
             inventory.GetTotemsFromShop();
         }
         botones.SetActive(false);
         DeleteShopItems();
-        inventory.DespawnItems();
+        if(inventory.IsDragActive())
+            inventory.DespawnItems();
         
         playerMoneyText.gameObject.SetActive(false);
     }
@@ -131,16 +132,47 @@ public class playerInfoStore : MonoBehaviour
         DeleteShopItems();
         canOnlyChooseOne = false;
         var index = 0;
-        var spawnableObjects = objectsTiendas.Where(aux => !inventory.Contains(aux.objectsToSell[0])).ToList();
-        for (int i = 0; i < 4; i++)
+        //List of objects that can appear in the shop. Totem pieces on the inventory are discarded
+        // var spawnableObjects = objectsTiendas.Where(aux => (aux.isBiome || !inventory.Contains(aux.objectsToSell[0]))).ToList();
+        var spawnableObjects = objectsTiendas;
+        var spawnedBiomes = 0;
+        var spawnedTotems = 0;
+        int numOfSpawnables = 4;
+        for (int i = 0; i < numOfSpawnables; i++)
         {
+            
             if(spawnableObjects.Count == 0) break;
             
             var objT = Instantiate(objTiendaPrefab, positionsToSpawn[index].position, Quaternion.identity, totemItems);
+            //Last object to spawn checks if it has spawned at least a biome and at least a totem
+            if (i == numOfSpawnables - 1)
+            {
+                if (spawnedBiomes == 0 || spawnedTotems == 0)
+                {
+                    //If it hasn't spawned at least one of each, gets which hasn't been spawned and creates a list with only that type of spawnables
+                    var hasToSpawnBiome = spawnedBiomes == 0;
+                    var tempList = spawnableObjects.Where(aux => aux.isBiome == hasToSpawnBiome);
+                    //If it can spawn an item of that type (lenght > 0), it swaps the spawnable items list so that one is selected at random below
+                    if (spawnableObjects.Count > 0)
+                    {
+                        spawnableObjects = tempList.ToList();
+                    }
+                }
+            }
             var objToSpawn = Random.Range(0, spawnableObjects.Count);
+            if (spawnableObjects[objToSpawn].isBiome)
+            {
+                spawnedBiomes++;
+            }
+            else
+            {
+                spawnedTotems++;
+            }
+            
             objT.CreateObject(spawnableObjects[objToSpawn]);
             spawnableObjects.RemoveAt(objToSpawn);
             index++;
+            
         }
         botones.SetActive(true);
     }

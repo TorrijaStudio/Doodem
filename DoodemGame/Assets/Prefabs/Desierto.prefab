@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 991896127592144101}
   - component: {fileID: 6992112803746988704}
   m_Layer: 9
-  m_Name: bioma
+  m_Name: Desierto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   zSize: 2
   mat: {fileID: 2100000, guid: 79105fdee0a99c04c8e45b37e39932f6, type: 2}
   indexLayerArea: 3
-  typeResource: 02000000
+  typeResource: 05000000
   damageReduction: 30
 --- !u!1001 &271605121214307717
 PrefabInstance:

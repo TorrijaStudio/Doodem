@@ -1,6 +1,6 @@
 using System;
 
-namespace HelloWorld.formulas
+namespace formulas
 {
     public struct Reward
     {

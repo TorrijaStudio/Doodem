@@ -61,7 +61,7 @@ public abstract class ABiome : NetworkBehaviour
         MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
         if (meshRenderer != null)
         {
-            Debug.LogError("ACTIVO");
+            // Debug.LogError("ACTIVO");
             meshRenderer.enabled = true;
         }
 
@@ -76,7 +76,7 @@ public abstract class ABiome : NetworkBehaviour
     {
         Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale/2f, transform.rotation,
             LayerMask.GetMask("casilla"));
-        Debug.LogError(colliders.Length);
+        // Debug.LogError(colliders.Length);
         foreach (var c in colliders)
         {
             var casillaMesh = c.GetComponent<MeshRenderer>();
@@ -88,7 +88,7 @@ public abstract class ABiome : NetworkBehaviour
         {
             if(r.gameObject)
             {
-                Debug.LogError(r.name+" : "+r.position);
+                // Debug.LogError(r.name+" : "+r.position);
                 r.GetComponent<recurso>().originPosition = r.position;
             }
         }
@@ -170,7 +170,7 @@ public abstract class ABiome : NetworkBehaviour
             else
             {
                 var positionCasilla = terreno.PositionToGrid(other.transform.position);
-                if ((positionCasilla.y < 10 && _idPlayer.Value == 1) || (positionCasilla.y > 9 && _idPlayer.Value == 0) )//terreno cliente / host
+                if ((positionCasilla.y < 15 && _idPlayer.Value == 1) || (positionCasilla.y > 14 && _idPlayer.Value == 0) )//terreno cliente / host
                 {
                     var casilla = other.GetComponent<casilla>();
                     var index = casilla.GetAreaNav();
@@ -215,7 +215,7 @@ public abstract class ABiome : NetworkBehaviour
                 
                 var u = index%2==0 ? SetT(v, obstaculos, aux1) :SetL(v,obstaculos,aux1);
                 //var u = SetL(v, obstaculos, aux1);
-                Debug.LogError(u+" : "+v);
+                // Debug.LogError(u+" : "+v);
                 if (!u)
                 {
                     t.GetComponent<obstaculo>().isSet = true;   

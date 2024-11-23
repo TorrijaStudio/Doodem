@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using tienda;
 using Totems;
 using Unity.Mathematics;
 using Unity.Services.Authentication;
 using UnityEngine;
+using Image = UnityEngine.UI.Image;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private List<List<TotemPiece>> _totemPieces;
+    [SerializeField] private Dictionary<ScriptableObjectTienda, int> _biomes;
 
     [SerializeField] private playerInfoStore boton;
 
@@ -40,10 +43,16 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public int GetFullTotems()
+    {
+        return _totemPieces.Count(a => a.Count == 3);
+    }
+    
     public static Inventory Instance;
     // Start is called before the first frame update
     void Start()
     {
+        _biomes = new Dictionary<ScriptableObjectTienda, int>();
         if (Instance) Destroy(gameObject);
         else Instance = this;
         
@@ -74,16 +83,39 @@ public class Inventory : MonoBehaviour
         pointer.SetActive(active);
         wall.SetActive(active);
     }
-    
+    public bool IsDragActive()
+    {
+        return pointer.activeSelf;
+    }
+    public void GetItemsFromShop()
+    {
+        GetTotemsFromShop();
+        GetBiomesFromShop();
+    }
+
     public void GetTotemsFromShop()
     {
-        foreach (var obj in boton.boughtObjects.Select(objetoTienda => objetoTienda.GetComponent<objetoTienda>()))
+        foreach (var obj in boton.boughtObjects.Select(objetoTienda => objetoTienda.GetComponent<objetoTienda>()).Where(objT => !objT.info.isBiome))
         {
             Debug.Log(obj.name);
             _totemPieces.Add(obj.info.objectsToSell);
         }
     }
 
+    private void GetBiomesFromShop()
+    {
+        foreach (var obj in boton.boughtObjects.Select(objetoTienda => objetoTienda.GetComponent<objetoTienda>()).Where(objT => objT.info.isBiome))
+        {
+            Debug.Log(obj.name);
+            if (!_biomes.TryAdd(obj.info, 1))
+            {
+                _biomes[obj.info] += 1;
+            }
+            // _biomes.Add(obj.info.biomeToSell);
+            // _totemPieces.Add(obj.info.objectsToSell);
+        }
+    }
+    
     public void DespawnItems()
     {
         var tempTotemPieces = new List<List<TotemPiece>>();
@@ -188,22 +220,46 @@ public class Inventory : MonoBehaviour
     }
     public void SpawnSeleccionables()
     {
+        SpawnTotemsAsSeleccionables();
         DeleteSeleccionables();
-        var infoForSeleccionables = _totemPieces.Where((list => list.Count == 3)).ToList();
-        Debug.Log(infoForSeleccionables.Count);
-        var objectsToSpawn = infoForSeleccionables.Count;
+        var objectsToSpawn = _biomes.Count;
         
         var separationDistance = selecDistance / objectsToSpawn;
         var pos = selecPosToSpawn.position;
-        foreach (var totemPiece in infoForSeleccionables)
+        foreach (var b in _biomes)
         { 
-            var totem = Instantiate(seleccionableToSpawn, pos, Quaternion.identity, seleccionableParent);
-            totem.gameObject.SetActive(true);
-            totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
+            var biome = Instantiate(seleccionableToSpawn, pos, Quaternion.identity, seleccionableParent);
+            biome.gameObject.SetActive(true);
+            biome.indexPrefab = b.Key.indexBioma;
+            biome.numCartas = b.Value;
+            biome.inventory = this;
+            biome.objetoACrear = b.Key.biomeObject;
+            biome.SetInfo(b.Key);
+            biome.CanDropEnemySide = true;
+            biome.GetComponent<Image>().sprite = b.Key.image;
+            // totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
             pos += Vector3.down * separationDistance;
         }
-        // SetDrag(true);
+        // foreach (var totemPiece in infoForSeleccionables)
+        // { 
+        //     var totem = Instantiate(seleccionableToSpawn, pos, Quaternion.identity, seleccionableParent);
+        //     totem.gameObject.SetActive(true);
+        //     totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
+        //     pos += Vector3.down * separationDistance;
+        // }
     }
+
+    public void UseBiome(ScriptableObjectTienda biomeIndex)
+    {
+        if (!_biomes.ContainsKey(biomeIndex)) return;
+        
+        _biomes[biomeIndex] -= 1;
+        if (_biomes[biomeIndex] <= 0)
+        {
+            _biomes.Remove(biomeIndex);
+        }
+    }
+    
     public void DeleteSeleccionables()
     {
         for(var i = seleccionableParent.childCount - 1; i >= 0; i--)

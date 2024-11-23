@@ -73,7 +73,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         meshes.ForEach(mesh =>
         {
             var materials = mesh.materials.ToList();
-            materials.ForEach(mat => mat.color = id == 0 ? Color.red : Color.blue);
+            materials.ForEach(mat => mat.color = id == 0 ? new Color(0.91f, 0f, 0.02f, 0.22f) : new Color(0.24f, 0.32f, 0.66f, 0.22f));
             mesh.SetMaterials(materials);
         });
         
@@ -442,7 +442,7 @@ public class Entity : NetworkBehaviour ,IAtackable
         }
         values.Sort((kp, kp1) => (int)Mathf.CeilToInt((kp.Value - kp1.Value)*1000));
         // Debug.Log(resources.Count());
-        if (objetive.TryGetComponent<recurso>(out var a))
+        if (objetive && objetive.TryGetComponent<recurso>(out var a))
         {
             a.SetSelected(false);
         }

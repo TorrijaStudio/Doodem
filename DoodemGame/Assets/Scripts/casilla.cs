@@ -4,7 +4,7 @@ using Unity.AI.Navigation;
 using Unity.Netcode;
 using UnityEngine;
 
-public class casilla : MonoBehaviour
+public class casilla : NetworkBehaviour
 {
     private GameObject biome;
     private GameObject previousBiome;
@@ -13,13 +13,20 @@ public class casilla : MonoBehaviour
     private int previousIndexArea;
     private Material originalMaterial;
     private Material material;
+    private Color _localMaterialSeleccionable;
+    private MeshRenderer _meshRenderer;
+    public string side;
     
     // Start is called before the first frame update
     void Start()
     {
+        _meshRenderer = GetComponent<MeshRenderer>();
         _navMeshModifier = GetComponent<NavMeshModifier>();
-        originalMaterial = GetComponent<MeshRenderer>().material;
+        originalMaterial = _meshRenderer.material;
         material = originalMaterial;
+        var terreno = transform.root.GetComponent<terreno>();
+        var postitionGrid = terreno.PositionToGrid(transform.position);
+        side = postitionGrid.y < terreno.grid.y/2 ? "HostSide" : "ClientSide";
     }
 
     // Update is called once per frame
@@ -95,5 +102,25 @@ public class casilla : MonoBehaviour
         previousMaterial = originalMaterial;
         GetComponent<MeshRenderer>().material = originalMaterial;
     }
+
+    public void SetColorSeleccionable(bool canDropEnemySide)
+    {
+        _localMaterialSeleccionable = _meshRenderer.material.color;
+        if (canDropEnemySide)
+            _meshRenderer.material.color = Color.green;
+        else
+        {
+            if (IsHost)
+                _meshRenderer.material.color = side == "HostSide" ? Color.red : Color.green;
+            else
+                _meshRenderer.material.color = side == "ClientSide" ? Color.red : Color.green;
+        }
+    }
+
+    public void SetPreviousColorSeleccionable()
+    {
+        _meshRenderer.material.color = _localMaterialSeleccionable;
+    }
     
+
 }
