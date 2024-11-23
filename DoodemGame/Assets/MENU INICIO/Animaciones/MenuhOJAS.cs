@@ -145,6 +145,7 @@ public class MenuhOJAS : MonoBehaviour
         animMedia.SetTrigger("pulsar");
         animArriba.SetTrigger("pulsar");
         animCartelMenus.SetTrigger("Start");
+        animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
         ActivarBotonesOpciones();
 
@@ -162,6 +163,7 @@ public class MenuhOJAS : MonoBehaviour
         animMedia.SetTrigger("pulsar");
         animArriba.SetTrigger("pulsar");
         animCartelMenus.SetTrigger("Start");
+        animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
         ActivarBotonesTienda();
 
@@ -177,6 +179,7 @@ public class MenuhOJAS : MonoBehaviour
         animMedia.SetTrigger("pulsar");
         animArriba.SetTrigger("pulsar");
         animCartelMenus.SetTrigger("Start");
+        animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
         ActivarBotonesMenuJugar();
 
@@ -253,6 +256,8 @@ public class MenuhOJAS : MonoBehaviour
         DesactivarBotonesOpciones();
         ActivarBotonesSenales();
         caerTotem();
+        aparecerLogo();
+        caerDoodem();
     }
 
     public void BotonHost(){
