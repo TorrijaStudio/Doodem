@@ -105,6 +105,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
             // {
             //     // SetChildrenActive(true);
             // }
+
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -123,6 +124,11 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
             // StartCoroutine(DestroyObject(o));
             _selected = false;
             objeto = null;
+            Transform casillas = terreno.transform.GetChild(0);
+            foreach (Transform c in casillas)
+            {
+                c.GetComponent<casilla>().SetPreviousColorSeleccionable();
+            }
         }
     }
     
@@ -177,7 +183,24 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
         GameManager.Instance.objectSelected = null;
         foreach (var c in cartas.Where(c => c))
         {
-            c.GetComponent<Seleccionable>().SetFalse();
+            if (c.TryGetComponent(out Seleccionable s))
+            {
+                s.SetFalse();
+            }
+        }
+        SetColorGridHolding();
+    }
+
+    private void SetColorGridHolding()
+    {
+        if (_selected)
+        {
+            Debug.LogError("28");
+            Transform casillas = terreno.transform.GetChild(0);
+            foreach (Transform c in casillas)
+            {
+                c.GetComponent<casilla>().SetColorSeleccionable(CanDropEnemySide);
+            }
         }
     }
     public void SetFalse()

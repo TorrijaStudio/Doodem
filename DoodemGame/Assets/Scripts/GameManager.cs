@@ -154,7 +154,7 @@ public class GameManager : NetworkBehaviour
         yield return new WaitForSeconds(secondsBiome);
         ab.EnableMeshesRecursively(p);
         ab.SetColorsGridBiome();
-        StartCoroutine(ab.SetResourcesDespawn(secondsBiome*20));
+        StartCoroutine(ab.SetResourcesDespawn(secondsBiome));
         _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
    
