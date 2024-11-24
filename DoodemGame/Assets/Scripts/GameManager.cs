@@ -34,6 +34,7 @@ public class GameManager : NetworkBehaviour
     private int numPlayers;
     public int numRondas;
     public int secondsBiome;
+    public int secondsResources;
     public List<GameObject> entidatesPrueba = new();
     
     public List<Entity> enemies;
@@ -173,7 +174,7 @@ public class GameManager : NetworkBehaviour
         yield return new WaitForSeconds(secondsBiome);
         ab.EnableMeshesRecursively(p);
         ab.SetColorsGridBiome();
-        StartCoroutine(ab.SetResourcesDespawn(secondsBiome));
+        StartCoroutine(ab.SetResourcesDespawn(secondsResources));
         _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
    
@@ -188,7 +189,7 @@ public class GameManager : NetworkBehaviour
             startMatchAfterTimer = false;
             _store.InitialSelection();
             Debug.LogWarning("Empezando timer en StartRound (if)");
-            StartTime(30);
+            StartTime(20);
             return;
         }
 
@@ -248,7 +249,7 @@ public class GameManager : NetworkBehaviour
         storeCanvas.gameObject.SetActive(true);
         Debug.Log("Ganas: "+moneyGained);
         
-        StartTime(10);
+        StartTime(30);
         _store.SetUpShop(moneyGained);
     }
     private IEnumerator ChangeScene(string s)
