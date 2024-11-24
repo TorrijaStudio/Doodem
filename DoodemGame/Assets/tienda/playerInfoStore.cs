@@ -137,6 +137,7 @@ public class playerInfoStore : MonoBehaviour
     private void Start()
     {
         // InitialSelection();
+        _experiencePrice = new Experience(20, 1.3f, 5);
         OnItemSelected += SetButtonsTextColour;
     }
 
