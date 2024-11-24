@@ -40,6 +40,9 @@ public class obstaculo : MonoBehaviour
             {
                 gameObject.SetActive(false);
             }
+        }else
+        {
+            gameObject.SetActive(false);
         }
     }
 }

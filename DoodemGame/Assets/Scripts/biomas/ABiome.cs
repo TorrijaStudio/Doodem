@@ -126,6 +126,7 @@ public abstract class ABiome : NetworkBehaviour
         
         pos = positions.ToList();
         transform.localScale = new Vector3(2*xSize*cellSize.x+cellSize.x,transform.localScale.y,2*zSize*cellSize.y+cellSize.y);
+        
         SetHijos();
         //if (IsOwner)
         //{
@@ -237,7 +238,7 @@ public abstract class ABiome : NetworkBehaviour
                         t.position = newPos;
                     }
                     else
-                        t.gameObject.SetActive(false);
+                        t.position = newPos;
                 }
                 
                 //if (terreno.IsInside(newPos))
@@ -263,7 +264,7 @@ public abstract class ABiome : NetworkBehaviour
             {
                 r.position = newPos;
             }else
-                r.gameObject.SetActive(false);
+                r.position = newPos;
             
             if (IsHost)
             {
@@ -279,6 +280,7 @@ public abstract class ABiome : NetworkBehaviour
         yield return new WaitForSeconds(time);
         foreach (Transform r in recursos)
         {
+            Debug.LogError("SOY RECURSO");
             if(r!=null)
             {
                 r.GetComponent<MeshRenderer>().enabled = false;
