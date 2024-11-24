@@ -39,7 +39,7 @@ public class GameManager : NetworkBehaviour
     public List<Entity> enemies;
     public List<Entity> allies;
     public List<recurso> recs;
-    private bool startMatchAfterTimer;
+    public bool startMatchAfterTimer;
 
     [SerializeField] public GameObject[] _heads;
     [SerializeField] public GameObject[] _body;
@@ -124,7 +124,7 @@ public class GameManager : NetworkBehaviour
                   //ab.EnableMeshesRecursively(p);
                   //ab.SetColorsGridBiome();
                   //Debug.LogError(p.name);
-                  StartCoroutine(StartBiome(ab, p));
+                  //StartCoroutine(StartBiome(ab, p));
                    //p.SetActive(true);
                }else
                    p.SetActive(true);
@@ -132,6 +132,11 @@ public class GameManager : NetworkBehaviour
            UpdateBiomeThings();
            _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
            OnStartMatch.Invoke();
+           if (IsHost)
+           {
+               Debug.LogError("compruebo al principio");
+               StartCoroutine(checkIfRoundEndedFirst());
+           }
        }
        else
        {
@@ -148,6 +153,12 @@ public class GameManager : NetworkBehaviour
            StartTime(15);
        }
     }
+
+   private IEnumerator checkIfRoundEndedFirst()
+   {
+       yield return new WaitForSeconds(1.0f);
+       checkIfRoundEnded("");
+   } 
    
     private IEnumerator StartBiome(ABiome ab,GameObject p)
     {
@@ -187,13 +198,16 @@ public class GameManager : NetworkBehaviour
             int gains = reward.GetReward(currentRound);
             if (winner == "Rojo")
             {
+                Debug.LogError("gana rojo");
                 _victoryRojoPoints++;
             }else if (winner == "Azul")
             {
+                Debug.LogError("gana azul");
                 _victoryAzulPoints++;
             }
             else
             {
+                Debug.LogError("empate");
                 _victoryAzulPoints++;
                 _victoryRojoPoints++;
             }
@@ -213,7 +227,6 @@ public class GameManager : NetworkBehaviour
             startMatchAfterTimer = false;
             StartCoroutine(DelayToChangeCanvas(gains));
             Debug.LogWarning("Empezando timer en StartRound (else)");
-            StartTime(10);
        // }
         
     }
@@ -224,6 +237,8 @@ public class GameManager : NetworkBehaviour
         gameCanvas.gameObject.SetActive(false);
         storeCanvas.gameObject.SetActive(true);
         Debug.Log("Ganas: "+moneyGained);
+        
+        StartTime(10);
         _store.SetUpShop(moneyGained);
     }
     private IEnumerator ChangeScene(string s)
@@ -373,12 +388,59 @@ public class GameManager : NetworkBehaviour
         w.enabled = true;
         w.StopTimer();
     }
-    
-    
+
+    [ClientRpc]
+    private void StartBiomeClientRpc(NetworkObjectReference target)
+    {
+        if (target.TryGet(out NetworkObject targetObject))
+        {
+            var ab = targetObject.GetComponent<ABiome>();
+            var p = targetObject.gameObject;
+            StartCoroutine(StartBiome(ab, p));
+        }
+    }
+
     public void checkIfRoundEnded(string layer)
     {
-        var RedEnemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == "Rojo").ToList();
-        var BlueEnemies = FindObjectsOfType<Entity>().Where((entity, i) => entity.layer == "Azul").ToList();
+        var RedEnemies = FindObjectsByType<Entity>(FindObjectsInactive.Include,FindObjectsSortMode.None).Where((entity, i) => entity.layer == "Rojo").ToList();
+        var BlueEnemies = FindObjectsByType<Entity>(FindObjectsInactive.Include,FindObjectsSortMode.None).Where((entity, i) => entity.layer == "Azul").ToList();
+
+        if (string.IsNullOrEmpty(layer))
+        {
+            Debug.LogError(RedEnemies.Count+" : "+BlueEnemies.Count);
+            if (RedEnemies.Count > 0 && BlueEnemies.Count > 0)
+            {
+                // Debug.LogError("empiezo corr");
+                for (var index = 0; index < playerObjects.Count; index++)
+                {
+                    var p = playerObjects[index];
+                    if (!p) continue;
+                    if (p.TryGetComponent(out ABiome ab))
+                    {
+                        //StartCoroutine(StartBiome(ab, p));
+                        StartBiomeClientRpc(ab.GetComponent<NetworkObject>());
+                    }
+                }
+                return;
+            }
+            if(RedEnemies.Count==0 && BlueEnemies.Count==0)
+            {
+                EndRoundClientRpc("empate");
+            }
+            else if(RedEnemies.Count>0)
+            {
+                EndRoundClientRpc("Rojo");
+            }
+            else
+            {
+                EndRoundClientRpc("Azul");
+            }
+            RedEnemies.AddRange(BlueEnemies);
+            StartCoroutine(DespawnAllEntityRoundEnded(RedEnemies));
+            return;
+        }
+
+        
         if (layer == "Rojo")
             RedEnemies.RemoveAt(0);
         else

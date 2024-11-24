@@ -8,8 +8,8 @@ using UnityEngine;
 public class Totem : MonoBehaviour
 {
     private Transform _transform;
-    [SerializeField] private float TotemOffset = 1.0f;
-    [SerializeField] private float TotemPieceHover = 0.30f;
+    [SerializeField] public float TotemOffset = 1.0f;
+    [SerializeField] public float TotemPieceHover = 0.30f;
     
     [SerializeField] private Transform head;
     [SerializeField] private Transform body;

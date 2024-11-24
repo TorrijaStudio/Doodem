@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -216,6 +217,45 @@ public class Inventory : MonoBehaviour
         for(var i = seleccionableTotemParent.childCount - 1; i >= 0; i--)
         {
             Destroy(seleccionableTotemParent.GetChild(i).gameObject);
+        }
+    }
+
+    public void SpawnTotemPieces()
+    {
+        SetDrag(false);
+        var totemPiecesList = _totemPieces.Where(a => a.Count == 1).ToList();
+        var doublePiecesList = _totemPieces.Where(a => a.Count == 2);
+        foreach (var totemList in doublePiecesList)
+        {
+            throw new NotImplementedException();
+        }
+        var objectsToSpawn = totemPiecesList.Count();
+        var separationDistance = distance / objectsToSpawn;
+        var pos = posToSpawn.position;
+        foreach (var totemPiece in totemPiecesList)
+        { 
+            var totem = Instantiate(totemToInstantiate, pos, Quaternion.identity, totemParent);
+            // totem.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            var aux = new GameObject[] { null, null, null };
+            foreach (var piece in totemPiece)
+            {
+                switch (piece.tag)
+                {
+                    case "Head":
+                        aux[0] = piece.gameObject;
+                        break;
+                    case "Body":
+                        aux[1] = piece.gameObject;
+                        break;
+                    case "Feet":
+                        aux[2] = piece.gameObject;
+                        break;
+                }
+            }
+            totem.TotemOffset = 0;
+            totem.TotemPieceHover = 0f;
+            totem.CreateTotem(aux[0], aux[1], aux[2]);
+            pos += Vector3.right * separationDistance;
         }
     }
     public void SpawnSeleccionables()

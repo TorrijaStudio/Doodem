@@ -52,13 +52,13 @@ namespace Animals.ClasesDeAnimales
                     return;
                 case 1:
                     var enemy = colliders[0].GetComponent<Entity>();
-                    enemy.Attacked(Damage);
+                    enemy.Attacked(Damage * _entity.DamageModifier);
                     enemy.Attacked(Damage);
                     break;
                 case 2:
                     foreach (var colliderEnemy in colliders)
                     {
-                        colliderEnemy.GetComponent<Entity>().Attacked(Damage);
+                        colliderEnemy.GetComponent<Entity>().Attacked(Damage * _entity.DamageModifier);
                     }
                     break;
             }
