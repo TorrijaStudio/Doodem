@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using formulas;
 using tienda;
 using TMPro;
 using Totems;
@@ -27,6 +28,7 @@ public class playerInfoStore : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerMoneyText;
     [SerializeField] private TextMeshProUGUI selectedMoneyText;
     [SerializeField] private TextMeshProUGUI reRollCostText;
+    [SerializeField] private TextMeshProUGUI experienceCostText;
     public Inventory inventory;
     public bool canOnlyChooseOne;
     private objetoTienda _selectedObject;
@@ -37,6 +39,11 @@ public class playerInfoStore : MonoBehaviour
     public int playerMoney;
     public static readonly Color UnavailableColor = new Color(0.67f, 0.17f, 0.11f);
     public static readonly Color AvailableColor = new Color(0.25f, 0.53f, 0f);
+
+    private Experience _experiencePrice;
+    public int currentLevel = 1;
+    public int currentExperience = 0;
+    public int experienceCost;
 
     // private PieceTotem _pieceTotemFormula;
 
@@ -85,13 +92,31 @@ public class playerInfoStore : MonoBehaviour
         }
     }
 
+    public void TryBuyExperience()
+    {
+        if (CanBuyItem(experienceCost))
+        {
+            currentExperience++;
+            if (currentExperience >= 3)
+            {
+                currentExperience = 0;
+                currentLevel++;
+                PlayerMoney -= experienceCost;
+                experienceCost = _experiencePrice.GetExperience(currentLevel);
+            }
+            experienceCostText.SetText(experienceCost.ToString());
+        }
+    }
+    
     private void MoveCameraToShop()
     {
         
         _reRollsThisRound = 1;
         UpdateReRollCost();
+        experienceCost = _experiencePrice.GetExperience(currentLevel);
         selectedMoneyText.SetText(_selectedItemsCost.ToString());
         playerMoneyText.SetText(playerMoney.ToString());
+        experienceCostText.SetText(experienceCost.ToString());
         var cam = Camera.main.transform;
         _prevCameraPos = cam.position;
         cameraRot = cam.rotation;

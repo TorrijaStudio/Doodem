@@ -17,7 +17,7 @@ namespace Totems
         private TotemInfo _info;
         public Totem totem;
         [SerializeField]
-        private Type type;
+        public Type type;
         [SerializeField]
         private string animalName;
 
