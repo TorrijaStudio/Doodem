@@ -123,7 +123,7 @@ public class GameManager : NetworkBehaviour
        // if(IsServer)
        if(startMatchAfterTimer){
            startedGame = true;
-           StartTime(25);
+           StartTime(60);
            for (var index = 0; index < playerObjects.Count; index++)
            {
                var p = playerObjects[index];
