@@ -27,6 +27,8 @@ namespace HelloWorld
         public GameObject botonHost;
         public GameObject botonClient;
         
+        public GameObject botonMenu;
+        
         async void Start()
         {
             campoTexto = GameObject.Find("CODE");
@@ -38,6 +40,9 @@ namespace HelloWorld
             
             botonHost = GameObject.Find("ButtonHost");
             botonClient = GameObject.Find("ButtonClient");
+            
+            botonMenu = GameObject.Find("menu");
+            botonMenu.SetActive(false);
             
             await UnityServices.InitializeAsync();
 
@@ -137,6 +142,8 @@ namespace HelloWorld
                 botonHost.SetActive(false);
                 botonClient.SetActive(false);
                 
+                botonMenu.SetActive(true);
+                
                 GUIUtility.systemCopyBuffer = _joinCode;
                 NetworkManager.Singleton.StartHost();
             }
@@ -169,6 +176,8 @@ namespace HelloWorld
                 campoTexto.SetActive(false);
                 botonHost.SetActive(false);
                 botonClient.SetActive(false);
+                
+                botonMenu.SetActive(true);
 
             }
             catch (RelayServiceException e)
