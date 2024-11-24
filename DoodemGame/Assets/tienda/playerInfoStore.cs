@@ -29,6 +29,9 @@ public class playerInfoStore : MonoBehaviour
     [SerializeField] private TextMeshProUGUI selectedMoneyText;
     [SerializeField] private TextMeshProUGUI reRollCostText;
     [SerializeField] private TextMeshProUGUI experienceCostText;
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI experienceText;
+    
     public Inventory inventory;
     public bool canOnlyChooseOne;
     private objetoTienda _selectedObject;
@@ -46,6 +49,12 @@ public class playerInfoStore : MonoBehaviour
     public int experienceCost;
 
     // private PieceTotem _pieceTotemFormula;
+    private void UpdateExperienceTexts()
+    {
+        experienceCostText.SetText(experienceCost.ToString());
+        levelText.SetText(currentLevel.ToString());
+        experienceText.SetText(currentExperience.ToString());
+    }
 
     public int PlayerMoney
     {
@@ -104,7 +113,7 @@ public class playerInfoStore : MonoBehaviour
                 PlayerMoney -= experienceCost;
                 experienceCost = _experiencePrice.GetExperience(currentLevel);
             }
-            experienceCostText.SetText(experienceCost.ToString());
+            UpdateExperienceTexts();
         }
     }
     
@@ -116,7 +125,7 @@ public class playerInfoStore : MonoBehaviour
         experienceCost = _experiencePrice.GetExperience(currentLevel);
         selectedMoneyText.SetText(_selectedItemsCost.ToString());
         playerMoneyText.SetText(playerMoney.ToString());
-        experienceCostText.SetText(experienceCost.ToString());
+        UpdateExperienceTexts();
         var cam = Camera.main.transform;
         _prevCameraPos = cam.position;
         cameraRot = cam.rotation;
