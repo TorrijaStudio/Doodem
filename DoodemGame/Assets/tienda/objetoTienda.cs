@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using formulas;
 using tienda;
 using TMPro;
 using Totems;
@@ -12,11 +14,14 @@ using UnityEngine.UI;
 public class objetoTienda : MonoBehaviour,IPointerClickHandler
 {
     [SerializeField] public ScriptableObjectTienda info;
+    private int price;
     public bool selected;
 
     private playerInfoStore _store;
 
     private TextMeshProUGUI _proUGUI;
+    private PriceBiome _priceBiome = new PriceBiome(20, 1, 2);
+    private PricePieceTotem _priceTotemPiece = new PricePieceTotem(3, 5, 5);
     // Start is called before the first frame update
     void Start()
     {
@@ -38,16 +43,47 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
             return;
         }
 
-        _proUGUI.color = _store.CanBuyItem(info.price) ? new Color(0.28f, 0.6f, 0f) : new Color(0.67f, 0.17f, 0.11f);
+        _proUGUI.color = _store.CanBuyItem(info.price) ? playerInfoStore.AvailableColor : playerInfoStore.UnavailableColor;
     }
     
-    public void CreateObject(ScriptableObjectTienda scriptableObjectTienda)
+    public void CreateObject(ScriptableObjectTienda scriptableObjectTienda, bool isFullTotem = false)
     {
         info = scriptableObjectTienda;
         GetComponent<Image>().sprite = info.image;
         _store = FindObjectOfType<playerInfoStore>();
         _proUGUI = GetComponentInChildren<TextMeshProUGUI>();
-        _proUGUI.SetText(info.price.ToString());
+        if(isFullTotem)
+        {
+            price = info.price;
+        }
+        else
+        {
+            if (scriptableObjectTienda.isBiome)
+            {
+                price = _priceBiome.GetPrice(GameManager.Instance.currentRound, GameManager.Instance.playerObjects.Count(aux =>
+                {
+                    if (aux.TryGetComponent<ABiome>(out var b))
+                    {
+                        return b.type == info.biomeType;
+                    }
+                    return false;
+                }));
+            }
+            else
+            {
+                if (info.objectsToSell.Any(a => a.type == TotemPiece.Type.Head))
+                {
+                    price = _priceTotemPiece.GetHead();
+                }else if (info.objectsToSell.Any(a => a.type == TotemPiece.Type.Feet))
+                {
+                    price = _priceTotemPiece.GetFeet();
+                }else
+                {
+                    price = _priceTotemPiece.GetBody();
+                }
+            }
+        }
+        _proUGUI.SetText(price.ToString());
         _store.OnItemSelected += SetTextColour;
         SetTextColour();
     }
@@ -57,17 +93,17 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
         if(!selected && eventData.button == PointerEventData.InputButton.Left)
         {
             selected = true;
-            if (!_store.CanBuyItem(info.price)) return;
+            if (!_store.CanBuyItem(price)) return;
             
             if (_store.canOnlyChooseOne)
                 _store.SelectedObject = this;
             
-            _store.SelectedItemsCost += info.price;
+            _store.SelectedItemsCost += price;
         }
         else if (selected && eventData.button == PointerEventData.InputButton.Right)
         {
             selected = false;
-            _store.SelectedItemsCost -= info.price;
+            _store.SelectedItemsCost -= price;
             if (_store.canOnlyChooseOne)
                 _store.SelectedObject = null;
         }

@@ -236,6 +236,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: baf762dda392e6648915a22d72beade8, type: 2}
   indexLayerArea: 6
   typeResource: 020000000400000003000000
+  type: 3
 --- !u!1001 &663471058380154595
 PrefabInstance:
   m_ObjectHideFlags: 0

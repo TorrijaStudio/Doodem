@@ -119,7 +119,7 @@ public class casilla : NetworkBehaviour
 
     public void SetPreviousColorSeleccionable()
     {
-        _meshRenderer.material.color = _localMaterialSeleccionable;
+        _meshRenderer.material.color = Color.white;
     }
     
 

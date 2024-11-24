@@ -50,13 +50,19 @@ public class GameManager : NetworkBehaviour
 
     public GameObject gameCanvas;
     public Canvas storeCanvas;
+    public Canvas pauseCanvas;
     
     private playerInfoStore _store;
 
     public Reward reward = new (20,5,1.5F);
     private int _victoryRojoPoints;
     private int _victoryAzulPoints;
-    private int currentRound;
+
+    public int currentRound
+    {
+        get;
+        private set;
+    }
     [Space(15)] private RoundDisplay _roundDisplay;
     
    
@@ -480,8 +486,20 @@ public class GameManager : NetworkBehaviour
             }
         }
     }
-    
-    
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DisonnectButtonServerRpc(ServerRpcParams rpcParams = default)
+    {
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        DisconnectClientRpc(clientId);
+        
+    }
+    [ClientRpc]
+    private void DisconnectClientRpc(ulong clientId)
+    {
+        ulong localClientId = _networkManager.LocalClientId;
+        SceneManager.LoadScene(clientId == localClientId ? "defeat" : "victory");
+    }
     
     public void UpdateBiomeThings()
     {

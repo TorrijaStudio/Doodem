@@ -206,10 +206,13 @@ public class Inventory : MonoBehaviour
             var a = totem.gameObject.AddComponent<Seleccionable>();
             a.indexPrefab = 0;
             a.numCartas = 1;
+            a.isTotem = true;
             a.objetoACrear = totemToInstantiate.gameObject;
             a.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
             // pos += Vector3.down * separationDistance;
         }
+
+        Seleccionable.MaxTotems = boton.currentLevel;
         SetDrag(false);
     }
     public void DeleteSeleccionableTotems()
@@ -276,6 +279,7 @@ public class Inventory : MonoBehaviour
             biome.objetoACrear = b.Key.biomeObject;
             biome.SetInfo(b.Key);
             biome.CanDropEnemySide = true;
+            biome.isTotem = false;
             biome.GetComponent<Image>().sprite = b.Key.image;
             // totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
             pos += Vector3.down * separationDistance;
