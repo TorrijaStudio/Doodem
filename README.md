@@ -1,7 +1,7 @@
 # Game Design Document (GDD)
 
 
-<img src="/IMAGENES_GDD/Logo Idea 2.png" alt="Logo de Doodem" width=100% height=100%>
+<img src="/IMAGENES_GDD/DOODEM.png" alt="Logo de Doodem" width=75% height=75%>
 
 
 **Juegos para Web y Redes Sociales**  
@@ -487,17 +487,19 @@ Se presentan _mockups_ o maquetas visuales para representar el diseño de las pr
 
 Cada pantalla está diseñada para optimizar la navegación y asegurar que el jugador pueda acceder fácilmente a las diferentes secciones del juego, tanto en la interfaz principal como en las secciones específicas de combate, tienda y configuración del juego.
 
-<img src="/IMAGENES_GDD/m1.png" alt="Habilidades del águila" width=75% height=75%>
+<img src="/IMAGENES_GDD/UI-Update.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m2.png" alt="Habilidades del águila" width=75% height=75%>
+<img src="/IMAGENES_GDD/Botones.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m3.png" alt="Habilidades del águila" width=75% height=75%>
+<img src="/IMAGENES_GDD/Menú.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m4.png" alt="Habilidades del águila" width=75% height=75%>
+<img src="/IMAGENES_GDD/play.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m5.png" alt="Habilidades del águila" width=75% height=75%>
+<img src="/IMAGENES_GDD/Creditos.png" alt="Habilidades del águila" width=75% height=75%>
 
-<img src="/IMAGENES_GDD/m6.png" alt="Habilidades del águila" width=75% height=75%>
+<img src="/IMAGENES_GDD/Shop.png" alt="Habilidades del águila" width=75% height=75%>
+
+<img src="/IMAGENES_GDD/Idea de interfaz.png" alt="Habilidades del águila" width=75% height=75%>
 
 
 ---
