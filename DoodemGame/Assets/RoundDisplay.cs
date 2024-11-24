@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoundDisplay : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class RoundDisplay : MonoBehaviour
             _ => throw new ArgumentOutOfRangeException(nameof(info), info, null)
         };
         var child = positions.GetChild(_posIndex);
-        child.GetComponent<SpriteRenderer>().sprite = spriteToRender;
+        child.gameObject.SetActive(true);
+        child.GetComponent<Image>().sprite = spriteToRender;
 
         _posIndex++;
     }
