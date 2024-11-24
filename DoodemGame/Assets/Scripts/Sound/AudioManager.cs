@@ -35,7 +35,6 @@ public class AudioManager : MonoBehaviour
     {
         ambienceEventInstance = CreateEventInstance(ambienceEventReference);
         ambienceEventInstance.start();
-        Debug.Log("Tamos Aquí");
     }
 
     private void InitializeMusic(EventReference musicEventReference)

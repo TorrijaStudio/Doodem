@@ -15,12 +15,6 @@ public class MenuhOJAS : MonoBehaviour
     [SerializeField] private string parameterName1;
     [SerializeField] private float parameterValue1;
 
-    [SerializeField] private string parameterName2;
-    [SerializeField] private float parameterValue2;
-
-    [SerializeField] private string parameterName3;
-    [SerializeField] private float parameterValue3;
-
     public Button abajo; //señal Opciones
     public Button medio; //señal Tienda
     public Button arriba; //señal Jugar
@@ -112,7 +106,6 @@ public class MenuhOJAS : MonoBehaviour
         DesactivarBotonesOpciones();
 
         AudioManager.instance.SetMusicParameter(parameterName0, parameterValue0);
-        AudioManager.instance.SetMusicParameter(parameterName2, parameterValue2);
     }
 
     // Update is called once per frame
@@ -129,7 +122,6 @@ public class MenuhOJAS : MonoBehaviour
             anim4.SetTrigger("Start");
             AudioManager.instance.PlayOneShot(FMODEvents.instance.MoverHojas, camara.transform.position);
             AudioManager.instance.SetMusicParameter(parameterName1, parameterValue1);
-            AudioManager.instance.SetMusicParameter(parameterName3, parameterValue3);
 
 
             animTexto.SetTrigger("Start");
