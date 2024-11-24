@@ -204,6 +204,7 @@ public class Entity : NetworkBehaviour ,IAtackable
     {
         if (!agente.isOnNavMesh) yield return null;
         Debug.LogWarning("Following enemy");
+        //MARIO aqui el animal se mueve
         while (!isFlying && !agente.isStopped && isEnemy && objetive)
         {
             var position = objetive.position;
@@ -212,6 +213,7 @@ public class Entity : NetworkBehaviour ,IAtackable
             if (distance <= maxAttackDistance)
             {
                 agente.isStopped = true;
+                //MARIO aqui el animal se para
                 break;
             }
             yield return new WaitForNextFrameUnit();
@@ -238,6 +240,7 @@ public class Entity : NetworkBehaviour ,IAtackable
                     if (_followCoroutine != null)
                         StopCoroutine(_followCoroutine);
                     agente.isStopped = true;
+                    //MARIO aqui el animal se para
                     if (Time.time - timeLastHit >= 1f / attackSpeed)
                     {
                         if (TryAttack(distance))
