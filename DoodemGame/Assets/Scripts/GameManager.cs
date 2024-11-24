@@ -57,6 +57,8 @@ public class GameManager : NetworkBehaviour
     private int _victoryRojoPoints;
     private int _victoryAzulPoints;
     private int currentRound;
+    [Space(15)] private RoundDisplay _roundDisplay;
+    
    
     public float MaxDistance
     {
@@ -78,6 +80,7 @@ public class GameManager : NetworkBehaviour
             Instance = this;
         }
 
+        _roundDisplay = FindAnyObjectByType<RoundDisplay>(FindObjectsInactive.Include);
         gameCanvas.gameObject.SetActive(true);
         storeCanvas.gameObject.SetActive(false);
         _store = FindObjectOfType<playerInfoStore>(true);
@@ -200,14 +203,17 @@ public class GameManager : NetworkBehaviour
             {
                 Debug.LogError("gana rojo");
                 _victoryRojoPoints++;
+                _roundDisplay.UpdateRoundDisplay(IsHost ? RoundDisplay.RoundDisplayInfo.Win : RoundDisplay.RoundDisplayInfo.Loss);
             }else if (winner == "Azul")
             {
                 Debug.LogError("gana azul");
+                _roundDisplay.UpdateRoundDisplay(IsHost ? RoundDisplay.RoundDisplayInfo.Loss : RoundDisplay.RoundDisplayInfo.Win);
                 _victoryAzulPoints++;
             }
             else
             {
                 Debug.LogError("empate");
+                _roundDisplay.UpdateRoundDisplay(RoundDisplay.RoundDisplayInfo.Tie);
                 _victoryAzulPoints++;
                 _victoryRojoPoints++;
             }

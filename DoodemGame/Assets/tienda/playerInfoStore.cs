@@ -84,16 +84,17 @@ public class playerInfoStore : MonoBehaviour
 
     private void MoveCameraToShop()
     {
+        
         _reRollsThisRound = 1;
         UpdateReRollCost();
+        selectedMoneyText.SetText(_selectedItemsCost.ToString());
+        playerMoneyText.SetText(playerMoney.ToString());
         var cam = Camera.main.transform;
         _prevCameraPos = cam.position;
         cameraRot = cam.rotation;
         // Debug.LogWarning("camara camara camaramsd asfddjasd " + _prevCameraPos);
         cam.SetPositionAndRotation(_cameraPos.position, _cameraPos.rotation);
         
-        playerMoneyText.gameObject.SetActive(true);
-        playerMoneyText.SetText(_selectedItemsCost + "/" + playerMoney);
     }
     
     private void Start()
