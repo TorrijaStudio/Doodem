@@ -52,8 +52,8 @@ public class playerInfoStore : MonoBehaviour
     private void UpdateExperienceTexts()
     {
         experienceCostText.SetText(experienceCost.ToString());
-        levelText.SetText(currentLevel.ToString());
-        experienceText.SetText(currentExperience.ToString());
+        levelText.SetText($"LEVEL {currentLevel.ToString()}");
+        experienceText.SetText($"{currentExperience.ToString()}/3");
     }
 
     public int PlayerMoney
@@ -137,7 +137,6 @@ public class playerInfoStore : MonoBehaviour
     private void Start()
     {
         // InitialSelection();
-        _experiencePrice = new Experience(20, 1.3f, 5);
         OnItemSelected += SetButtonsTextColour;
     }
 
@@ -202,6 +201,7 @@ public class playerInfoStore : MonoBehaviour
     public void InitialSelection()
     {
         isFirstTime = true;
+        _experiencePrice = new Experience(20, 1.3f, 5);
         MoveCameraToShop();
         canOnlyChooseOne = true;
         var index = 1;

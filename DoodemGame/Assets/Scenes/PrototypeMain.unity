@@ -49572,9 +49572,9 @@ MonoBehaviour:
   playerMoneyText: {fileID: 1690546250}
   selectedMoneyText: {fileID: 1394863173}
   reRollCostText: {fileID: 1394863170}
-  experienceCostText: {fileID: 0}
-  levelText: {fileID: 0}
-  experienceText: {fileID: 0}
+  experienceCostText: {fileID: 1346163185}
+  levelText: {fileID: 850051891}
+  experienceText: {fileID: 735245302}
   inventory: {fileID: 1356764715}
   canOnlyChooseOne: 0
   _cameraPos: {fileID: 1115739264}
