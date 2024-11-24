@@ -30,6 +30,8 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     private bool _selected;
     private List<Transform> cartas;
     public Inventory inventory;
+    public static int MaxTotems;
+    public bool isTotem;
 
     private int _activeDestroyCoroutines;
     
@@ -66,7 +68,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !(isTotem && MaxTotems <= 0))
         {
             // Debug.Log($"{_selected} + {!GameManager.Instance.startedGame} yy {numCartas}");
             if (_selected && !GameManager.Instance.startedGame && numCartas>0)
@@ -120,6 +122,7 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         if (_selected && objeto)
         {
+            MaxTotems--;
             SpawnServer(objeto.transform.position, ClientID);
             _objectsToDelete.Add(objeto);
             GameObject o = objeto;
