@@ -1002,6 +1002,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d63aa3c818a7de74c87abb12883fd6f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameterName0: 
+  parameterValue0: 0
+  parameterName1: 
+  parameterValue1: 0
+  parameterName2: 
+  parameterValue2: 0
+  parameterName3: 
+  parameterValue3: 0
   abajo: {fileID: 0}
   medio: {fileID: 0}
   arriba: {fileID: 0}
@@ -3693,35 +3701,42 @@ MonoBehaviour:
       Data2: 1106241526
       Data3: 875489169
       Data4: -721503499
-    Path: event:/DeslizarHojas
+    Path: event:/SFX/DeslizarHojas
   <ClickMadera>k__BackingField:
     Guid:
       Data1: -734663518
       Data2: 1079313987
       Data3: 1374894755
       Data4: 320665678
-    Path: event:/ClickMadera
+    Path: event:/SFX/ClickMadera
   <CaidaTotem>k__BackingField:
     Guid:
       Data1: 371859369
       Data2: 1268621878
       Data3: 436261545
       Data4: -937612897
-    Path: event:/CaidaTotem
+    Path: event:/SFX/CaidaTotem
   <CaidaCadenas>k__BackingField:
     Guid:
       Data1: 1576415846
       Data2: 1326019388
       Data3: -582903134
       Data4: -405650133
-    Path: event:/Cadenas
+    Path: event:/SFX/Cadenas
   <PajarosAmbience>k__BackingField:
     Guid:
-      Data1: 1160682618
-      Data2: 1298300900
-      Data3: 1785063853
-      Data4: -934360984
-    Path: event:/Pajaros
+      Data1: 2122729954
+      Data2: 1209292689
+      Data3: 981009578
+      Data4: -1729634543
+    Path: event:/Ambience/Pajaros
+  <MenuMusic>k__BackingField:
+    Guid:
+      Data1: 1529590597
+      Data2: 1109505580
+      Data3: 638541988
+      Data4: -674879508
+    Path: event:/Music/MusicMenu
 --- !u!1 &835659607
 GameObject:
   m_ObjectHideFlags: 0
@@ -5047,6 +5062,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d63aa3c818a7de74c87abb12883fd6f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameterName0: music_intensity
+  parameterValue0: 0
+  parameterName1: music_intensity
+  parameterValue1: 1
+  parameterName2: music_freq
+  parameterValue2: 0
+  parameterName3: music_freq
+  parameterValue3: 1
   abajo: {fileID: 337070166}
   medio: {fileID: 876021655}
   arriba: {fileID: 86562364}

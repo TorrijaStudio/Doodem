@@ -32,13 +32,13 @@ namespace Animals.ClasesDeAnimales
                     if (_isBonusActive)
                     {
                         //... y el bonus esta activado... desactivalo!
-                        _entity.SetCurrentDamage(_entity.GetCurrentDamageModifier() - 10);
+                        _entity.DamageModifier += 0.10F;
                         _isBonusActive = false;
                     }
                 }else if (!_isBonusActive)
                 {
                     //Si NO hay aliados en el rango y el bonus NO esta activado... activalo!
-                    _entity.SetCurrentDamage(_entity.GetCurrentDamageModifier() + 10);
+                    _entity.DamageModifier -= 0.10F;
                     _isBonusActive = true;
                 }
             }

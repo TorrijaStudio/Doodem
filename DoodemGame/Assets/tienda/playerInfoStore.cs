@@ -21,7 +21,11 @@ public class playerInfoStore : MonoBehaviour
     [SerializeField] private Transform[] positionsToSpawn;
     [SerializeField] private Transform totemItems;
     [SerializeField] public GameObject botones;
+    [Space(20)]
+    [InspectorLabel("TEXTS", "Interface texts :)")]
     [SerializeField] private TextMeshProUGUI playerMoneyText;
+    [SerializeField] private TextMeshProUGUI selectedMoneyText;
+    [SerializeField] private TextMeshProUGUI reRollCostText;
     public Inventory inventory;
     public bool canOnlyChooseOne;
     private objetoTienda _selectedObject;
@@ -30,6 +34,20 @@ public class playerInfoStore : MonoBehaviour
     public Quaternion cameraRot;
     public bool isFirstTime = true;
     public int playerMoney;
+    public static readonly Color UnavailableColor = new Color(0.67f, 0.17f, 0.11f);
+    public static readonly Color AvailableColor = new Color(0.25f, 0.53f, 0f);
+
+    public int PlayerMoney
+    {
+        get => playerMoney;
+        set
+        {
+            playerMoney = Math.Max(0, value);
+            selectedMoneyText.SetText(_selectedItemsCost.ToString());
+            playerMoneyText.SetText(playerMoney.ToString());
+            OnItemSelected.Invoke();
+        }
+    }
     private int _selectedItemsCost;
 
     public int SelectedItemsCost
@@ -39,7 +57,8 @@ public class playerInfoStore : MonoBehaviour
         {
             _selectedItemsCost = Math.Max(0, value);
             // Debug.Log("Objeto tienda (de)seleccionado " + OnItemSelected.Method.Name + " new precio: " + _selectedItemsCost + " player " + playerMoney);
-            playerMoneyText.SetText(_selectedItemsCost + "/" + playerMoney);
+            selectedMoneyText.SetText(_selectedItemsCost.ToString());
+            playerMoneyText.SetText(playerMoney.ToString());
             OnItemSelected.Invoke();
         }
     }
@@ -65,19 +84,23 @@ public class playerInfoStore : MonoBehaviour
 
     private void MoveCameraToShop()
     {
+        
+        _reRollsThisRound = 1;
+        UpdateReRollCost();
+        selectedMoneyText.SetText(_selectedItemsCost.ToString());
+        playerMoneyText.SetText(playerMoney.ToString());
         var cam = Camera.main.transform;
         _prevCameraPos = cam.position;
         cameraRot = cam.rotation;
         // Debug.LogWarning("camara camara camaramsd asfddjasd " + _prevCameraPos);
         cam.SetPositionAndRotation(_cameraPos.position, _cameraPos.rotation);
         
-        playerMoneyText.gameObject.SetActive(true);
-        playerMoneyText.SetText(_selectedItemsCost + "/" + playerMoney);
     }
     
     private void Start()
     {
         // InitialSelection();
+        OnItemSelected += SetButtonsTextColour;
     }
 
     public void CloseShopAfterTimer()
@@ -97,6 +120,36 @@ public class playerInfoStore : MonoBehaviour
         playerMoneyText.gameObject.SetActive(false);
     }
 
+    private int _reRollsThisRound;
+    private int _reRollCost;
+    public void TryReRollShop()
+    {
+        if(!isFirstTime && CanBuyItem(_reRollCost))
+        {
+            _reRollsThisRound++;
+            PlayerMoney -= _reRollCost;
+            GenerateShop();
+            UpdateReRollCost();
+        }
+    }
+
+    private void SetButtonsTextColour()
+    {
+        reRollCostText.color = CanBuyItem(_reRollCost) ? AvailableColor : UnavailableColor;
+        if (CanBuyItem(_reRollCost))
+        {
+            reRollCostText.SetText(_reRollCost.ToString());
+        }
+    }
+    
+    private void UpdateReRollCost()
+    {
+        var a = 20f;
+        const int D = 5;
+        var d = 8;
+        _reRollCost = Mathf.CeilToInt(a / D + Mathf.Pow(a / d, _reRollsThisRound - 1));
+    }
+    
     public void DeleteShopItems()
     {
         for(var i = totemItems.childCount - 1; i >= 0; i--)
@@ -111,7 +164,6 @@ public class playerInfoStore : MonoBehaviour
     public void InitialSelection()
     {
         isFirstTime = true;
-        // playerMoney = 10000;
         MoveCameraToShop();
         canOnlyChooseOne = true;
         var index = 1;
@@ -125,16 +177,19 @@ public class playerInfoStore : MonoBehaviour
             index++;
         }
     }
-    public void SetUpShop(int moneyGained)
+
+    public void GenerateShop()
     {
-        playerMoney += moneyGained;
-        MoveCameraToShop();
+        SetButtonsTextColour();
+        _selectedObject = null;
+        SelectedItemsCost = 0;
+        
         DeleteShopItems();
-        canOnlyChooseOne = false;
         var index = 0;
         //List of objects that can appear in the shop. Totem pieces on the inventory are discarded
         // var spawnableObjects = objectsTiendas.Where(aux => (aux.isBiome || !inventory.Contains(aux.objectsToSell[0]))).ToList();
-        var spawnableObjects = objectsTiendas;
+        var spawnableObjects = new List<ScriptableObjectTienda>(objectsTiendas);
+        // Debug.Log(objectsTiendas.Count);
         var spawnedBiomes = 0;
         var spawnedTotems = 0;
         int numOfSpawnables = 4;
@@ -174,6 +229,17 @@ public class playerInfoStore : MonoBehaviour
             index++;
             
         }
-        botones.SetActive(true);
+        botones.SetActive(!GameManager.Instance.startMatchAfterTimer);
+    }
+    
+    public void SetUpShop(int moneyGained)
+    {
+        isFirstTime = false;
+        PlayerMoney += moneyGained;
+
+        
+        MoveCameraToShop();
+        canOnlyChooseOne = false;
+        GenerateShop();
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{87cd34a6-4aac-4eda-aab9-e8939f68de9a}">
+		<property name="name">
+			<value>music_freq</value>
+		</property>
+		<relationship name="folder">
+			<destination>{6e867a1e-b3c3-44e5-8c01-1c2e0f36f53f}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{8d2014c9-89ef-4c06-a244-0f366dfcdc31}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{8d2014c9-89ef-4c06-a244-0f366dfcdc31}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeed">
+			<value>0.18999999761581421</value>
+		</property>
+	</object>
+</objects>

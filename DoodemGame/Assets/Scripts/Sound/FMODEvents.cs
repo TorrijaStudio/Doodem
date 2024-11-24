@@ -23,6 +23,9 @@ public class FMODEvents : MonoBehaviour
     [field: Header("PajarosAmbience")]
     [field: SerializeField] public EventReference PajarosAmbience { get; private set; }
 
+    [field: Header("MenuMUsic")]
+    [field: SerializeField] public EventReference MenuMusic { get; private set; }
+
     public static FMODEvents instance { get; private set; }
 
     public void Awake()

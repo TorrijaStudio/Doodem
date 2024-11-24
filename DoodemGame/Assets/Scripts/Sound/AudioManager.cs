@@ -12,6 +12,8 @@ public class AudioManager : MonoBehaviour
 
     private EventInstance ambienceEventInstance;
 
+    private EventInstance musicEventInstance;
+
     public void Awake()
     {
         if (instance != null)
@@ -26,12 +28,25 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         InitializeAmbience(FMODEvents.instance.PajarosAmbience);
+        InitializeMusic(FMODEvents.instance.MenuMusic);
     }
 
     private void InitializeAmbience(EventReference ambienceEventReference)
     {
         ambienceEventInstance = CreateEventInstance(ambienceEventReference);
         ambienceEventInstance.start();
+        Debug.Log("Tamos Aquí");
+    }
+
+    private void InitializeMusic(EventReference musicEventReference)
+    {
+        musicEventInstance = CreateEventInstance(musicEventReference);
+        musicEventInstance.start();
+    }
+
+    public void SetMusicParameter(string parameterName, float paramenterValue)
+    {
+        musicEventInstance.setParameterByName(parameterName, paramenterValue);
     }
 
     public void PlayOneShot(EventReference sound, Vector3 worldPos)

@@ -58,7 +58,7 @@ namespace Animals.ClasesDeAnimales
                 if(angle>AttackAngle/2) continue;
                 if (c.TryGetComponent(out IAtackable m))
                 {
-                    m.Attacked(Mathf.Min(_entity.GetCurrentDamageModifier() + AttackDamage, 0));
+                    m.Attacked(Mathf.Min(_entity.DamageModifier * AttackDamage, 0));
                 }
             }
         }

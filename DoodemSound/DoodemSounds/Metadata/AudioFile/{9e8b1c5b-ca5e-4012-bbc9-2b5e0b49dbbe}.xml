@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{9e8b1c5b-ca5e-4012-bbc9-2b5e0b49dbbe}">
 		<property name="assetPath">
-			<value>caidaTotemFinal.wav</value>
+			<value>Menú/caidaTotemFinal.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

@@ -23,7 +23,13 @@ public class Entity : NetworkBehaviour ,IAtackable
     public NetworkVariable<int> _idPlayer = new NetworkVariable<int>(writePerm:NetworkVariableWritePermission.Server);
     public string layerEnemy;
     private int currentAreaIndex;
-    [SerializeField] private float currentDamage;
+    [SerializeField] private float damageModifier;
+
+    public float DamageModifier
+    {
+        get => damageModifier;
+        set => damageModifier = value;
+    }
     private bool isEnemy;
     private Coroutine _followCoroutine;
     public bool isFlying;
@@ -125,7 +131,7 @@ public class Entity : NetworkBehaviour ,IAtackable
             float aux = 0;
             if (objetive.TryGetComponent(out IAtackable m))
             {
-                aux = m.Attacked(GetCurrentDamageModifier() + damage);
+                aux = m.Attacked(DamageModifier * damage);
             }
             if (aux < 0)
             {
@@ -172,7 +178,8 @@ public class Entity : NetworkBehaviour ,IAtackable
 
 
     void Start()
-    {        
+    {
+        DamageModifier = 1.0f;
         _resources = new Dictionary<Recursos, int>();
         SetLayer(0, _idPlayer.Value);
         // currentDamage = damage;
@@ -364,15 +371,15 @@ public class Entity : NetworkBehaviour ,IAtackable
         return isOnGround;
     }
 
-    public float GetCurrentDamageModifier()
+    public float GetCurrentDamage()
     {
-        return currentDamage;
+        return DamageModifier * damage;
     }
 
-    public void SetCurrentDamage(float v)
-    {
-        currentDamage = v;
-    }
+    // public void SetCurrentDamage(float v)
+    // {
+    //     damageModifier = v;
+    // }
 
     public void SetSpeed(float s)
     {
