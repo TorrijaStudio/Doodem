@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuhOJAS : MonoBehaviour
 {
@@ -226,6 +227,8 @@ public class MenuhOJAS : MonoBehaviour
     }
 
     public void PulsadoSenalArriba(){
+
+		SceneManager.LoadScene("PrototypeMain");
         Debug.Log("se ha pulsado la senal de abajo vale??");
         AudioManager.instance.PlayOneShot(FMODEvents.instance.ClickMadera, camara.transform.position);
         StartCoroutine(ReproducirSenales());
