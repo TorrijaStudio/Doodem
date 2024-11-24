@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: ../DoodemSound/DoodemSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638680133127256062
+  lastModified: 638680410846830086
   FileSizes:
   - Name: Desktop
     Value: 1256
@@ -110,7 +110,7 @@ MonoBehaviour:
   Path: ../DoodemSound/DoodemSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638680133127230878
+  lastModified: 638679898501616916
   FileSizes:
   - Name: Desktop
     Value: 1036
@@ -132,20 +132,20 @@ MonoBehaviour:
   - {fileID: -750936954162226726}
   - {fileID: 2419423023951186156}
   - {fileID: 2012309256021111217}
-  - {fileID: -4587397433420397743}
+  - {fileID: 3308135356386293922}
   EditorEvents:
   - {fileID: -3036532170847525466}
   - {fileID: 4984849742039263099}
   - {fileID: 4454165011507793943}
   - {fileID: -4220850686418270608}
   - {fileID: 321840722786863874}
-  - {fileID: 2203126943887374674}
+  - {fileID: 7788015068830469687}
   EditorParameters: []
   MasterBanks:
   - {fileID: -750936954162226726}
   StringsBanks:
   - {fileID: -3563568354393314972}
-  cacheTime: 638680135295592447
+  cacheTime: 638680410847509850
   cacheVersion: 131621
 --- !u!114 &321840722786863874
 MonoBehaviour:
@@ -174,6 +174,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &895642513289707829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MusicMenu/music_intensity
+  m_EditorClassIdentifier: 
+  Name: music_intensity
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2676448809
+    data2: 3419978149
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &2012309256021111217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +213,7 @@ MonoBehaviour:
   Path: ../DoodemSound/DoodemSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638680135295274991
+  lastModified: 638680410847509850
   FileSizes:
   - Name: Desktop
     Value: 1572352
@@ -238,10 +262,54 @@ MonoBehaviour:
   Path: ../DoodemSound/DoodemSounds/Build/Desktop/Menu.bank
   Name: Menu
   StudioPath: bank:/Menu
-  lastModified: 638680102331852147
+  lastModified: 638680410847115491
   FileSizes:
   - Name: Desktop
     Value: 1531168
+  Exists: 1
+--- !u!114 &3308135356386293922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: ../DoodemSound/DoodemSounds/Build/Desktop/Music.bank
+  Name: Music
+  StudioPath: bank:/Music
+  lastModified: 638680410847311195
+  FileSizes:
+  - Name: Desktop
+    Value: 921408
+  Exists: 1
+--- !u!114 &3458263803535751350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MusicMenu/music_freq
+  m_EditorClassIdentifier: 
+  Name: music_freq
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2438852269
+    data2: 2255674375
+  Type: 0
+  IsGlobal: 0
+  Labels: []
   Exists: 1
 --- !u!114 &4454165011507793943
 MonoBehaviour:
@@ -321,6 +389,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &7788015068830469687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MusicMenu
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MusicMenu
+  Guid:
+    Data1: 1529590597
+    Data2: 1109505580
+    Data3: 638541988
+    Data4: -674879508
+  Banks:
+  - {fileID: 3308135356386293922}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 895642513289707829}
+  - {fileID: 3458263803535751350}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 83000
 --- !u!114 &8425474364645829621
 MonoBehaviour:
   m_ObjectHideFlags: 0

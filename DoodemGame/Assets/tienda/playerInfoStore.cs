@@ -21,7 +21,10 @@ public class playerInfoStore : MonoBehaviour
     [SerializeField] private Transform[] positionsToSpawn;
     [SerializeField] private Transform totemItems;
     [SerializeField] public GameObject botones;
+    [Space(20)]
+    [InspectorLabel("TEXTS", "Interface texts :)")]
     [SerializeField] private TextMeshProUGUI playerMoneyText;
+    [SerializeField] private TextMeshProUGUI selectedMoneyText;
     [SerializeField] private TextMeshProUGUI reRollCostText;
     public Inventory inventory;
     public bool canOnlyChooseOne;
@@ -40,7 +43,8 @@ public class playerInfoStore : MonoBehaviour
         set
         {
             playerMoney = Math.Max(0, value);
-            playerMoneyText.SetText(_selectedItemsCost + "/" + playerMoney);
+            selectedMoneyText.SetText(_selectedItemsCost.ToString());
+            playerMoneyText.SetText(playerMoney.ToString());
             OnItemSelected.Invoke();
         }
     }
@@ -53,7 +57,8 @@ public class playerInfoStore : MonoBehaviour
         {
             _selectedItemsCost = Math.Max(0, value);
             // Debug.Log("Objeto tienda (de)seleccionado " + OnItemSelected.Method.Name + " new precio: " + _selectedItemsCost + " player " + playerMoney);
-            playerMoneyText.SetText(_selectedItemsCost + "/" + playerMoney);
+            selectedMoneyText.SetText(_selectedItemsCost.ToString());
+            playerMoneyText.SetText(playerMoney.ToString());
             OnItemSelected.Invoke();
         }
     }
@@ -132,7 +137,7 @@ public class playerInfoStore : MonoBehaviour
         reRollCostText.color = CanBuyItem(_reRollCost) ? AvailableColor : UnavailableColor;
         if (CanBuyItem(_reRollCost))
         {
-            reRollCostText.SetText($"REGENERATE SHOP ({_reRollCost}");
+            reRollCostText.SetText(_reRollCost.ToString());
         }
     }
     
@@ -182,7 +187,8 @@ public class playerInfoStore : MonoBehaviour
         var index = 0;
         //List of objects that can appear in the shop. Totem pieces on the inventory are discarded
         // var spawnableObjects = objectsTiendas.Where(aux => (aux.isBiome || !inventory.Contains(aux.objectsToSell[0]))).ToList();
-        var spawnableObjects = objectsTiendas;
+        var spawnableObjects = new List<ScriptableObjectTienda>(objectsTiendas);
+        // Debug.Log(objectsTiendas.Count);
         var spawnedBiomes = 0;
         var spawnedTotems = 0;
         int numOfSpawnables = 4;
