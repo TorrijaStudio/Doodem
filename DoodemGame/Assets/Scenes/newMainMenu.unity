@@ -1006,6 +1006,10 @@ MonoBehaviour:
   parameterValue0: 0
   parameterName1: 
   parameterValue1: 0
+  parameterName2: 
+  parameterValue2: 0
+  parameterName3: 
+  parameterValue3: 0
   abajo: {fileID: 0}
   medio: {fileID: 0}
   arriba: {fileID: 0}
@@ -5062,6 +5066,10 @@ MonoBehaviour:
   parameterValue0: 0
   parameterName1: music_intensity
   parameterValue1: 1
+  parameterName2: music_freq
+  parameterValue2: 0
+  parameterName3: music_freq
+  parameterValue3: 1
   abajo: {fileID: 337070166}
   medio: {fileID: 876021655}
   arriba: {fileID: 86562364}
