@@ -21,7 +21,7 @@ public class readyBoton : MonoBehaviour
 
    public void OnClickPlayButton()
     {
-        if(tienda.canOnlyChooseOne) return;
+        if(tienda.canOnlyChooseOne && !tienda.SelectedObject) return;
         
         foreach (Transform obTr in storeItems)
         {
