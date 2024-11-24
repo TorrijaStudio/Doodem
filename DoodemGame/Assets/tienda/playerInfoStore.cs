@@ -32,7 +32,7 @@ public class playerInfoStore : MonoBehaviour
     [SerializeField] private TextMeshProUGUI experienceCostText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI experienceText;
-    
+    [SerializeField] private GameObject fondoJunglaTienda;
     public Inventory inventory;
     public bool canOnlyChooseOne;
     private objetoTienda _selectedObject;
@@ -121,7 +121,7 @@ public class playerInfoStore : MonoBehaviour
     
     private void MoveCameraToShop()
     {
-        
+        fondoJunglaTienda.SetActive(true);
         _reRollsThisRound = 1;
         UpdateReRollCost();
         experienceCost = _experiencePrice.GetExperience(currentLevel);
@@ -158,6 +158,7 @@ public class playerInfoStore : MonoBehaviour
             inventory.DespawnItems();
         
         // playerMoneyText.gameObject.SetActive(false);
+        fondoJunglaTienda.SetActive(false);
     }
 
     private int _reRollsThisRound;
