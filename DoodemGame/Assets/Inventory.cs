@@ -282,7 +282,7 @@ public class Inventory : MonoBehaviour
             biome.isTotem = false;
             biome.GetComponent<Image>().sprite = b.Key.image;
             // totem.SetInfo(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
-            pos += Vector3.down * separationDistance;
+            pos += Vector3.right * separationDistance;
         }
         // foreach (var totemPiece in infoForSeleccionables)
         // { 
