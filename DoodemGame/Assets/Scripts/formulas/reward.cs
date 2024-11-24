@@ -17,7 +17,7 @@ namespace formulas
 
         public int GetReward(int numRondas)
         {
-            return (int)(A + Math.Abs(B * Math.Pow(numRondas - 1,C)));
+            return A + (int)Math.Round(B * Math.Pow(numRondas - 1,C));
         }
     }
 }
