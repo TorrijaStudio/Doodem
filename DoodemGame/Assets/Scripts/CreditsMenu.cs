@@ -9,7 +9,7 @@ public class CreditsMenu : MonoBehaviour
     public void Back()
     {
         // se va a usar para varias pantallas no solo creditops pero bueno
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene("newMainMenu"); 
     }
 
     }

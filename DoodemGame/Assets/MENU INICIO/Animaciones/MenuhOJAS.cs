@@ -193,7 +193,7 @@ public class MenuhOJAS : MonoBehaviour
         torrijaLogo.SetActive(false);
         DesactivarBotonesSenales();
         
-        Invoke("ActivarBotonesOpciones", 2.5f);
+        Invoke("ActivarBotonesOpciones", 2.0f);
     }
     IEnumerator ReproducirSenales()
     {
@@ -241,7 +241,7 @@ public class MenuhOJAS : MonoBehaviour
         //animLogo.SetTrigger("Pulsado");
         DesactivarBotonesSenales();
 
-        Invoke("ActivarBotonesMenuJugar", 1.5f);
+        Invoke("ActivarBotonesMenuJugar", 2.0f);
         //ActivarBotonesMenuJugar();
 
     }
