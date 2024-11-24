@@ -23,6 +23,7 @@ public class playerInfoStore : MonoBehaviour
     [SerializeField] private Transform[] positionsToSpawn;
     [SerializeField] private Transform totemItems;
     [SerializeField] public GameObject botones;
+    [SerializeField] public GameObject Ready;
     [Space(20)]
     [InspectorLabel("TEXTS", "Interface texts :)")]
     [SerializeField] private TextMeshProUGUI playerMoneyText;
@@ -150,6 +151,7 @@ public class playerInfoStore : MonoBehaviour
             inventory.GetTotemsFromShop();
         }
         botones.SetActive(false);
+        Ready.SetActive(false);
         DeleteShopItems();
         if(inventory.IsDragActive())
             inventory.DespawnItems();
@@ -173,10 +175,7 @@ public class playerInfoStore : MonoBehaviour
     private void SetButtonsTextColour()
     {
         reRollCostText.color = CanBuyItem(_reRollCost) ? AvailableColor : UnavailableColor;
-        if (CanBuyItem(_reRollCost))
-        {
-            reRollCostText.SetText(_reRollCost.ToString());
-        }
+        reRollCostText.SetText(_reRollCost.ToString());
     }
     
     private void UpdateReRollCost()
@@ -194,6 +193,7 @@ public class playerInfoStore : MonoBehaviour
             Destroy(totemItems.GetChild(i).gameObject);
         }
         boughtObjects.Clear();
+        Ready.SetActive(false);
         botones.SetActive(false);
     }
     
@@ -214,6 +214,8 @@ public class playerInfoStore : MonoBehaviour
             prevTotems.RemoveAt(totemI);
             index++;
         }
+        botones.SetActive(false);
+        Ready.SetActive(true);
     }
 
     public void GenerateShop()
@@ -267,6 +269,7 @@ public class playerInfoStore : MonoBehaviour
             index++;
             
         }
+        Ready.SetActive(!GameManager.Instance.startMatchAfterTimer);
         botones.SetActive(!GameManager.Instance.startMatchAfterTimer);
     }
     

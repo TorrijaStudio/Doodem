@@ -62,7 +62,7 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
             {
                 price = _priceBiome.GetPrice(GameManager.Instance.currentRound, GameManager.Instance.playerObjects.Count(aux =>
                 {
-                    if (aux.TryGetComponent<ABiome>(out var b))
+                    if (aux && aux.TryGetComponent<ABiome>(out var b))
                     {
                         return b.type == info.biomeType;
                     }
