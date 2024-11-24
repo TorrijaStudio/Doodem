@@ -50,6 +50,7 @@ public class GameManager : NetworkBehaviour
 
     public GameObject gameCanvas;
     public Canvas storeCanvas;
+    public Canvas pauseCanvas;
     
     private playerInfoStore _store;
 
@@ -485,8 +486,20 @@ public class GameManager : NetworkBehaviour
             }
         }
     }
-    
-    
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DisonnectButtonServerRpc(ServerRpcParams rpcParams = default)
+    {
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        DisconnectClientRpc(clientId);
+        
+    }
+    [ClientRpc]
+    private void DisconnectClientRpc(ulong clientId)
+    {
+        ulong localClientId = _networkManager.LocalClientId;
+        SceneManager.LoadScene(clientId == localClientId ? "defeat" : "victory");
+    }
     
     public void UpdateBiomeThings()
     {
