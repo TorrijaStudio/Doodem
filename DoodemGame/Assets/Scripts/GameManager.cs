@@ -139,7 +139,7 @@ public class GameManager : NetworkBehaviour
                    p.SetActive(true);
            }
            UpdateBiomeThings();
-           _terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
+           //_terreno.GetComponent<NavMeshSurface>().BuildNavMesh();
            OnStartMatch.Invoke();
            if (IsHost)
            {
