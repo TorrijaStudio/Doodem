@@ -1,5 +1,45 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8951756904612855651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: ../DoodemSounds/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638680677837051398
+  FileSizes:
+  - Name: Desktop
+    Value: 1036
+  Exists: 1
+--- !u!114 &-6022338078679192031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: ../DoodemSounds/Build/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638680679615910890
+  FileSizes:
+  - Name: Desktop
+    Value: 40736
+  Exists: 1
 --- !u!114 &-4587397433420397743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20,6 +60,33 @@ MonoBehaviour:
   - Name: Desktop
     Value: 921408
   Exists: 1
+--- !u!114 &-4359681991882668497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ClickMadera
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/ClickMadera
+  Guid:
+    Data1: 583980684
+    Data2: 1321754636
+    Data3: 836986038
+    Data4: -1050179515
+  Banks:
+  - {fileID: -6022338078679192031}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-4220850686418270608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +134,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1256
   Exists: 1
+--- !u!114 &-3373523111241125335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Musica.bank
+  m_EditorClassIdentifier: 
+  Path: ../DoodemSounds/Build/Desktop/Musica.bank
+  Name: Musica
+  StudioPath: bank:/Musica
+  lastModified: 638680677837368515
+  FileSizes:
+  - Name: Desktop
+    Value: 921216
+  Exists: 1
 --- !u!114 &-3036532170847525466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +182,61 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 138614
+--- !u!114 &-2746288974943904175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Musica/MusicMenu
+  m_EditorClassIdentifier: 
+  Path: event:/Musica/MusicMenu
+  Guid:
+    Data1: -1516527342
+    Data2: 1327945436
+    Data3: -6315901
+    Data4: 1103239591
+  Banks:
+  - {fileID: -3373523111241125335}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 7489022267551472200}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 83000
+--- !u!114 &-2401828210541937480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/MoverHojas
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/MoverHojas
+  Guid:
+    Data1: 902520468
+    Data2: 1191715326
+    Data3: -1744886653
+    Data4: -16592652
+  Banks:
+  - {fileID: -6022338078679192031}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-750936954162226726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,24 +270,24 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -3563568354393314972}
-  - {fileID: -750936954162226726}
-  - {fileID: 2419423023951186156}
-  - {fileID: 2012309256021111217}
-  - {fileID: 3308135356386293922}
+  - {fileID: 5047080384799813149}
+  - {fileID: 2978819782706672828}
+  - {fileID: -8951756904612855651}
+  - {fileID: -3373523111241125335}
+  - {fileID: -6022338078679192031}
   EditorEvents:
-  - {fileID: -3036532170847525466}
-  - {fileID: 4984849742039263099}
-  - {fileID: 4454165011507793943}
-  - {fileID: -4220850686418270608}
-  - {fileID: 321840722786863874}
-  - {fileID: 7788015068830469687}
+  - {fileID: -2746288974943904175}
+  - {fileID: 7038534300661002068}
+  - {fileID: -4359681991882668497}
+  - {fileID: -2401828210541937480}
+  - {fileID: 6123727794736847933}
+  - {fileID: 3885369627561947970}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -750936954162226726}
+  - {fileID: -8951756904612855651}
   StringsBanks:
-  - {fileID: -3563568354393314972}
-  cacheTime: 638680410847509850
+  - {fileID: 5047080384799813149}
+  cacheTime: 638680679615910890
   cacheVersion: 131621
 --- !u!114 &321840722786863874
 MonoBehaviour:
@@ -267,6 +409,26 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1531168
   Exists: 1
+--- !u!114 &2978819782706672828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Ambiente.bank
+  m_EditorClassIdentifier: 
+  Path: ../DoodemSounds/Build/Desktop/Ambiente.bank
+  Name: Ambiente
+  StudioPath: bank:/Ambiente
+  lastModified: 638680675062852305
+  FileSizes:
+  - Name: Desktop
+    Value: 1531168
+  Exists: 1
 --- !u!114 &3308135356386293922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +473,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &3885369627561947970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambient/Pajars
+  m_EditorClassIdentifier: 
+  Path: event:/Ambient/Pajars
+  Guid:
+    Data1: -829309486
+    Data2: 1136667368
+    Data3: -2093882695
+    Data4: -1126599000
+  Banks:
+  - {fileID: 2978819782706672828}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 138614
 --- !u!114 &4454165011507793943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +578,104 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &5047080384799813149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: ../DoodemSounds/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638680677837071586
+  FileSizes:
+  - Name: Desktop
+    Value: 1212
+  Exists: 1
+--- !u!114 &6123727794736847933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/CaidaTotem
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/CaidaTotem
+  Guid:
+    Data1: 1359847070
+    Data2: 1233511442
+    Data3: -38497656
+    Data4: 1109757513
+  Banks:
+  - {fileID: -6022338078679192031}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7038534300661002068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cadenas
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cadenas
+  Guid:
+    Data1: 309577601
+    Data2: 1232046415
+    Data3: -476607610
+    Data4: 491279257
+  Banks:
+  - {fileID: -6022338078679192031}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7489022267551472200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MusicMenu/music_intensity
+  m_EditorClassIdentifier: 
+  Name: music_intensity
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1067164317
+    data2: 2814676366
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &7788015068830469687
 MonoBehaviour:
   m_ObjectHideFlags: 0

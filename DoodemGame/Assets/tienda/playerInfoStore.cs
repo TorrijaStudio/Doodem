@@ -65,6 +65,7 @@ public class playerInfoStore : MonoBehaviour
             playerMoney = Math.Max(0, value);
             selectedMoneyText.SetText(_selectedItemsCost.ToString());
             playerMoneyText.SetText(playerMoney.ToString());
+            Debug.Log(playerMoney);
             OnItemSelected.Invoke();
         }
     }
@@ -156,7 +157,7 @@ public class playerInfoStore : MonoBehaviour
         if(inventory.IsDragActive())
             inventory.DespawnItems();
         
-        playerMoneyText.gameObject.SetActive(false);
+        // playerMoneyText.gameObject.SetActive(false);
     }
 
     private int _reRollsThisRound;

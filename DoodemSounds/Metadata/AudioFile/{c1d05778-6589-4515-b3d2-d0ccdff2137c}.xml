@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c1d05778-6589-4515-b3d2-d0ccdff2137c}">
+		<property name="assetPath">
+			<value>Batalla/PonerBioma.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.13079166666666667</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a0981139-1eae-4c0f-b437-13cb9991c219}</destination>
+		</relationship>
+	</object>
+</objects>
