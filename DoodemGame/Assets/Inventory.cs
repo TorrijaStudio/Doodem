@@ -202,7 +202,7 @@ public class Inventory : MonoBehaviour
             pos += dir * offset;
             var totem = Instantiate(totemToInstantiate, pos, rotation, seleccionableTotemParent);
             totem.gameObject.SetActive(true);
-            totem.CreateTotem(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda);
+            totem.CreateTotem(totemPiece[0].scriptableObjectTienda, totemPiece[1].scriptableObjectTienda, totemPiece[2].scriptableObjectTienda, true);
             var a = totem.gameObject.AddComponent<Seleccionable>();
             a.indexPrefab = 0;
             a.numCartas = 1;

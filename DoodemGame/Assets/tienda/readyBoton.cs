@@ -21,6 +21,8 @@ public class readyBoton : MonoBehaviour
 
    public void OnClickPlayButton()
     {
+        if(tienda.canOnlyChooseOne) return;
+        
         foreach (Transform obTr in storeItems)
         {
             var ob = obTr.GetComponent<objetoTienda>();

@@ -29,27 +29,28 @@ public class Totem : MonoBehaviour
             list.Add(feet.GetComponent<TotemPiece>().scriptableObjectTienda);
         return list;
     }
-    public void CreateTotem(GameObject h, GameObject b, GameObject f)
+    public void CreateTotem(GameObject h, GameObject b, GameObject f, bool keepRotation = false)
     {
         _transform = transform;
         // if(!(ValidatePartDebug(h, "Head") && ValidatePartDebug(b, "Body") && ValidatePartDebug(f, "Feet")))
         //     return;
 
+        var rotation = keepRotation ? transform.rotation : Quaternion.Euler(0, 180, 0);
         var position = _transform.position;
         var up = _transform.up * TotemOffset;
         if(ValidatePartDebug(h, "Head"))
-            head = Instantiate(h, position + up, Quaternion.Euler(0, 180, 0), _transform).transform;
+            head = Instantiate(h, position + up, rotation, _transform).transform;
         // head.transform.SetParent(_transform);
         
         if(ValidatePartDebug(b, "Body"))
-            body = Instantiate(b, position, Quaternion.Euler(0, 180, 0), _transform).transform;
+            body = Instantiate(b, position, rotation, _transform).transform;
         // body.transform.SetParent(_transform);
         
         if(ValidatePartDebug(f, "Feet"))
-            feet = Instantiate(f, position - up, Quaternion.Euler(0, 180, 0), _transform).transform;
+            feet = Instantiate(f, position - up, rotation, _transform).transform;
         // feet.transform.SetParent(_transform);
     }
-    public void CreateTotem(ScriptableObjectTienda soh, ScriptableObjectTienda sob, ScriptableObjectTienda sof)
+    public void CreateTotem(ScriptableObjectTienda soh, ScriptableObjectTienda sob, ScriptableObjectTienda sof, bool keepRotation = false)
     {
         _transform = transform;
         // if(!(ValidatePartDebug(h, "Head") && ValidatePartDebug(b, "Body") && ValidatePartDebug(f, "Feet")))
@@ -60,10 +61,12 @@ public class Totem : MonoBehaviour
         var h = soh.objectsToSell[0].gameObject;
         var b = sob.objectsToSell[0].gameObject;
         var f = sof.objectsToSell[0].gameObject;
+        
+        var rotation = keepRotation ? transform.rotation : Quaternion.Euler(0, 180, 0);
         if(ValidatePartDebug(h, "Head"))
         {
             var tempHead = Instantiate(soh.objectsToSell[0], position + up, 
-                Quaternion.Euler(0, 180, 0), _transform);
+                rotation, _transform);
             tempHead.scriptableObjectTienda = soh;
             head = tempHead.transform;
         }        // head.transform.SetParent(_transform);
@@ -71,7 +74,7 @@ public class Totem : MonoBehaviour
         if(ValidatePartDebug(b, "Body"))
         {
             var tempBody = Instantiate(sob.objectsToSell[0], position, 
-                Quaternion.Euler(0, 180, 0), _transform);
+                rotation, _transform);
             tempBody.scriptableObjectTienda = sob;
             body = tempBody.transform;
         }
@@ -80,7 +83,7 @@ public class Totem : MonoBehaviour
         if(ValidatePartDebug(f, "Feet"))
         {
             var tempFeet = Instantiate(sof.objectsToSell[0], position - up, 
-                Quaternion.Euler(0, 180, 0), _transform);
+                rotation, _transform);
             tempFeet.scriptableObjectTienda = sof;
             feet = tempFeet.transform;
         }        // feet.transform.SetParent(_transform);

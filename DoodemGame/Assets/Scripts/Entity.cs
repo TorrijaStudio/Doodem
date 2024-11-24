@@ -329,7 +329,10 @@ public class Entity : NetworkBehaviour ,IAtackable
         if (!objetive) return;
         Debug.Log("Flying");
 
-        _targetRot = Quaternion.LookRotation(objetive.transform.position - transform.position, Vector3.up);
+        var pos = transform.position;
+        var objPosition = objetive.transform.position;
+        pos.y = objPosition.y;
+        _targetRot = Quaternion.LookRotation(objPosition - pos, Vector3.up);
         
         if (!Mathf.Approximately(Quaternion.Angle(transform.rotation, _targetRot), 0))
         {
