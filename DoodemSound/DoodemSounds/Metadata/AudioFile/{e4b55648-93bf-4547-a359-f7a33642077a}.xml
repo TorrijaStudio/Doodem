@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{e4b55648-93bf-4547-a359-f7a33642077a}">
 		<property name="assetPath">
-			<value>FondoPájaros.wav</value>
+			<value>Menú/FondoPájaros.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

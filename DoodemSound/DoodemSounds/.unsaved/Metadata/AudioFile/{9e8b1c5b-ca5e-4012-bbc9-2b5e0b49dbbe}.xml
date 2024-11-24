@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{0205ee23-8480-4338-9a05-919cd56551a0}">
+	<object class="AudioFile" id="{9e8b1c5b-ca5e-4012-bbc9-2b5e0b49dbbe}">
 		<property name="assetPath">
-			<value>Música/Menú_principal.wav</value>
-		</property>
-		<property name="isStreaming">
-			<value>true</value>
+			<value>Menú/caidaTotemFinal.wav</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>44.0999985</value>
+			<value>48</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>83</value>
+			<value>0.26864583333333331</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{8d8b1804-d70c-4771-99a2-2c12c168ad0d}</destination>

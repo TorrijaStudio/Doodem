@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{a9a445d9-c5aa-494a-97d9-0932546117ce}">
+	<object class="AudioFile" id="{e4b55648-93bf-4547-a359-f7a33642077a}">
 		<property name="assetPath">
-			<value>Música/Pelea_Batalla.wav</value>
+			<value>Menú/FondoPájaros.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>44.0999985</value>
+			<value>48</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>61.358730158730161</value>
+			<value>138.61445833333335</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{8d8b1804-d70c-4771-99a2-2c12c168ad0d}</destination>

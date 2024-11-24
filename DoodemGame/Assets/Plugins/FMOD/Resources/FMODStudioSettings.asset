@@ -625,6 +625,7 @@ MonoBehaviour:
   - Master
   Banks:
   - Menu
+  - Music
   - SFX
   BanksToLoad: []
   LiveUpdatePort: 9264

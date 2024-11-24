@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{f4356397-1cd3-4137-a95f-2ff0ca4b2b36}">
 		<property name="assetPath">
-			<value>cadenasFinal.wav</value>
+			<value>Menú/cadenasFinal.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
