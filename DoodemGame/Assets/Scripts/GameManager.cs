@@ -56,7 +56,12 @@ public class GameManager : NetworkBehaviour
     public Reward reward = new (20,5,1.5F);
     private int _victoryRojoPoints;
     private int _victoryAzulPoints;
-    private int currentRound;
+
+    public int currentRound
+    {
+        get;
+        private set;
+    }
     [Space(15)] private RoundDisplay _roundDisplay;
     
    

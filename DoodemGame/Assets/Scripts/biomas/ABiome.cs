@@ -30,6 +30,16 @@ public abstract class ABiome : NetworkBehaviour
     
 
     private static Random random;
+    public BiomeType type;
+    
+    public enum BiomeType
+    {
+        Forest,
+        Desert,
+        Glacier,
+        Mountain,
+        Lake,
+    }
     
     
     private void Awake()

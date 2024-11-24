@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using formulas;
 using tienda;
 using TMPro;
 using Totems;
@@ -12,6 +14,7 @@ using UnityEngine.UI;
 public class objetoTienda : MonoBehaviour,IPointerClickHandler
 {
     [SerializeField] public ScriptableObjectTienda info;
+    private int price;
     public bool selected;
 
     private playerInfoStore _store;
@@ -41,13 +44,33 @@ public class objetoTienda : MonoBehaviour,IPointerClickHandler
         _proUGUI.color = _store.CanBuyItem(info.price) ? new Color(0.28f, 0.6f, 0f) : new Color(0.67f, 0.17f, 0.11f);
     }
     
-    public void CreateObject(ScriptableObjectTienda scriptableObjectTienda)
+    public void CreateObject(ScriptableObjectTienda scriptableObjectTienda, bool isFullTotem = true)
     {
         info = scriptableObjectTienda;
         GetComponent<Image>().sprite = info.image;
         _store = FindObjectOfType<playerInfoStore>();
         _proUGUI = GetComponentInChildren<TextMeshProUGUI>();
-        _proUGUI.SetText(info.price.ToString());
+        if(isFullTotem)
+        {
+            price = info.price;
+        }
+        else
+        {
+            if (scriptableObjectTienda.isBiome)
+            {
+                var st = new PriceBiome(20, 1, 2);
+                price = st.GetPrice(GameManager.Instance.currentRound, GameManager.Instance.playerObjects.Count(aux =>
+                {
+                    if (aux.TryGetComponent<ABiome>(out var b))
+                    {
+                        return b.type == info.biomeType;
+                    }
+
+                    return false;
+                }));
+            }
+        }
+        _proUGUI.SetText(price.ToString());
         _store.OnItemSelected += SetTextColour;
         SetTextColour();
     }

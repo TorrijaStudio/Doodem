@@ -16,5 +16,6 @@ namespace tienda
         public int num;
         public bool isBiome;
         public GameObject biomeObject;
+        public ABiome.BiomeType biomeType;
     }
 }

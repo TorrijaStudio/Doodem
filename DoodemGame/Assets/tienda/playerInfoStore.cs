@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using tienda;
 using TMPro;
+using Totems;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -36,6 +37,8 @@ public class playerInfoStore : MonoBehaviour
     public int playerMoney;
     public static readonly Color UnavailableColor = new Color(0.67f, 0.17f, 0.11f);
     public static readonly Color AvailableColor = new Color(0.25f, 0.53f, 0f);
+
+    // private PieceTotem _pieceTotemFormula;
 
     public int PlayerMoney
     {
@@ -172,7 +175,7 @@ public class playerInfoStore : MonoBehaviour
         {
             var objT = Instantiate(objTiendaPrefab, positionsToSpawn[index].position, Quaternion.identity, totemItems);
             var totemI = Random.Range(0, prevTotems.Count);
-            objT.CreateObject(prevTotems[totemI]);
+            objT.CreateObject(prevTotems[totemI], true);
             prevTotems.RemoveAt(totemI);
             index++;
         }
