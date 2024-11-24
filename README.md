@@ -15,7 +15,7 @@
 - Sancho Quesada Carballo
 - Alejandro García Martínez  
 
-_Octubre 2024_
+_Noviembre 2024_
 
 ---
 
@@ -277,7 +277,7 @@ Como la partida dura cinco rondas, un jugador puede ganar al conseguir tres punt
  
  Tanto las partes como los biomas son generados aleatoriamente, por lo que el jugador puede pagar para regenerar los artículos de la tienda y generar nuevos objetos. La tienda siempre tiene cuatro objetos aleatorios, y siempre aparecerá al menos un bioma y una parte de tótem. Finalmente, los jugadores pueden utilizar dinero para ampliar el número máximo de tótems. Al comienzo de la partida la cantidad máxima es de 2 tótems, pero podrá ampliarse hasta 5. Este aumento de tótems para colocar se hace con la compra de experiencia (XP), que aumentará el nivel del jugador. 
  
- Antes de comenzar la batalla los jugadores deben colocar los biomas y tótems que poseen. En total esta fase dura 2 minutos.
+ Antes de comenzar la batalla los jugadores deben colocar los biomas y tótems que poseen. En total esta fase dura un minuto.
 
 ### 2.8 Economía
 Entre rondas, los jugadores podrán hacer uso de la divisa obtenida durante la partida para organizar su estrategia.
@@ -462,7 +462,7 @@ En cuanto al texturizado de los mismos, los detalles se han pintado a mano sobre
 ## Capítulo 4: Sonido y Música
 
 ### 4.1 Música
-Doodem contará con varios temas musicales que se utilizarán en diferentes ocasiones. Todos los temas están compuestos con instrumentos típicos de las culturas americanas nativas, evocando a la naturaleza y la guerra. Partiendo de un tema principal, se abordarán otros tres temas ambiente para las batallas y uno para el ambiente durante la navegación del menú fuera de las batallas.
+Doodem contará con varios temas musicales que se utilizarán en diferentes ocasiones. Todos los temas están compuestos con instrumentos típicos de las culturas americanas nativas, evocando a la naturaleza y la guerra. Partiendo de un tema principal, se abordarán otros dos temas ambiente para las batallas y uno para el ambiente durante la navegación del menú fuera de las batallas.
 
 El tema principal debe ser el más reconocible, capaz de identificar al juego. Este tema será utilizado en productos promocionales como tráilers. Además de eso sonará al iniciar el juego a modo de presentación, y tras acabar, dejará paso al tema de ambiente.
 
@@ -505,9 +505,11 @@ Cada pantalla está diseñada para optimizar la navegación y asegurar que el ju
 ## Capítulo 6: Monetización y modelo de negocio
 
 ### 6.1 Modelo de negocio
-El modelo de negocio de _Doodem_ se basará en un enfoque de fidelización. El juego será lanzado de forma gratuita, pero con opciones de expansión que se pueden adquirir. A lo largo del tiempo, se lanzarán expansiones de pago que no afectarán el balance del juego ni darán ventaja competitiva a los que las obtengan. Estas expansiones buscan mantener a los jugadores actuales dentro del juego y atraer a nuevos posibles jugadores.
+Se basará en un modelo de negocio de fidelización. El juego se lanzará de forma gratuita. A lo largo del tiempo se lanzarán expansiones de pago (que no deben romper el juego ni dar ventaja a los que las obtengan). Estas expansiones deben mantener a los jugadores actuales dentro del juego y atraer a nuevos posibles jugadores.
 
 #### 6.1.1 Información del usuario
+A continuación se detallan de forma concisa y rápida los puntos más generales que identifican al público objetivo de Doodem. Con esta información se puede empezar a detallar la forma en la que se tratará de enfocar el producto para mejorar la publicidad, el soporte y más decisiones.
+
 - **¿Quién es?** Jugador casual de cualquier edad y procedencia.
 - **¿Situación?** El juego va dirigido a usuarios principalmente con poco tiempo para jugar, y a aquellos que tengan más tiempo libre para profundizar y dedicar tiempo. Económicamente el jugador no tiene una gran capacidad de realizar gastos.
 - **Cómo es**: El jugador es competitivo, estratega y social.
@@ -517,17 +519,17 @@ El modelo de negocio de _Doodem_ se basará en un enfoque de fidelización. El j
 - **¿Actividad?** Actividad habitual, aunque puedan ser sesiones cortas según el usuario. Una persona más competitiva o enfocada en la estrategia puede dedicar más tiempo.
 
 #### 6.1.2 Mapa de empatía
-El mapa de empatía está diseñado para comprender mejor a los usuarios del juego. Incluye preguntas y factores clave que permiten conocer los deseos, necesidades y comportamientos del jugador. Esta herramienta es crucial para desarrollar un enfoque de monetización efectivo y una experiencia de usuario atractiva.
+Con el mapa de empatía se profundiza más en la psique del usuario final y público objetivo al que va dirigido el juego. Con este documento se trata de representar el comportamiento de una persona, para poder ajustar y detallar aun más las estrategias y decisiones que se tomarán a la hora de dar a conocer el juego y conseguir beneficios.
 
 <img src="/IMAGENES_GDD/sdgddfsd.png" alt="Habilidades del águila" width=100% height=100%>
 
 #### 6.1.3 Caja de herramientas
-La caja de herramientas incluye las estrategias y tácticas que el equipo de desarrollo empleará para mantener y mejorar la experiencia del jugador. Estas herramientas están alineadas con los objetivos del modelo de negocio y buscan promover la retención de jugadores, la adquisición de nuevos usuarios y el incremento en la participación dentro del juego.
+La caja de herramientas incluye las estrategias y tácticas que el equipo de desarrollo empleará para mantener y mejorar la experiencia del jugador. Estas herramientas están alineadas con los objetivos del modelo de negocio y buscan promover la retención de jugadores, la adquisición de nuevos usuarios y el incremento en la participación dentro del juego. En este esquema queda retratada la relación de la empresa con el resto de entes de interés más cercanos.
 
 <img src="/IMAGENES_GDD/asdasdasf.png" alt="Habilidades del águila" width=75% height=75%>
 
 #### 6.1.4 Modelo de lienzo
-El modelo de lienzo es un esquema que representa los componentes principales del modelo de negocio, incluyendo el valor del juego para los usuarios, las fuentes de ingresos, la estructura de costos y las alianzas clave necesarias para el éxito del juego en el mercado.
+El modelo de lienzo aporta información sobre todas las herramientas y relaciones disponibles de forma visual a la hora de conceptualizar y analizar el modelo de negocio de la empresa.
 
 <img src="/IMAGENES_GDD/k.png" alt="Habilidades del águila" width=100% height=100%>
 
