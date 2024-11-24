@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3f053069-de9e-4533-b433-6f172f1d2702}">
+		<property name="assetPath">
+			<value>Batalla/osoPardoEuropeo.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.8131041666666667</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a0981139-1eae-4c0f-b437-13cb9991c219}</destination>
+		</relationship>
+	</object>
+</objects>
