@@ -32,11 +32,16 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     public Inventory inventory;
     public static int MaxTotems;
     public bool isTotem;
+    private Transform totemParent;
+    private Transform biomaParent;
 
     private int _activeDestroyCoroutines;
     
     void Start()
     {
+        totemParent = GameObject.Find("SeleccionableTotemsParent").transform;
+        biomaParent = GameObject.Find("Canvas/cartas/totems").transform;
+        if(biomaParent) Debug.LogError("hplaaaa");
         _objectsToDelete = new List<GameObject>();
         cartas = new List<Transform>();
         foreach (Transform t in transform.parent)
@@ -122,7 +127,8 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     {
         if (_selected && objeto)
         {
-            MaxTotems--;
+            if (isTotem)
+                MaxTotems--;
             SpawnServer(objeto.transform.position, ClientID);
             _objectsToDelete.Add(objeto);
             GameObject o = objeto;
@@ -190,9 +196,9 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(GameManager.Instance.startedGame) return;
         if(!_selected)
             SetColorGridHolding();
-        _selected = true;
         GameManager.Instance.objectSelected = null;
         foreach (var c in cartas.Where(c => c))
         {
@@ -201,6 +207,22 @@ public class Seleccionable : MonoBehaviour, IPointerDownHandler
                 s.SetFalse();
             }
         }
+
+        foreach (Transform c in totemParent)
+        {
+            if (c && c.TryGetComponent(out Seleccionable s))
+            {
+                s.SetFalse();
+            }
+        }
+        foreach (Transform c in biomaParent)
+        {
+            if (c && c.TryGetComponent(out Seleccionable s))
+            {
+                s.SetFalse();
+            }
+        }
+        _selected = true;
     }
 
     private void SetColorGridHolding()

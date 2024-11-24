@@ -143,7 +143,6 @@ public class GameManager : NetworkBehaviour
            OnStartMatch.Invoke();
            if (IsHost)
            {
-               Debug.LogError("compruebo al principio");
                StartCoroutine(checkIfRoundEndedFirst());
            }
        }
@@ -218,7 +217,6 @@ public class GameManager : NetworkBehaviour
             }
             else
             {
-                Debug.LogError("empate");
                 _roundDisplay.UpdateRoundDisplay(RoundDisplay.RoundDisplayInfo.Tie);
                 _victoryAzulPoints++;
                 _victoryRojoPoints++;
@@ -419,7 +417,6 @@ public class GameManager : NetworkBehaviour
 
         if (string.IsNullOrEmpty(layer))
         {
-            Debug.LogError(RedEnemies.Count+" : "+BlueEnemies.Count);
             if (RedEnemies.Count > 0 && BlueEnemies.Count > 0)
             {
                 // Debug.LogError("empiezo corr");
