@@ -68,5 +68,9 @@ public class recurso : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
